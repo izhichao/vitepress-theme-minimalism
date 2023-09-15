@@ -3,16 +3,16 @@ import path from 'path';
 import matter from 'gray-matter';
 import { IPost } from '../types';
 
-async function fileExists(filePath: string) {
+const fileExists = async (filePath: string) => {
   try {
     await fs.access(filePath, fs.constants.F_OK);
     return true;
   } catch {
     return false;
   }
-}
+};
 
-async function generatePages(pageSize: number, total: number = 0) {
+const generatePages = async (pageSize: number, total: number = 0) => {
   let pageTotal = Math.ceil(total / pageSize);
   const indexPath = path.resolve('index.md');
   const index = await fileExists(indexPath);
@@ -43,9 +43,9 @@ layout: page
     `.trim();
     await fs.writeFile(indexPath, page);
   }
-}
+};
 
-export async function getPosts(pageSize: number, folder: string = 'posts') {
+export const getPosts = async (pageSize: number, folder: string = 'posts') => {
   const rewrites = {};
   try {
     const paths = await fs.readdir(folder);
@@ -92,4 +92,4 @@ export async function getPosts(pageSize: number, folder: string = 'posts') {
     await generatePages(pageSize);
     return { posts: [], rewrites };
   }
-}
+};
