@@ -1,5 +1,21 @@
 import { IPost, ITag, IArchive } from '../types';
 
+export const groupByTags = (posts: IPost[]) => {
+  const data: ITag = {};
+  posts.forEach((post) => {
+    const tags = post.tags;
+    if (tags) {
+      tags.forEach((tag) => {
+        if (!data[tag]) {
+          data[tag] = [];
+        }
+        data[tag].push(post);
+      });
+    }
+  });
+  return data;
+};
+
 export const groupByYears = (posts: IPost[]) => {
   const data: ITag = {};
   posts.forEach((post) => {
