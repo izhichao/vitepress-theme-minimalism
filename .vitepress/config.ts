@@ -1,10 +1,16 @@
-import { defineConfig } from 'vitepress';
+import { defineConfigWithTheme } from 'vitepress';
+import { ThemeConfig } from './theme/src/types';
+import { getPosts } from './theme/src/utils/getPosts';
 
-export default defineConfig({
-  title: 'Minimalism',
+const pageSize = 9;
+const { posts, rewrites } = await getPosts(pageSize);
+export default defineConfigWithTheme<ThemeConfig>({
+  title: '只抄',
   titleTemplate: 'VitePress Theme Minimalism',
   description: 'VitePress Theme Minimalism',
+  rewrites,
   themeConfig: {
+    posts,
     outline: { level: [2, 3], label: '目录' },
     nav: [
       { text: 'Home', link: '/' },
@@ -28,12 +34,12 @@ export default defineConfig({
     },
     socialLinks: [{ icon: 'github', link: 'https://github.com/izhichao/vitepress-theme-minimalism' }],
     footer: {
-      message: `友情链接：<a href="https://xn--4gq62f52gdss.com/#/register?code=dHfuMweo">一元机场</a>&nbsp;
-      <a href="https://bwh81.net/aff.php?aff=46644">搬瓦工</a>&nbsp;
-      <a href="https://my.racknerd.com/aff.php?aff=6884">RackNerd</a>&nbsp;
-      <a href="https://vps.hosting/?affid=816">V.PS</a>`,
-      copyright:
-        'Theme by <a href="https://github.com/izhichao/vitepress-theme-minimalism">Minimalism</a> | Copyright © 2017-2023 <a href="https://github.com/izhichao">只抄</a>'
+      message: `友情链接：<a href="https://xn--4gq62f52gdss.com/#/register?code=dHfuMweo" target="_blank">一元机场</a>&nbsp;
+      <a href="https://bwh81.net/aff.php?aff=46644" target="_blank">搬瓦工</a>&nbsp;
+      <a href="https://my.racknerd.com/aff.php?aff=6884" target="_blank">RackNerd</a>&nbsp;
+      <a href="https://vps.hosting/?affid=816" target="_blank">V.PS</a><br />
+      Theme by <a href="https://github.com/izhichao/vitepress-theme-minimalism" target="_blank">Minimalism</a>`,
+      copyright: 'Copyright © 2017-2023 <a href="https://github.com/izhichao" target="_blank">只抄</a>'
     },
     search: { provider: 'local' }
   },
@@ -41,5 +47,5 @@ export default defineConfig({
     theme: 'dark-plus',
     lineNumbers: true
   },
-  srcExclude: ['README.md']
+  srcExclude: ['README.md', 'README_EN.md']
 });
