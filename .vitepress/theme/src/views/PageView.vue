@@ -20,7 +20,7 @@
           class="pagination__link"
           v-for="page in pageTotal"
           :key="page"
-          :href="withBase(page === 1 ? '/index.html' : `/page_${page}.html`)"
+          :href="withBase(page === 1 ? '/index.html' : `/page${page}.html`)"
           :class="{ 'pagination__link--active': pageCurrent === page }"
         >
           {{ page }}
