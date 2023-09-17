@@ -45,6 +45,12 @@ layout: page
   }
 };
 
+/**
+ * getPosts
+ * @param pageSize number of posts per page
+ * @param folder posts folder --default='posts'
+ * @returns
+ */
 export const getPosts = async (pageSize: number, folder: string = 'posts') => {
   const rewrites = {};
   try {
