@@ -16,7 +16,7 @@
     "@types/node": "^20.6.0",
     "gray-matter": "^4.0.3",
     "less": "^4.2.0",
-    "vitepress": "1.0.0-rc.13",
+    "vitepress": "1.0.0-rc.14",
     "vue": "^3.3.4"
   }
 }
