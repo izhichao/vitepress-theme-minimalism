@@ -1,6 +1,7 @@
 import fs from 'fs/promises';
 import path from 'path';
 import matter from 'gray-matter';
+import fg from 'fast-glob';
 import { IPost } from '../types';
 
 const fileExists = async (filePath: string) => {
@@ -45,28 +46,12 @@ layout: page
   }
 };
 
-/**
- * getPosts
- * @param pageSize number of posts per page
- * @param folder posts folder --default='posts'
- * @returns
- */
 export const getPosts = async (pageSize: number, folder: string = 'posts') => {
   const rewrites = {};
   try {
-    const paths = await fs.readdir(folder);
-    const mdPaths = paths
-      .filter((item) => {
-        return path.extname(item) === '.md';
-      })
-      .map((item) => {
-        return `${folder}/${item}`;
-      });
-
-    await generatePages(pageSize, paths.length);
-
+    const paths = await fg(`${folder}/**/*.md`);
     const posts = await Promise.all(
-      mdPaths.map(async (path) => {
+      paths.map(async (path) => {
         const { data } = matter.read(path);
 
         // date
@@ -92,6 +77,8 @@ export const getPosts = async (pageSize: number, folder: string = 'posts') => {
     posts.sort((a, b) => {
       return new Date(b.date).getTime() - new Date(a.date).getTime();
     });
+
+    await generatePages(pageSize, paths.length);
 
     return { posts, rewrites };
   } catch {
