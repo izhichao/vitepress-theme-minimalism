@@ -20,7 +20,7 @@
           class="pagination__link"
           v-for="page in pageTotal"
           :key="page"
-          :href="withBase(page === 1 ? '/index.html' : `/page${page}.html`)"
+          :href="withBase(page === 1 && index ? '/index.html' : `/page${page}.html`)"
           :class="{ 'pagination__link--active': pageCurrent === page }"
         >
           {{ page }}
@@ -36,7 +36,8 @@ import { IPost } from '../types';
 defineProps({
   posts: Array<IPost>,
   pageCurrent: Number,
-  pageTotal: Number
+  pageTotal: Number,
+  index: Boolean
 });
 </script>
 
