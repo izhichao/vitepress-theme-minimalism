@@ -1,6 +1,8 @@
 <template>
   <div class="home">
-    <img :src="imgUrl" />
+    <div class="home__image">
+      <img :src="imgUrl" />
+    </div>
     <div class="home__title">{{ title }}</div>
     <div class="home__desc">{{ desc }}</div>
     <div class="home__links">
@@ -59,6 +61,18 @@ window.addEventListener('resize', debounce(handleHeight));
   justify-content: center;
   align-items: center;
   height: v-bind(contentHeight);
+
+  &__image {
+    width: 18rem;
+    height: 18rem;
+
+    img {
+      width: 100%;
+      height: 100%;
+      user-select: none;
+      -webkit-user-drag: none;
+    }
+  }
 
   &__title {
     font-size: 2.3rem;

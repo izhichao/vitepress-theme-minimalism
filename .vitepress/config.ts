@@ -16,7 +16,8 @@ export default defineConfigWithTheme<ThemeConfig>({
       { text: 'Home', link: '/' },
       { text: 'Docs', link: '/docs/doc1' },
       { text: 'Archives', link: '/pages/archives' },
-      { text: 'Tags', link: '/pages/tags' }
+      { text: 'Tags', link: '/pages/tags' },
+      { text: 'Home Mini', link: '/home' }
     ],
     sidebar: {
       '/docs': [
