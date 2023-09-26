@@ -14,7 +14,7 @@ const fileExists = async (filePath: string) => {
   }
 };
 
-const generatePages = async (pageSize: number, total: number = 0, index: boolean = true) => {
+const generatePages = async (pageSize: number, total = 0, index = true) => {
   let pageTotal = Math.ceil(total / pageSize);
   const indexPath = path.resolve('index.md');
   const indexExist = await fileExists(indexPath);
@@ -49,7 +49,7 @@ layout: page
   }
 };
 
-export const getPosts = async (pageSize: number, folder: string = 'posts', index: boolean = true) => {
+export const getPosts = async (pageSize = 10, folder = 'posts', index = true) => {
   const rewrites = {};
   try {
     const paths = await fg(`${folder}/**/*.md`);
