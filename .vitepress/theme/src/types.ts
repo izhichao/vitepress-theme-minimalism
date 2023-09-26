@@ -5,6 +5,7 @@ export interface IPost {
   title: string;
   tags?: string[];
   permalink?: string;
+  excerpt: string;
   path: string;
 }
 

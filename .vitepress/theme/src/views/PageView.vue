@@ -2,12 +2,15 @@
   <div class="main-container">
     <div class="main-content">
       <div v-for="post in posts" :key="post.title" class="post">
-        <div class="post__header">
+        <div>
           <div class="post__title">
             <a :href="withBase(post.path)">{{ post.title }}</a>
           </div>
+          <div class="post__excerpt">
+            {{ post.excerpt }}
+          </div>
         </div>
-        <div class="post__content">
+        <div>
           <span class="post__date">{{ post.date }}</span>
           <a :href="withBase(`/pages/tags.html?tag=${item}`)" v-for="item in post.tags" class="post__tag">
             {{ item }}
@@ -47,12 +50,6 @@ defineProps({
   padding: 14px 0;
   border-bottom: 1px dashed #ccc;
 
-  &__header {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-  }
-
   &__title {
     font-size: 1.125rem;
     font-weight: 500;
@@ -65,6 +62,16 @@ defineProps({
         color: var(--vp-c-brand);
       }
     }
+  }
+
+  &__excerpt {
+    color: var(--vp-c-text-2);
+    margin-bottom: 8px;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    text-overflow: ellipsis;
   }
 
   &__date,
