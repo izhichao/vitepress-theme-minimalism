@@ -2,6 +2,7 @@ import fs from 'fs/promises';
 import path from 'path';
 import matter from 'gray-matter';
 import fg from 'fast-glob';
+import removeMd from 'remove-markdown';
 import { IPost } from '../types';
 
 const fileExists = async (filePath: string) => {
@@ -54,7 +55,10 @@ export const getPosts = async (pageSize: number, folder: string = 'posts') => {
     const paths = await fg(`${folder}/**/*.md`);
     const posts = await Promise.all(
       paths.map(async (path) => {
-        const { data } = matter.read(path);
+        const { data, excerpt } = matter.read(path, {
+          excerpt: true,
+          excerpt_separator: '<!-- more -->'
+        });
 
         // date
         const date = (data.date ? new Date(data.date) : new Date()).toISOString().split('T')[0];
@@ -67,9 +71,19 @@ export const getPosts = async (pageSize: number, folder: string = 'posts') => {
           path = path.replace(/\.md$/, '.html');
         }
 
+        // excerpt
+        const contents = removeMd(excerpt)
+          .trim()
+          .split(/\r\n|\n|\r/)
+          .slice(1)
+          .join('')
+          .replace(/\s{2,}/g, '')
+          .trim();
+
         return {
           ...data,
           date,
+          excerpt: contents,
           path
         } as IPost;
       })
