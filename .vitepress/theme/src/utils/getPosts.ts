@@ -31,7 +31,7 @@ import { useData } from "vitepress";
 const { theme } = useData();
 const posts = theme.value.posts.slice(${pageSize * (i - 1)},${pageSize * i})
 </script>
-<Page :posts="posts" :pageCurrent="${i}" :pageTotal="${pageTotal}" ${index ? '' : `:index="${index}"`}/>
+<Page :posts="posts" :pageCurrent="${i}" :pageTotal="${pageTotal}" :index="${index}" />
 `.trim();
       const pagePath = i === 1 && index ? indexPath : path.resolve(`page${i}.md`);
       await fs.writeFile(pagePath, page);
@@ -49,7 +49,7 @@ layout: page
   }
 };
 
-export const getPosts = async (pageSize: number, folder: string = 'posts') => {
+export const getPosts = async (pageSize: number, folder: string = 'posts', index: boolean = true) => {
   const rewrites = {};
   try {
     const paths = await fg(`${folder}/**/*.md`);
@@ -94,7 +94,7 @@ export const getPosts = async (pageSize: number, folder: string = 'posts') => {
       return new Date(b.date).getTime() - new Date(a.date).getTime();
     });
 
-    await generatePages(pageSize, paths.length);
+    await generatePages(pageSize, paths.length, index);
 
     return { posts, rewrites };
   } catch {
