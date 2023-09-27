@@ -10,6 +10,7 @@ export default defineConfigWithTheme<ThemeConfig>({
   title: '只抄',
   titleTemplate: 'VitePress Theme Minimalism',
   description: 'VitePress Theme Minimalism',
+  base: '/vitepress-theme-minimalism/',
   rewrites,
   themeConfig: {
     posts,
