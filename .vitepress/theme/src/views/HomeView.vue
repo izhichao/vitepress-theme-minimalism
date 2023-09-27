@@ -1,7 +1,7 @@
 <template>
   <div class="home">
     <div class="home__image">
-      <img :src="imgUrl" />
+      <img :src="withBase(imgUrl)" />
     </div>
     <div class="home__title">{{ title }}</div>
     <div class="home__desc">{{ desc }}</div>
@@ -12,6 +12,7 @@
 </template>
 
 <script lang="ts" setup>
+import { withBase } from 'vitepress';
 import { ref, onMounted } from 'vue';
 defineProps({
   imgUrl: { type: String, required: true },
