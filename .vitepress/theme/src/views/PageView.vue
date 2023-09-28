@@ -6,9 +6,7 @@
           <div class="post__title">
             <a :href="withBase(post.path)">{{ post.title }}</a>
           </div>
-          <div class="post__excerpt">
-            {{ post.excerpt }}
-          </div>
+          <div class="post__excerpt" v-if="post.excerpt">{{ post.excerpt }}</div>
         </div>
         <div>
           <span class="post__date">{{ post.date }}</span>
