@@ -22,8 +22,7 @@ const generatePages = async (pageSize: number, total = 0, index = true) => {
   if (total > 0) {
     for (let i = 1; i <= pageTotal; i++) {
       const page = `
----
-title: ${i === 1 && index ? '首页' : `第${i}页`}
+---${i === 1 && index ? '' : `\ntitle: 第${i}页`}
 layout: page
 ---
 <script setup>
