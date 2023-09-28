@@ -61,7 +61,9 @@ export const getPosts = async (pageSize = 10, folder = 'posts', index = true) =>
         });
 
         // date
-        const date = (data.date ? new Date(data.date) : new Date()).toISOString().split('T')[0];
+        const ISOString = (data.date ? new Date(data.date) : new Date()).toISOString().split('T');
+        const date = ISOString[0];
+        const time = ISOString[1].split('.')[0];
 
         // permalink
         if (data.permalink) {
@@ -83,6 +85,7 @@ export const getPosts = async (pageSize = 10, folder = 'posts', index = true) =>
         return {
           ...data,
           date,
+          time,
           excerpt: contents,
           path
         } as IPost;
@@ -91,7 +94,7 @@ export const getPosts = async (pageSize = 10, folder = 'posts', index = true) =>
 
     // date sort
     posts.sort((a, b) => {
-      return new Date(b.date).getTime() - new Date(a.date).getTime();
+      return new Date(`${b.date} ${b.time}`).getTime() - new Date(`${a.date} ${a.time}`).getTime();
     });
 
     await generatePages(pageSize, paths.length, index);
