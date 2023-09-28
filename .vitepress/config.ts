@@ -2,7 +2,7 @@ import { defineConfigWithTheme } from 'vitepress';
 import { ThemeConfig } from './theme/src/types';
 import { getPosts } from './theme/src/utils/getPosts';
 
-const pageSize = 6;
+const pageSize = 7;
 const folder = 'posts';
 const index = false;
 const { posts, rewrites } = await getPosts(pageSize, folder, index);
