@@ -67,9 +67,21 @@ pre::-webkit-scrollbar {
 
   // 标题前 # 的位置
   h1,
-  h2 {
+  h2,
+  h3 {
     .header-anchor {
       top: auto;
+    }
+
+    a {
+      &:not(.header-anchor) {
+        font-weight: 600;
+        color: var(--vp-c-text-1);
+
+        &:hover {
+          color: var(--vp-c-brand-2);
+        }
+      }
     }
   }
 }
