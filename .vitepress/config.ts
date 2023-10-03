@@ -51,5 +51,5 @@ export default defineConfigWithTheme<ThemeConfig>({
     theme: 'dark-plus',
     lineNumbers: true
   },
-  srcExclude: ['README.md']
+  srcExclude: ['README.md','README_zh-CN.md']
 });

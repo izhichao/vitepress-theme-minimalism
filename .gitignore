@@ -3,3 +3,4 @@ node_modules
 .vitepress/cache
 /*.md
 !README.md
+!README_zh-CN.md
