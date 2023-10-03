@@ -1,4 +1,4 @@
-**简体中文 | [English](/README.md)**
+**[English](/README.md) | 简体中文**
 
 # 一个极简的 VitePress 博客主题
 
