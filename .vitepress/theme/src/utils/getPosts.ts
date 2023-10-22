@@ -60,7 +60,13 @@ export const getPosts = async (pageSize = 10, folder = 'posts', index = true) =>
         });
 
         // date
-        const ISOString = (data.date ? new Date(data.date) : new Date()).toISOString().split('T');
+        let ISOString: string[] = [];
+        if (data.date) {
+          ISOString = new Date(data.date).toISOString().split('T');
+        } else {
+          const stats = await fs.stat(path);
+          ISOString = new Date(stats.birthtime).toISOString().split('T');
+        }
         const date = ISOString[0];
         const time = ISOString[1].split('.')[0];
 
