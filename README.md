@@ -6,7 +6,7 @@
 
 Based on the VitePress default theme extends the leading page, posts list page, post page, archives page, tabs page, can be fully compatible with the default theme's document mode (with Sidebar).
 
-[Demo1](https://zhichao.org) | [Demo2](https://izhichao.github.io/vitepress-theme-minimalism) | [Documentation](https://zhichao.org/minimalism.html#vitepress-theme-minimalism-documentation)
+[Demo1](https://zhichao.org) | [Demo2](https://izhichao.github.io/vitepress-theme-minimalism) | [Documentation](https://zhichao.org/posts/minimalism.html#vitepress-theme-minimalism-documentation)
 
 ## Feature 
 
@@ -14,8 +14,9 @@ Based on the VitePress default theme extends the leading page, posts list page, 
 
 - [x] Archives
 - [x] Tabs
-- [x] permalink
+- [x] Permalink
 - [x] Summary `<!--more-->`
+- [x] Zoom Images
 - [ ] Pin
 - [x] ~~Comments~~
 
@@ -35,5 +36,6 @@ Based on the VitePress default theme extends the leading page, posts list page, 
 
 - [vuepress](https://github.com/vuejs/vitepress) - inherit default theme
 - [vitepress](https://github.com/vuejs/vuepress) - reference to homepage style
+- [Allow images to be zoomed in on click](https://github.com/vuejs/vitepress/issues/854) - reference to zoom images
 - [vitepress-blog-demo](https://github.com/brc-dd/vitepress-blog-demo) - reference to post reading and summary function
 - [vitepress-blog-pure](https://github.com/airene/vitepress-blog-pure) - reference blog style
