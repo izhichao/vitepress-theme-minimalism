@@ -6,7 +6,7 @@
 
 基于 VitePress 默认主题拓展了引导页、文章列表页、文章页、归档页、标签页，可以与默认主题的文档模式 (带 Sidebar) 完全兼容。
 
-[演示站1](https://zhichao.org) | [演示站2](https://izhichao.github.io/vitepress-theme-minimalism) | [使用文档](https://zhichao.org/minimalism.html)
+[演示站1](https://zhichao.org) | [演示站2](https://izhichao.github.io/vitepress-theme-minimalism) | [使用文档](https://zhichao.org/posts/minimalism.html)
 
 ## 功能
 
@@ -16,6 +16,7 @@
 - [x] 标签页
 - [x] 永久链接
 - [x] 文章摘要 `<!--more-->`
+- [x] 图片缩放
 - [ ] 文章置顶
 - [x] ~~评论~~
 
@@ -35,5 +36,6 @@
 
 - [vitepress](https://github.com/vuejs/vitepress) - 继承默认主题
 - [vuepress](https://github.com/vuejs/vuepress) - 参考首页样式
+- [Allow images to be zoomed in on click](https://github.com/vuejs/vitepress/issues/854) - 参考图片缩放
 - [vitepress-blog-demo](https://github.com/brc-dd/vitepress-blog-demo) - 参考文章读取与摘要功能
 - [vitepress-blog-pure](https://github.com/airene/vitepress-blog-pure) - 参考博客样式
