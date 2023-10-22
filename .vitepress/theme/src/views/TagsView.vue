@@ -2,9 +2,9 @@
   <div class="main-container">
     <div class="main-content">
       <div class="tag">
-        <span @click="handleTag(key as string)" v-for="(value, key) in posts" class="tag__item">
-          {{ key }}
-          <span>{{ posts[key].length }}</span>
+        <span @click="handleTag(tag)" v-for="tag in orderedTags" :key="tag" class="tag__item">
+          {{ tag }}
+          <span>{{ posts[tag].length }}</span>
         </span>
       </div>
       <div class="tag__header">{{ selectTag }}</div>
@@ -22,6 +22,12 @@ import PostItem from '../components/PostItem.vue';
 
 const { theme } = useData();
 const posts = computed(() => groupByTags(theme.value.posts));
+// sort tags
+const orderedTags = computed(() => {
+  return Object.keys(posts.value).sort((a, b) => {
+    return a.localeCompare(b);
+  });
+});
 
 const url = location.href.split('?')[1];
 const params = new URLSearchParams(url);
