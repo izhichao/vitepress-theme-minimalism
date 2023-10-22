@@ -30,6 +30,16 @@ pre::-webkit-scrollbar {
   }
 }
 
+// 图片放大样式
+.medium-zoom-overlay {
+  z-index: 30;
+}
+
+.medium-zoom-image {
+  border-radius: 10px;
+  z-index: 31;
+}
+
 // 去除 Nav Footer 边框
 .VPNavBar,
 .VPFooter {
@@ -46,6 +56,14 @@ pre::-webkit-scrollbar {
   // 去除 a 下划线
   a {
     text-decoration: none;
+  }
+
+  img {
+    display: block;
+    margin: 0 auto;
+    border-radius: 10px;
+    box-shadow: 0px 0px 8px rgba(0, 0, 0, 0.2);
+    max-width: 75%;
   }
 
   // 标题样式
