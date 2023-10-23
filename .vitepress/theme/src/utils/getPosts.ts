@@ -53,18 +53,21 @@ export const getPosts = async (pageSize = 10, folder = 'posts', index = true) =>
   try {
     const paths = await fg(`${folder}/**/*.md`);
     const posts = await Promise.all(
-      paths.map(async (path) => {
-        const { data, excerpt } = matter.read(path, {
+      paths.map(async (postPath) => {
+        const { data, excerpt } = matter.read(postPath, {
           excerpt: true,
           excerpt_separator: '<!-- more -->'
         });
+
+        // title
+        !data.title && (data.title = path.basename(postPath, path.extname(postPath)));
 
         // date
         let ISOString: string[] = [];
         if (data.date) {
           ISOString = new Date(data.date).toISOString().split('T');
         } else {
-          const stats = await fs.stat(path);
+          const stats = await fs.stat(postPath);
           ISOString = new Date(stats.birthtime).toISOString().split('T');
         }
         const date = ISOString[0];
@@ -72,10 +75,10 @@ export const getPosts = async (pageSize = 10, folder = 'posts', index = true) =>
 
         // permalink
         if (data.permalink) {
-          rewrites[path.replaceAll('+', '\\+')] = `${data.permalink}.md`.replaceAll('+', '\\+');
-          path = `/${data.permalink}.html`;
+          rewrites[postPath.replaceAll('+', '\\+')] = `${data.permalink}.md`.replaceAll('+', '\\+');
+          postPath = `/${data.permalink}.html`;
         } else {
-          path = path.replace(/\.md$/, '.html');
+          postPath = postPath.replace(/\.md$/, '.html');
         }
 
         // excerpt
@@ -92,7 +95,7 @@ export const getPosts = async (pageSize = 10, folder = 'posts', index = true) =>
           date,
           time,
           excerpt: contents,
-          path
+          path: postPath
         } as IPost;
       })
     );
