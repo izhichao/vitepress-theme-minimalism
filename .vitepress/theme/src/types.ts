@@ -2,10 +2,11 @@ import { DefaultTheme } from 'vitepress/theme';
 
 export interface IPost {
   title: string;
-  date: string;
+  datetime: string;
   tags?: string[];
   permalink?: string;
   excerpt: string;
+  date: string;
   time: string;
   path: string;
 }
