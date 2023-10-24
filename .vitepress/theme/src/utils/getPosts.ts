@@ -5,12 +5,76 @@ import fg from 'fast-glob';
 import removeMd from 'remove-markdown';
 import { IPost } from '../types';
 
-const fileExists = async (filePath: string) => {
+export const getPosts = async (pageSize = 10, folder = 'posts', index = true) => {
+  const rewrites = {};
   try {
-    await fs.access(filePath, fs.constants.F_OK);
-    return true;
-  } catch {
-    return false;
+    const paths = await fg(`${folder}/**/*.md`);
+    const posts = await Promise.all(
+      paths.map(async (postPath) => {
+        const { data, excerpt, content } = matter.read(postPath, {
+          excerpt: true,
+          excerpt_separator: '<!-- more -->'
+        });
+
+        // no title/date/permalink/outline
+        let tag = false;
+        if (!data.title || !data.date || !data.permalink || !data.outline) {
+          tag = true;
+        }
+        !data.title && (data.title = path.basename(postPath, path.extname(postPath)));
+        !data.datetime && (data.datetime = await generateBirthtime(postPath));
+        !data.outline && (data.outline = 'deep');
+        !data.permalink && (data.permalink = 'posts/' + generateRandomString(6));
+
+        // date
+        let ISOString = new Date(data.datetime).toISOString().split('T');
+        const date = ISOString[0];
+        const time = ISOString[1].split('.')[0];
+
+        // permalink
+        rewrites[postPath.replaceAll('+', '\\+')] = `${data.permalink}.md`.replaceAll('+', '\\+');
+        const permalink = `/${data.permalink}.html`;
+
+        // excerpt
+        const contents = removeMd(excerpt)
+          .trim()
+          .split(/\r\n|\n|\r/)
+          .slice(1)
+          .join('')
+          .replace(/\s{2,}/g, '')
+          .trim();
+
+        if (tag) {
+          const matters = ['title', 'datetime', 'permalink', 'outline', 'tags'];
+          const newMarkdown = matter.stringify(content, data, {
+            // @ts-ignore
+            sortKeys: (a: string, b: string) => matters.indexOf(a) - matters.indexOf(b)
+          });
+          await fs.writeFile(postPath, newMarkdown, 'utf8');
+        }
+
+        return {
+          ...data,
+          date,
+          time,
+          excerpt: contents,
+          path: permalink
+        } as IPost;
+      })
+    );
+
+    // date sort
+    posts.sort((a, b) => {
+      return new Date(b.datetime).getTime() - new Date(a.datetime).getTime();
+    });
+
+    await generatePages(pageSize, paths.length, index);
+
+    return { posts, rewrites };
+  } catch (e) {
+    console.log(e);
+    await generatePages(pageSize);
+    return { posts: [], rewrites };
   }
 };
 
@@ -48,68 +112,29 @@ layout: page
   }
 };
 
-export const getPosts = async (pageSize = 10, folder = 'posts', index = true) => {
-  const rewrites = {};
+const fileExists = async (filePath: string) => {
   try {
-    const paths = await fg(`${folder}/**/*.md`);
-    const posts = await Promise.all(
-      paths.map(async (postPath) => {
-        const { data, excerpt } = matter.read(postPath, {
-          excerpt: true,
-          excerpt_separator: '<!-- more -->'
-        });
-
-        // title
-        !data.title && (data.title = path.basename(postPath, path.extname(postPath)));
-
-        // date
-        let ISOString: string[] = [];
-        if (data.date) {
-          ISOString = new Date(data.date).toISOString().split('T');
-        } else {
-          const stats = await fs.stat(postPath);
-          ISOString = new Date(stats.birthtime).toISOString().split('T');
-        }
-        const date = ISOString[0];
-        const time = ISOString[1].split('.')[0];
-
-        // permalink
-        if (data.permalink) {
-          rewrites[postPath.replaceAll('+', '\\+')] = `${data.permalink}.md`.replaceAll('+', '\\+');
-          postPath = `/${data.permalink}.html`;
-        } else {
-          postPath = postPath.replace(/\.md$/, '.html');
-        }
-
-        // excerpt
-        const contents = removeMd(excerpt)
-          .trim()
-          .split(/\r\n|\n|\r/)
-          .slice(1)
-          .join('')
-          .replace(/\s{2,}/g, '')
-          .trim();
-
-        return {
-          ...data,
-          date,
-          time,
-          excerpt: contents,
-          path: postPath
-        } as IPost;
-      })
-    );
-
-    // date sort
-    posts.sort((a, b) => {
-      return new Date(`${b.date} ${b.time}`).getTime() - new Date(`${a.date} ${a.time}`).getTime();
-    });
-
-    await generatePages(pageSize, paths.length, index);
-
-    return { posts, rewrites };
+    await fs.access(filePath, fs.constants.F_OK);
+    return true;
   } catch {
-    await generatePages(pageSize);
-    return { posts: [], rewrites };
+    return false;
   }
+};
+
+const generateRandomString = (length: number) => {
+  const charset = '0123456789abcdef';
+  let randomCode = '';
+
+  for (let i = 0; i < length; i++) {
+    const randomIndex = Math.floor(Math.random() * charset.length);
+    randomCode += charset[randomIndex];
+  }
+
+  return randomCode;
+};
+
+const generateBirthtime = async (path: string) => {
+  const stats = await fs.stat(path);
+  const date = new Date(stats.birthtime);
+  return `${date.toLocaleDateString()} ${date.toLocaleTimeString()}`;
 };

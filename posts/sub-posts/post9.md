@@ -1,8 +1,9 @@
 ---
 title: 文章 9 - 图片 demo
-date: 2023/10/10 10:00:00
-outline: [2, 3]
-tags: 
+datetime: '2023/10/10 10:00:00'
+permalink: posts/0e1cd7
+outline: deep
+tags:
   - 子文章
 ---
 

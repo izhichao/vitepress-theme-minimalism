@@ -1,8 +1,9 @@
 ---
 title: 文章 2
-date: 2023/10/02 10:00:00
-outline: [2, 3]
-tags: 
+datetime: '2023/10/02 10:00:00'
+permalink: posts/1e9071
+outline: deep
+tags:
   - 文章
 ---
 
