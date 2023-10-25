@@ -16,8 +16,8 @@ Based on the VitePress default theme extends the leading page, posts list page, 
 - [x] Tabs
 - [x] Permalink
 - [x] Summary `<!--more-->`
+- [x] Pin
 - [x] Zoom Images
-- [ ] Pin
 - [x] ~~Comments~~
 
 ## Home Page
@@ -28,7 +28,7 @@ Based on the VitePress default theme extends the leading page, posts list page, 
 
 ![](https://img.erpweb.eu.org/imgs/2023/10/4ec9a01282ed2c05.png)
 
-2. Leading page as homepage (refer to [Demo 2](https://izhichao.github.io/vitepress-theme-minimalism))
+2. Leading page as homepage (refer to [Demo2](https://izhichao.github.io/vitepress-theme-minimalism))
 
 ![](https://img.erpweb.eu.org/imgs/2023/10/5ba99dc0cf4e3e04.png)
 
