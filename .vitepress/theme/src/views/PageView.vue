@@ -18,13 +18,27 @@
 
       <div class="pagination">
         <a
+          class="pagination__link pagination__arrow"
+          :href="withBase(index ? '/index.html' : '/page1.html')"
+          v-if="pageTotal > pageMax"
+        >
+          &lt;&lt;
+        </a>
+        <a
           class="pagination__link"
-          v-for="page in pageTotal"
+          v-for="page in pages"
           :key="page"
           :href="withBase(page === 1 && index ? '/index.html' : `/page${page}.html`)"
           :class="{ 'pagination__link--active': pageCurrent === page }"
         >
           {{ page }}
+        </a>
+        <a
+          class="pagination__link pagination__arrow"
+          :href="withBase(`/page${pageTotal}.html`)"
+          v-if="pageTotal > pageMax"
+        >
+          &gt;&gt;
         </a>
       </div>
     </div>
@@ -32,14 +46,50 @@
 </template>
 
 <script lang="ts" setup>
+import { ref } from 'vue';
 import { withBase } from 'vitepress';
 import { IPost } from '../types';
-defineProps({
+const props = defineProps({
   posts: Array<IPost>,
   pageCurrent: Number,
   pageTotal: Number,
+  pageMax: Number,
   index: Boolean
 });
+
+const pages = ref(findNeighbors(props.pageCurrent, props.pageTotal, props.pageMax));
+
+function findNeighbors(target: number, total: number, max: number) {
+  const result: number[] = [];
+  const half = Math.floor(max / 2);
+
+  if (total < max) {
+    for (let i = 1; i <= total; i++) {
+      result.push(i);
+    }
+    return result;
+  }
+
+  for (let i = target - half; i <= target + half; i++) {
+    if (i >= 1 && i <= total) {
+      result.push(i);
+    }
+  }
+
+  while (result.length < max) {
+    const first = result[0];
+    const last = result[result.length - 1];
+
+    if (first > 1) {
+      result.unshift(first - 1);
+    } else if (last < total) {
+      result.push(last + 1);
+    } else {
+      break;
+    }
+  }
+  return result;
+}
 </script>
 
 <style lang="less" scoped>
@@ -102,7 +152,7 @@ defineProps({
     display: inline-block;
     width: 36px;
     height: 36px;
-    line-height: 36px;
+    line-height: 34px;
     text-align: center;
     border: 1px var(--vp-c-divider) solid;
     margin: 0 0.2rem;
@@ -116,6 +166,10 @@ defineProps({
       background: var(--vp-c-text-1);
       border: 1px solid var(--vp-c-text-1);
     }
+  }
+
+  &__arrow {
+    line-height: 32px;
   }
 }
 

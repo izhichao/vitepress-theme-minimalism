@@ -2,10 +2,7 @@ import { defineConfigWithTheme } from 'vitepress';
 import { ThemeConfig } from './theme/src/types';
 import { getPosts } from './theme/src/utils/getPosts';
 
-const pageSize = 7;
-const folder = 'posts';
-const index = false;
-const { posts, rewrites } = await getPosts(pageSize, folder, index);
+const { posts, rewrites } = await getPosts({ pageSize: 7, pageMax: 5, folder: 'posts', index: false });
 export default defineConfigWithTheme<ThemeConfig>({
   title: '只抄',
   titleTemplate: 'VitePress Theme Minimalism',
@@ -51,5 +48,5 @@ export default defineConfigWithTheme<ThemeConfig>({
     theme: 'dark-plus',
     lineNumbers: true
   },
-  srcExclude: ['README.md','README_zh-CN.md']
+  srcExclude: ['README.md', 'README_zh-CN.md']
 });

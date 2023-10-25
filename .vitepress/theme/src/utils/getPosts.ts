@@ -5,7 +5,7 @@ import fg from 'fast-glob';
 import removeMd from 'remove-markdown';
 import { IPost } from '../types';
 
-export const getPosts = async (pageSize = 10, folder = 'posts', index = true) => {
+export const getPosts = async ({ pageSize = 10, pageMax = 5, index = true, folder = 'posts' }) => {
   const rewrites = {};
   try {
     const paths = await fg(`${folder}/**/*.md`);
@@ -68,17 +68,17 @@ export const getPosts = async (pageSize = 10, folder = 'posts', index = true) =>
       return new Date(b.datetime).getTime() - new Date(a.datetime).getTime();
     });
 
-    await generatePages(pageSize, paths.length, index);
+    await generatePages({ pageSize, pageMax, total: paths.length, index });
 
     return { posts, rewrites };
   } catch (e) {
     console.log(e);
-    await generatePages(pageSize);
+    await generatePages({});
     return { posts: [], rewrites };
   }
 };
 
-const generatePages = async (pageSize: number, total = 0, index = true) => {
+const generatePages = async ({ pageSize = 10, pageMax = 5, index = true, total = 0 }) => {
   let pageTotal = Math.ceil(total / pageSize);
   const indexPath = path.resolve('index.md');
   const indexExist = await fileExists(indexPath);
@@ -94,7 +94,7 @@ import { useData } from "vitepress";
 const { theme } = useData();
 const posts = theme.value.posts.slice(${pageSize * (i - 1)},${pageSize * i})
 </script>
-<Page :posts="posts" :pageCurrent="${i}" :pageTotal="${pageTotal}" :index="${index}" />
+<Page :posts="posts" :pageCurrent="${i}" :pageTotal="${pageTotal}" :pageMax="${pageMax}" :index="${index}" />
 `.trim();
       const pagePath = i === 1 && index ? indexPath : path.resolve(`page${i}.md`);
       await fs.writeFile(pagePath, page);
