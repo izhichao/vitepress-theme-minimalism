@@ -1,0 +1,1 @@
+import{_ as a,o as e,c as t,Q as o}from"./chunks/framework.eaa68e93.js";const p=JSON.parse('{"title":"文档 1","description":"","frontmatter":{},"headers":[],"relativePath":"docs/doc1.md","filePath":"docs/doc1.md"}'),r={name:"docs/doc1.md"},c=o("",3),s=[c];function d(n,_,i,h,l,m){return e(),t("div",null,s)}const u=a(r,[["render",d]]);export{p as __pageData,u as default};
