@@ -5,7 +5,7 @@ import fg from 'fast-glob';
 import removeMd from 'remove-markdown';
 import { IPost } from '../types';
 
-export const getPosts = async ({ pageSize = 10, pageMax = 5, index = true, folder = 'posts' }) => {
+export const getPosts = async ({ pageSize = 10, pageMax = 5, index = true, pinned = '[置顶]', folder = 'posts' }) => {
   const rewrites = {};
   try {
     const paths = await fg(`${folder}/**/*.md`);
@@ -45,7 +45,7 @@ export const getPosts = async ({ pageSize = 10, pageMax = 5, index = true, folde
           .trim();
 
         if (tag) {
-          const matters = ['title', 'datetime', 'permalink', 'outline', 'tags'];
+          const matters = ['title', 'datetime', 'permalink', 'outline', 'pinned', 'tags'];
           const newMarkdown = matter.stringify(content, data, {
             // @ts-ignore
             sortKeys: (a: string, b: string) => matters.indexOf(a) - matters.indexOf(b)
@@ -65,10 +65,18 @@ export const getPosts = async ({ pageSize = 10, pageMax = 5, index = true, folde
 
     // date sort
     posts.sort((a, b) => {
-      return new Date(b.datetime).getTime() - new Date(a.datetime).getTime();
+      const timeDiff = new Date(b.datetime).getTime() - new Date(a.datetime).getTime();
+
+      if (a.pinned && !b.pinned) {
+        return -1;
+      } else if (!a.pinned && b.pinned) {
+        return 1;
+      } else {
+        return timeDiff;
+      }
     });
 
-    await generatePages({ pageSize, pageMax, total: paths.length, index });
+    await generatePages({ pageSize, pageMax, index, pinned, total: paths.length });
 
     return { posts, rewrites };
   } catch (e) {
@@ -78,7 +86,7 @@ export const getPosts = async ({ pageSize = 10, pageMax = 5, index = true, folde
   }
 };
 
-const generatePages = async ({ pageSize = 10, pageMax = 5, index = true, total = 0 }) => {
+const generatePages = async ({ pageSize = 10, pageMax = 5, index = true, pinned = '[置顶]', total = 0 }) => {
   let pageTotal = Math.ceil(total / pageSize);
   const indexPath = path.resolve('index.md');
   const indexExist = await fileExists(indexPath);
@@ -94,7 +102,7 @@ import { useData } from "vitepress";
 const { theme } = useData();
 const posts = theme.value.posts.slice(${pageSize * (i - 1)},${pageSize * i})
 </script>
-<Page :posts="posts" :pageCurrent="${i}" :pageTotal="${pageTotal}" :pageMax="${pageMax}" :index="${index}" />
+<Page :posts="posts" :pageCurrent="${i}" :pageTotal="${pageTotal}" :pageMax="${pageMax}" :index="${index}" :pinned="'${pinned}'"/>
 `.trim();
       const pagePath = i === 1 && index ? indexPath : path.resolve(`page${i}.md`);
       await fs.writeFile(pagePath, page);

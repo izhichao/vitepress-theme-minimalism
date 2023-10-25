@@ -4,6 +4,7 @@
       <div v-for="post in posts" :key="post.title" class="post">
         <div>
           <div class="post__title">
+            <span class="post__pinned" v-if="post.pinned">{{ pinned }}</span>
             <a :href="withBase(post.path)">{{ post.title }}</a>
           </div>
           <div class="post__excerpt" v-if="post.excerpt">{{ post.excerpt }}</div>
@@ -54,6 +55,7 @@ const props = defineProps({
   pageCurrent: Number,
   pageTotal: Number,
   pageMax: Number,
+  pinned: String,
   index: Boolean
 });
 
@@ -97,6 +99,11 @@ function findNeighbors(target: number, total: number, max: number) {
 .post {
   padding: 14px 0;
   border-bottom: 1px dashed #ccc;
+
+  &__pinned {
+    color: crimson;
+    margin-right: 4px;
+  }
 
   &__title {
     font-size: 1.125rem;
