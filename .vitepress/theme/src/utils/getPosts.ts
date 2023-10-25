@@ -32,8 +32,7 @@ export const getPosts = async ({ pageSize = 10, pageMax = 5, index = true, pinne
         const time = ISOString[1].split('.')[0];
 
         // permalink
-        rewrites[postPath.replaceAll('+', '\\+')] = `${data.permalink}.md`.replaceAll('+', '\\+');
-        const permalink = `/${data.permalink}.html`;
+        rewrites[postPath.replace(/[+()]/g, '\\$&')] = `${data.permalink}.md`.replace(/[+()]/g, '\\$&');
 
         // excerpt
         const contents = removeMd(excerpt)
@@ -58,7 +57,7 @@ export const getPosts = async ({ pageSize = 10, pageMax = 5, index = true, pinne
           date,
           time,
           excerpt: contents,
-          path: permalink
+          path: `/${data.permalink}.html`
         } as IPost;
       })
     );
