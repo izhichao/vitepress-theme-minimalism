@@ -16,14 +16,13 @@ export const getPosts = async ({ pageSize = 10, pageMax = 5, index = true, pinne
           excerpt_separator: '<!-- more -->'
         });
 
-        // no title/date/permalink/outline
+        // no title/date/permalink
         let tag = false;
-        if (!data.title || !data.date || !data.permalink || !data.outline) {
+        if (!data.title || !data.date || !data.permalink) {
           tag = true;
         }
         !data.title && (data.title = path.basename(postPath, path.extname(postPath)));
         !data.datetime && (data.datetime = await generateBirthtime(postPath));
-        !data.outline && (data.outline = 'deep');
         !data.permalink && (data.permalink = 'posts/' + generateRandomString(6));
 
         // date
