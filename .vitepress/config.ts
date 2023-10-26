@@ -2,7 +2,13 @@ import { defineConfigWithTheme } from 'vitepress';
 import { ThemeConfig } from './theme/src/types';
 import { getPosts } from './theme/src/utils/getPosts';
 
-const { posts, rewrites } = await getPosts({ pageSize: 7, pageMax: 5, index: false,pinned: '[置顶]', folder: 'posts' });
+const { posts, rewrites } = await getPosts({
+  pageSize: 7,
+  pageMax: 5,
+  index: false,
+  pinned: '[置顶]',
+  folder: 'posts'
+});
 export default defineConfigWithTheme<ThemeConfig>({
   title: '只抄',
   titleTemplate: 'VitePress Theme Minimalism',
