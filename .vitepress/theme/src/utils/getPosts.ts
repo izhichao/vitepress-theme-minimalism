@@ -16,9 +16,9 @@ export const getPosts = async ({ pageSize = 10, pageMax = 5, index = true, pinne
           excerpt_separator: '<!-- more -->'
         });
 
-        // no title/date/permalink
+        // no title/datetime/permalink
         let tag = false;
-        if (!data.title || !data.date || !data.permalink) {
+        if (!data.title || !data.datetime || !data.permalink) {
           tag = true;
         }
         !data.title && (data.title = path.basename(postPath, path.extname(postPath)));
