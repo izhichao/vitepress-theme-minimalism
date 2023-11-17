@@ -47,8 +47,13 @@ pre::-webkit-scrollbar {
 }
 
 // Footer 链接样式
-.VPFooter a:hover {
-  color: var(--vp-c-brand);
+.VPFooter a {
+  text-decoration: none !important;
+  transition: none !important;
+
+  &:hover {
+    color: var(--vp-c-brand) !important;
+  }
 }
 
 // layout: doc
