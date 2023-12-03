@@ -42,9 +42,7 @@ export default defineConfigWithTheme<ThemeConfig>({
     },
     socialLinks: [{ icon: 'github', link: 'https://github.com/izhichao/vitepress-theme-minimalism' }],
     footer: {
-      message: `友情链接：<a href="https://bwh81.net/aff.php?aff=46644" target="_blank">搬瓦工</a>&nbsp;
-      <a href="https://vps.hosting/?affid=816" target="_blank">V.PS</a>&nbsp;<br />
-      Theme by <a href="https://github.com/izhichao/vitepress-theme-minimalism" target="_blank">Minimalism</a>`,
+      message: 'Theme by <a href="https://github.com/izhichao/vitepress-theme-minimalism" target="_blank">Minimalism</a>',
       copyright: 'Copyright © 2017-2023 <a href="https://github.com/izhichao" target="_blank">只抄</a>'
     },
     search: { provider: 'local' }
