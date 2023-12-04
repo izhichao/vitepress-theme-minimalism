@@ -15,13 +15,15 @@ export default defineConfigWithTheme<ThemeConfig>({
   description: 'VitePress Theme Minimalism',
   base: '/vitepress-theme-minimalism/',
   rewrites,
+  cleanUrls: true,
+  ignoreDeadLinks: true,
   themeConfig: {
     posts,
     logo: '/profile.png',
     outline: { level: 2 },
     nav: [
       { text: 'Home', link: '/' },
-      { text: 'Posts', link: '/page1' },
+      { text: 'Posts', link: '/page-1' },
       { text: 'Docs', link: '/docs/doc1' },
       { text: 'Archives', link: '/pages/archives' },
       { text: 'Tags', link: '/pages/tags' }
@@ -42,8 +44,12 @@ export default defineConfigWithTheme<ThemeConfig>({
     },
     socialLinks: [{ icon: 'github', link: 'https://github.com/izhichao/vitepress-theme-minimalism' }],
     footer: {
-      message: 'Theme by <a href="https://github.com/izhichao/vitepress-theme-minimalism" target="_blank">Minimalism</a>',
-      copyright: 'Copyright © 2017-2023 <a href="https://github.com/izhichao" target="_blank">只抄</a>'
+      message: `友情链接：<a href="https://bwh81.net/aff.php?aff=46644" target="_blank">搬瓦工</a>&nbsp;
+      <a href="https://vps.hosting/?affid=816" target="_blank">V.PS</a>&nbsp;
+      <a href="https://my.racknerd.com/aff.php?aff=6884" target="_blank">RackNerd</a>
+      `,
+      copyright: `Theme by <a href="https://github.com/izhichao/vitepress-theme-minimalism" target="_blank">Minimalism</a><br />
+        Copyright © 2017-2023 <a href="https://github.com/izhichao" target="_blank">只抄</a>`
     },
     search: { provider: 'local' }
   },
