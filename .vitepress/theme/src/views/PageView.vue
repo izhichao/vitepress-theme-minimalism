@@ -20,7 +20,7 @@
       <div class="pagination">
         <a
           class="pagination__link pagination__arrow"
-          :href="withBase(index ? '/index.html' : '/page1.html')"
+          :href="withBase(index ? '/index.html' : '/page-1.html')"
           v-if="pageTotal > pageMax"
         >
           &lt;&lt;
@@ -29,14 +29,14 @@
           class="pagination__link"
           v-for="page in pages"
           :key="page"
-          :href="withBase(page === 1 && index ? '/index.html' : `/page${page}.html`)"
+          :href="withBase(page === 1 && index ? '/index.html' : `/page-${page}.html`)"
           :class="{ 'pagination__link--active': pageCurrent === page }"
         >
           {{ page }}
         </a>
         <a
           class="pagination__link pagination__arrow"
-          :href="withBase(`/page${pageTotal}.html`)"
+          :href="withBase(`/page-${pageTotal}.html`)"
           v-if="pageTotal > pageMax"
         >
           &gt;&gt;

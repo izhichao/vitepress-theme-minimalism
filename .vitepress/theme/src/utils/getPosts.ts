@@ -102,12 +102,12 @@ const posts = theme.value.posts.slice(${pageSize * (i - 1)},${pageSize * i})
 </script>
 <Page :posts="posts" :pageCurrent="${i}" :pageTotal="${pageTotal}" :pageMax="${pageMax}" :index="${index}" :pinned="'${pinned}'"/>
 `.trim();
-      const pagePath = i === 1 && index ? indexPath : path.resolve(`page${i}.md`);
+      const pagePath = i === 1 && index ? indexPath : path.resolve(`page-${i}.md`);
       await fs.writeFile(pagePath, page);
     }
   }
 
-  if ((total < 0 || !index) && !indexExist) {
+  if ((total === 0 || !index) && !indexExist) {
     const page = `
 ---
 layout: page
