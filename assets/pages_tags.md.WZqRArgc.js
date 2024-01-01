@@ -1,1 +1,0 @@
-import{_ as t,o as a,c as e}from"./chunks/framework.j2UpB2vO.js";const d=JSON.parse('{"title":"Tags","description":"","frontmatter":{"title":"Tags","layout":"Tags"},"headers":[],"relativePath":"pages/tags.md","filePath":"pages/tags.md"}'),s={name:"pages/tags.md"};function o(r,c,n,p,g,i){return a(),e("div")}const l=t(s,[["render",o]]);export{d as __pageData,l as default};
