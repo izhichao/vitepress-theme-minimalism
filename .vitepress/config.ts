@@ -49,7 +49,7 @@ export default defineConfigWithTheme<ThemeConfig>({
       <a href="https://my.racknerd.com/aff.php?aff=6884" target="_blank">RackNerd</a>
       `,
       copyright: `Theme by <a href="https://github.com/izhichao/vitepress-theme-minimalism" target="_blank">Minimalism</a><br />
-        Copyright © 2017-2023 <a href="https://github.com/izhichao" target="_blank">只抄</a>`
+        Copyright © 2017-2024 <a href="https://github.com/izhichao" target="_blank">只抄</a>`
     },
     search: { provider: 'local' }
   },
