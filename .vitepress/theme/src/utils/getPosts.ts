@@ -23,7 +23,7 @@ export const getPosts = async ({ pageSize = 10, pageMax = 5, index = true, pinne
         }
         !data.title && (data.title = path.basename(postPath, path.extname(postPath)));
         !data.datetime && (data.datetime = await generateBirthtime(postPath));
-        !data.permalink && (data.permalink = 'posts/' + generateRandomString(6));
+        !data.permalink && (data.permalink = `${folder}/${generateRandomString(6)}`);
 
         // date
         let ISOString = new Date(data.datetime).toISOString().split('T');
