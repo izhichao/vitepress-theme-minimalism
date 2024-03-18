@@ -5,7 +5,7 @@ import fg from 'fast-glob';
 import removeMd from 'remove-markdown';
 import { IPost } from '../types';
 
-export const getPosts = async ({ pageSize = 10, pageMax = 5, index = true, pinned = '[置顶]', folder = 'posts' }) => {
+export const getPosts = async ({ pageSize = 10, index = true, folder = 'posts' }) => {
   const rewrites = {};
   try {
     const paths = await fg(`${folder}/**/*.md`);
@@ -74,7 +74,7 @@ export const getPosts = async ({ pageSize = 10, pageMax = 5, index = true, pinne
       }
     });
 
-    await generatePages({ pageSize, pageMax, index, pinned, total: paths.length });
+    await generatePages({ pageSize, index, total: paths.length });
 
     return { posts, rewrites };
   } catch (e) {
@@ -84,10 +84,10 @@ export const getPosts = async ({ pageSize = 10, pageMax = 5, index = true, pinne
   }
 };
 
-const generatePages = async ({ pageSize = 10, pageMax = 5, index = true, pinned = '[置顶]', total = 0 }) => {
-  let pageTotal = Math.ceil(total / pageSize);
+const generatePages = async ({ pageSize = 10, index = true, total = 0 }) => {
   const indexPath = path.resolve('index.md');
   const indexExist = await fileExists(indexPath);
+  let pageTotal = Math.ceil(total / pageSize);
 
   if (total > 0) {
     for (let i = 1; i <= pageTotal; i++) {
@@ -98,9 +98,11 @@ layout: page
 <script setup>
 import { useData } from "vitepress";
 const { theme } = useData();
-const posts = theme.value.posts.slice(${pageSize * (i - 1)},${pageSize * i})
+const page = theme.value.page;
+const posts = theme.value.posts.slice(${pageSize * (i - 1)},${pageSize * i});
 </script>
-<Page :posts="posts" :pageCurrent="${i}" :pageTotal="${pageTotal}" :pageMax="${pageMax}" :index="${index}" :pinned="'${pinned}'"/>
+
+<Page :posts="posts" :pageConfig="page" :pageCurrent="${i}" :pageTotal="${pageTotal}" :index="${index}" :pageMax="page.max ? page.max : 5" :pinned="page.pinned ? page.pinned : '[置顶]'"/>
 `.trim();
       const pagePath = i === 1 && index ? indexPath : path.resolve(`page-${i}.md`);
       await fs.writeFile(pagePath, page);

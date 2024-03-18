@@ -12,6 +12,11 @@ export interface IPost {
   path: string;
 }
 
+export interface IPage {
+  max?: number;
+  pinned?: string;
+}
+
 export interface ITag {
   [key: string]: IPost[];
 }
@@ -23,4 +28,5 @@ export interface IArchive {
 
 export interface ThemeConfig extends DefaultTheme.Config {
   posts: IPost[];
+  page?: IPage;
 }
