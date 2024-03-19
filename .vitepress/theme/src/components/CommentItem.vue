@@ -1,5 +1,5 @@
 <template>
-  <Waline v-if="serverURL" :serverURL="serverURL" :path="path" />
+  <Waline v-if="serverURL" :serverURL="serverURL" :path="path" :dark="dark" />
 </template>
 
 <script setup>
@@ -10,5 +10,6 @@ import '@waline/client/style';
 
 const { theme } = useData();
 const serverURL = theme.value?.comment?.serverURL || '';
+const dark = 'html[class="dark"]'
 const path = computed(() => useRoute().path);
 </script>
