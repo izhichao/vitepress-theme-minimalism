@@ -18,6 +18,9 @@ export default defineConfigWithTheme<ThemeConfig>({
       max: 5,
       pinned: '[置顶]'
     },
+    comment: {
+      serverURL: 'https://waline.vercel.app'
+    },
     logo: '/profile.png',
     outline: { level: 2 },
     nav: [
