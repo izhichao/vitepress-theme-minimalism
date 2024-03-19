@@ -13,3 +13,14 @@ const serverURL = theme.value?.comment?.serverURL || '';
 const dark = 'html[class="dark"]'
 const path = computed(() => useRoute().path);
 </script>
+
+<style scoped>
+[data-waline] {
+  --waline-theme-color: var(--vp-c-brand);
+  --waline-active-color: var(--vp-c-brand);
+}
+
+:deep(.wl-emoji-popup, .wl-gif-popup) {
+  z-index: 99;
+}
+</style>
