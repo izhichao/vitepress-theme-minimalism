@@ -2,10 +2,11 @@ import DefaultTheme from 'vitepress/theme';
 import mediumZoom from 'medium-zoom';
 import { onMounted, watch, nextTick } from 'vue';
 import { useRoute } from 'vitepress';
-import { registerComponents } from './src';
+import { registerComponents, MinimalismLayout } from './src';
 
 export default {
   ...DefaultTheme,
+  Layout: MinimalismLayout,
   enhanceApp({ app }) {
     registerComponents(app);
   },

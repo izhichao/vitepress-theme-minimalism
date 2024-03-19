@@ -17,6 +17,10 @@ export interface IPage {
   pinned?: string;
 }
 
+export interface ICommnet {
+  serverURL?: string;
+}
+
 export interface ITag {
   [key: string]: IPost[];
 }
@@ -29,4 +33,5 @@ export interface IArchive {
 export interface ThemeConfig extends DefaultTheme.Config {
   posts: IPost[];
   page?: IPage;
+  comment?: ICommnet;
 }
