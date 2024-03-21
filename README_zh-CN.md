@@ -18,7 +18,7 @@
 - [x] 文章摘要 `<!--more-->`
 - [x] 文章置顶
 - [x] 图片缩放
-- [x] ~~评论~~
+- [x] 评论（基于 Waline）
 
 ## 主页
 
@@ -39,3 +39,4 @@
 - [Allow images to be zoomed in on click](https://github.com/vuejs/vitepress/issues/854) - 参考图片缩放
 - [vitepress-blog-demo](https://github.com/brc-dd/vitepress-blog-demo) - 参考文章读取与摘要功能
 - [vitepress-blog-pure](https://github.com/airene/vitepress-blog-pure) - 参考博客样式
+- [waline](https://github.com/walinejs/waline) - 评论系统

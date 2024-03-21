@@ -18,7 +18,7 @@ Based on the VitePress default theme extends the leading page, posts list page, 
 - [x] Summary `<!--more-->`
 - [x] Pin
 - [x] Zoom Images
-- [x] ~~Comments~~
+- [x] Comments (with Waline)
 
 ## Home Page
 
@@ -39,3 +39,4 @@ Based on the VitePress default theme extends the leading page, posts list page, 
 - [Allow images to be zoomed in on click](https://github.com/vuejs/vitepress/issues/854) - reference to zoom images
 - [vitepress-blog-demo](https://github.com/brc-dd/vitepress-blog-demo) - reference to post reading and summary function
 - [vitepress-blog-pure](https://github.com/airene/vitepress-blog-pure) - reference blog style
+- [waline](https://github.com/walinejs/waline) - comment system
