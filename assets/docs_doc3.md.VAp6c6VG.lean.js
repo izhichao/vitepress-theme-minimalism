@@ -1,0 +1,1 @@
+import{_ as a,o as e,c as t,ag as o}from"./chunks/framework.DHVJg2a1.js";const p=JSON.parse('{"title":"文档 3","description":"","frontmatter":{},"headers":[],"relativePath":"docs/doc3.md","filePath":"docs/doc3.md"}'),r={name:"docs/doc3.md"},c=o("",3),s=[c];function d(n,_,i,h,l,m){return e(),t("div",null,s)}const u=a(r,[["render",d]]);export{p as __pageData,u as default};
