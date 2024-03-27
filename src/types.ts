@@ -9,6 +9,7 @@ import {
   WalineTeXRenderer,
   WalineSearchOptions
 } from '@waline/client';
+
 export interface IPost {
   title: string;
   datetime: string;
