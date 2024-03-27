@@ -1,6 +1,6 @@
 import { defineConfigWithTheme } from 'vitepress';
-import { ThemeConfig } from './theme/src/types';
-import { getPosts } from './theme/src/utils/getPosts';
+import type { ThemeConfig } from '../src/types';
+import { getPosts } from '../src/utils/getPosts';
 
 const { posts, rewrites } = await getPosts({ pageSize: 7, index: false, folder: 'posts' });
 
