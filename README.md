@@ -26,11 +26,11 @@ Based on the VitePress default theme extends the leading page, posts list page, 
 
 1. Posts list as homepage (refer to [Demo1](https://zhichao.org) )
 
-![](https://img.erpweb.eu.org/imgs/2023/10/4ec9a01282ed2c05.png)
+![vitepress-theme-minimalism1](https://minio.zhichao.org/images/vitepress-theme-minimalism1.webp)
 
 2. Leading page as homepage (refer to [Demo2](https://izhichao.github.io/vitepress-theme-minimalism))
 
-![](https://img.erpweb.eu.org/imgs/2023/10/5ba99dc0cf4e3e04.png)
+![vitepress-theme-minimalism2](https://minio.zhichao.org/images/vitepress-theme-minimalism2.webp)
 
 ## Thanks to
 
