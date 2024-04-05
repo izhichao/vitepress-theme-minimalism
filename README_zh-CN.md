@@ -26,11 +26,11 @@
 
 1. 文章列表作为主页（参考[演示站1](https://izhichao.github.io/vitepress-theme-minimalism)）
 
-![](https://img.erpweb.eu.org/imgs/2023/10/4ec9a01282ed2c05.png)
+![vitepress-theme-minimalism1](https://minio.zhichao.org/images/vitepress-theme-minimalism1.webp)
 
 2. 引导页作为主页（参考[演示站2](https://izhichao.github.io/vitepress-theme-minimalism)）
 
-![](https://img.erpweb.eu.org/imgs/2023/10/5ba99dc0cf4e3e04.png)
+![vitepress-theme-minimalism2](https://minio.zhichao.org/images/vitepress-theme-minimalism2.webp)
 
 ## 感谢
 
