@@ -19,11 +19,11 @@
 
       <div class="pagination">
         <a
-          class="pagination__link pagination__arrow"
+          class="pagination__link iconfont"
           :href="withBase(index ? '/index.html' : '/page-1.html')"
           v-if="pageTotal > pageMax"
         >
-          &lt;&lt;
+          &#xe602;
         </a>
         <a
           class="pagination__link"
@@ -34,12 +34,8 @@
         >
           {{ page }}
         </a>
-        <a
-          class="pagination__link pagination__arrow"
-          :href="withBase(`/page-${pageTotal}.html`)"
-          v-if="pageTotal > pageMax"
-        >
-          &gt;&gt;
+        <a class="pagination__link iconfont" :href="withBase(`/page-${pageTotal}.html`)" v-if="pageTotal > pageMax">
+          &#xe601;
         </a>
       </div>
     </div>
@@ -173,10 +169,6 @@ function findNeighbors(target: number, total: number, max: number) {
       background: var(--vp-c-text-1);
       border: 1px solid var(--vp-c-text-1);
     }
-  }
-
-  &__arrow {
-    line-height: 32px;
   }
 }
 
