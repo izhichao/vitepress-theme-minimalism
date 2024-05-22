@@ -13,6 +13,14 @@ export const groupByTags = (posts: IPost[]) => {
       });
     }
   });
+
+  // sort by datetime
+  for (let i in data) {
+    data[i].sort((a, b) => {
+      return new Date(b.datetime).getTime() - new Date(a.datetime).getTime();
+    });
+  }
+
   return data;
 };
 
@@ -34,6 +42,13 @@ export const groupByYears = (posts: IPost[]) => {
   const sortedData: IArchive[] = [];
   years.forEach((year) => {
     sortedData.push({ year, data: data[year] });
+  });
+
+  // sort by datetime
+  sortedData.forEach((item) => {
+    item.data.sort((a, b) => {
+      return new Date(b.datetime).getTime() - new Date(a.datetime).getTime();
+    });
   });
   return sortedData;
 };
