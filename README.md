@@ -1,42 +1,42 @@
-**English | [简体中文](/README_zh-CN.md)**
+**简体中文 | [English](/README_en-US.md)**
 
-# A minimalist VitePress blog theme
+# 一个极简的 VitePress 博客主题
 
-## Introduction
+## 介绍
 
-Based on the VitePress default theme extends the leading page, posts list page, post page, archives page, tabs page, can be fully compatible with the default theme's document mode (with Sidebar).
+基于 VitePress 默认主题拓展了引导页、文章列表页、文章页、归档页、标签页，可以与默认主题的文档模式 (带 Sidebar) 完全兼容。
 
-[Demo1](https://zhichao.org) | [Demo2](https://izhichao.github.io/vitepress-theme-minimalism) | [Documentation](https://zhichao.org/posts/minimalism.html#vitepress-theme-minimalism-documentation)
+[演示站1](https://zhichao.org) | [演示站2](https://izhichao.github.io/vitepress-theme-minimalism) | [使用文档](https://zhichao.org/posts/minimalism.html)
 
-## Feature 
+## 功能
 
-> Checked means completed, unchecked means in progress, crossed out means the feature will not be available.
+> 打勾代表已完成，未打勾代表正在完成，划去代表不会有该功能
 
-- [x] Archives
-- [x] Tabs
-- [x] Permalink
-- [x] Summary `<!--more-->`
-- [x] Pin
-- [x] Zoom Images
-- [x] Comments (with Waline)
+- [x] 归档页
+- [x] 标签页
+- [x] 永久链接
+- [x] 文章摘要 `<!--more-->`
+- [x] 文章置顶
+- [x] 图片缩放
+- [x] 评论（基于 Waline）
 
-## Home Page
+## 主页
 
-> The theme provides two homepage modes
+>  主题提供了两种主页模式
 
-1. Posts list as homepage (refer to [Demo1](https://zhichao.org) )
+1. 文章列表作为主页（参考[演示站1](https://izhichao.github.io/vitepress-theme-minimalism)）
 
 ![vitepress-theme-minimalism1](https://minio.zhichao.org/images/vitepress-theme-minimalism1.webp)
 
-2. Leading page as homepage (refer to [Demo2](https://izhichao.github.io/vitepress-theme-minimalism))
+2. 引导页作为主页（参考[演示站2](https://izhichao.github.io/vitepress-theme-minimalism)）
 
 ![vitepress-theme-minimalism2](https://minio.zhichao.org/images/vitepress-theme-minimalism2.webp)
 
-## Thanks to
+## 感谢
 
-- [vuepress](https://github.com/vuejs/vitepress) - inherit default theme
-- [vitepress](https://github.com/vuejs/vuepress) - reference to homepage style
-- [Allow images to be zoomed in on click](https://github.com/vuejs/vitepress/issues/854) - reference to zoom images
-- [vitepress-blog-demo](https://github.com/brc-dd/vitepress-blog-demo) - reference to post reading and summary function
-- [vitepress-blog-pure](https://github.com/airene/vitepress-blog-pure) - reference blog style
-- [waline](https://github.com/walinejs/waline) - comment system
+- [vitepress](https://github.com/vuejs/vitepress) - 继承默认主题
+- [vuepress](https://github.com/vuejs/vuepress) - 参考首页样式
+- [Allow images to be zoomed in on click](https://github.com/vuejs/vitepress/issues/854) - 参考图片缩放
+- [vitepress-blog-demo](https://github.com/brc-dd/vitepress-blog-demo) - 参考文章读取与摘要功能
+- [vitepress-blog-pure](https://github.com/airene/vitepress-blog-pure) - 参考博客样式
+- [waline](https://github.com/walinejs/waline) - 评论系统
