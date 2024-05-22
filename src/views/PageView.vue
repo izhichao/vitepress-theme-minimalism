@@ -10,7 +10,9 @@
           <div class="post__excerpt" v-if="post.excerpt">{{ post.excerpt }}</div>
         </div>
         <div>
+          <span class="iconfont">&#xe7eb;</span>
           <span class="post__date">{{ post.date }}</span>
+          <span class="iconfont" v-if="post.tags">&#xe869;</span>
           <a :href="withBase(`/pages/tags.html?tag=${item}`)" v-for="item in post.tags" class="post__tag">
             {{ item }}
           </a>
@@ -23,7 +25,7 @@
           :href="withBase(index ? '/index.html' : '/page-1.html')"
           v-if="pageTotal > pageMax"
         >
-          &#xe602;
+          &#xe86a;
         </a>
         <a
           class="pagination__link"
@@ -35,7 +37,7 @@
           {{ page }}
         </a>
         <a class="pagination__link iconfont" :href="withBase(`/page-${pageTotal}.html`)" v-if="pageTotal > pageMax">
-          &#xe601;
+          &#xe86b;
         </a>
       </div>
     </div>
@@ -92,6 +94,11 @@ function findNeighbors(target: number, total: number, max: number) {
 
 <style lang="less" scoped>
 @import '../styles/page.less';
+.iconfont {
+  vertical-align: bottom;
+  margin-right: 6px;
+}
+
 .post {
   padding: 14px 0;
   border-bottom: 1px dashed #ccc;
@@ -125,19 +132,27 @@ function findNeighbors(target: number, total: number, max: number) {
     text-overflow: ellipsis;
   }
 
-  &__date,
-  &__tag {
+  &__date {
     font-size: 14px;
+    margin-right: 10px;
   }
 
   &__tag {
+    font-size: 14px;
     display: inline-block;
     padding: 0 8px;
     border-radius: 2px;
-    margin-left: 10px;
     background-color: var(--vp-c-bg-alt);
     color: var(--vp-c-text-1);
     transition: 0.4s;
+
+    &:nth-of-type(1) {
+      margin-left: 2px;
+    }
+
+    &:not(:nth-of-type(1)) {
+      margin-left: 8px;
+    }
 
     &:hover {
       color: var(--vp-c-brand);
