@@ -13,7 +13,7 @@
           <span class="iconfont">&#xe7eb;</span>
           <span class="post__date">{{ post.date }}</span>
           <span class="iconfont" v-if="post.tags">&#xe869;</span>
-          <a :href="withBase(`/pages/tags.html?tag=${item}`)" v-for="item in post.tags" class="post__tag">
+          <a :href="withBase(`/pages/tags.html?tag=${item.replaceAll('&','%26')}`)" v-for="item in post.tags" class="post__tag">
             {{ item }}
           </a>
         </div>
