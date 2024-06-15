@@ -115,6 +115,7 @@ function findNeighbors(target: number, total: number, max: number) {
 
   &__title {
     font-size: 1.125rem;
+    font-weight: 500;
     margin-bottom: 8px;
 
     a {
@@ -195,7 +196,6 @@ function findNeighbors(target: number, total: number, max: number) {
   .post {
     &__title {
       font-size: 1.0625rem;
-      font-weight: 500;
       display: -webkit-box;
       -webkit-box-orient: vertical;
       -webkit-line-clamp: 2;
