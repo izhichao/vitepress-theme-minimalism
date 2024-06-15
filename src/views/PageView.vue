@@ -13,7 +13,11 @@
           <span class="iconfont">&#xe7eb;</span>
           <span class="post__date">{{ post.date }}</span>
           <span class="iconfont" v-if="post.tags">&#xe869;</span>
-          <a :href="withBase(`/pages/tags.html?tag=${item.replaceAll('&','%26')}`)" v-for="item in post.tags" class="post__tag">
+          <a
+            :href="withBase(`/pages/tags.html?tag=${item.replaceAll('&', '%26')}`)"
+            v-for="item in post.tags"
+            class="post__tag"
+          >
             {{ item }}
           </a>
         </div>
@@ -95,6 +99,7 @@ function findNeighbors(target: number, total: number, max: number) {
 <style lang="less" scoped>
 @import '../styles/page.less';
 .iconfont {
+  font-size: 14px;
   vertical-align: bottom;
   margin-right: 6px;
 }
@@ -110,7 +115,6 @@ function findNeighbors(target: number, total: number, max: number) {
 
   &__title {
     font-size: 1.125rem;
-    font-weight: 500;
     margin-bottom: 8px;
 
     a {
@@ -191,6 +195,7 @@ function findNeighbors(target: number, total: number, max: number) {
   .post {
     &__title {
       font-size: 1.0625rem;
+      font-weight: 500;
       display: -webkit-box;
       -webkit-box-orient: vertical;
       -webkit-line-clamp: 2;
