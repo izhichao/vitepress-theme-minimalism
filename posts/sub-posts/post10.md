@@ -1,6 +1,6 @@
 ---
 title: 文章 10 - 摘要 demo
-datetime: '2023/10/10 10:00:00'
+datetime: '2023-10-10 10:00:00'
 permalink: /posts/36fb63
 outline: deep
 tags:
