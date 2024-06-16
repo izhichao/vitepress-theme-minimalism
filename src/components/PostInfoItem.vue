@@ -24,7 +24,7 @@ import { withBase } from 'vitepress';
 .info {
   display: flex;
   justify-content: space-between;
-  padding-bottom: 14px;
+  margin-bottom: 16px;
 }
 
 .date {
