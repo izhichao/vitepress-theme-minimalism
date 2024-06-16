@@ -5,7 +5,14 @@ import fg from 'fast-glob';
 import removeMd from 'remove-markdown';
 import { IPost } from '../types';
 
-export const getPosts = async ({ pageSize = 10, index = true, folder = 'posts', autoExcerpt = 0 }) => {
+export const getPosts = async ({
+  pageSize = 10,
+  index = true,
+  folder = 'posts',
+  autoExcerpt = 0,
+  prev = false,
+  next = false
+}) => {
   const rewrites = {};
   try {
     const paths = await fg(`${folder}/**/*.md`);
@@ -16,29 +23,8 @@ export const getPosts = async ({ pageSize = 10, index = true, folder = 'posts', 
           excerpt_separator: '<!-- more -->'
         });
 
-        // no title/datetime/permalink
-        let tag = false;
-        if (!data.title || !data.datetime || !data.permalink) {
-          tag = true;
-        }
-        !data.title && (data.title = path.basename(postPath, path.extname(postPath)));
-        !data.datetime && (data.datetime = await generateBirthtime(postPath));
-        !data.permalink && (data.permalink = `${folder}/${generateRandomString(6)}`);
-
-        // permalink
-        rewrites[postPath.replace(/[+()]/g, '\\$&')] = `${data.permalink}.md`.replace(/[+()]/g, '\\$&');
-
         // excerpt
         const contents = data.description || removeMdPro(excerpt) || removeMdPro(content).slice(0, autoExcerpt);
-
-        if (tag) {
-          const matters = ['title', 'datetime', 'permalink', 'outline', 'pinned', 'tags'];
-          const newMarkdown = matter.stringify(content, data, {
-            // @ts-ignore
-            sortKeys: (a: string, b: string) => matters.indexOf(a) - matters.indexOf(b)
-          });
-          await fs.writeFile(postPath, newMarkdown, 'utf8');
-        }
 
         return {
           ...data,
@@ -55,6 +41,67 @@ export const getPosts = async ({ pageSize = 10, index = true, folder = 'posts', 
       const timeDiff = new Date(b.datetime).getTime() - new Date(a.datetime).getTime();
 
       return timeDiff;
+    });
+
+    // frontMatter
+    paths.map(async (postPath) => {
+      const { data, content } = matter.read(postPath);
+
+      let postIndex = 0;
+      for (let index in posts) {
+        if (posts[index].permalink === data.permalink) {
+          postIndex = +index;
+        }
+      }
+
+      let flag = false;
+      if (!data.title) {
+        data.title = path.basename(postPath, path.extname(postPath));
+        flag = true;
+      }
+
+      if (!data.datetime) {
+        data.datetime = await generateBirthtime(postPath);
+        flag = true;
+      }
+
+      if (!data.permalink) {
+        data.permalink = `/${folder}/${generateRandomString(6)}`;
+        flag = true;
+      }
+
+      const prevPost = posts[postIndex - 1];
+      const prevDiff = data?.prev?.text !== prevPost?.title || data?.prev?.link !== prevPost?.permalink;
+      const nextPost = posts[postIndex + 1];
+      const nextDiff = data?.next?.text !== nextPost?.title || data?.next?.link !== nextPost?.permalink;
+
+      if (prev && prevPost && prevDiff) {
+        data.prev = { text: prevPost.title, link: prevPost.permalink };
+        flag = true;
+      } else if (!prevPost) {
+        delete data.prev;
+        flag = true;
+      }
+
+      if (next && nextPost && nextDiff) {
+        data.next = { text: nextPost.title, link: nextPost.permalink };
+        flag = true;
+      } else if (!nextPost) {
+        delete data.next;
+        flag = true;
+      }
+
+      if (flag) {
+        const matters = ['title', 'datetime', 'permalink', 'outline', 'pinned', 'tags', 'prev', 'next'];
+        const newMarkdown = matter.stringify(content, data, {
+          // @ts-ignore
+          sortKeys: (a: string, b: string) => matters.indexOf(a) - matters.indexOf(b)
+        });
+        await fs.writeFile(postPath, newMarkdown, 'utf8');
+      }
+
+      // rewrites
+      rewrites[postPath.replace(/[+()]/g, '\\$&')] = `${data.permalink}.md`.slice(1).replace(/[+()]/g, '\\$&');
     });
 
     await generatePages({ pageSize, index, total: paths.length });

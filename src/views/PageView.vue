@@ -5,7 +5,7 @@
         <div>
           <div class="post__title">
             <span class="post__pinned" v-if="post.pinned">{{ pinned }}</span>
-            <a :href="withBase('/' + post.permalink)">{{ post.title }}</a>
+            <a :href="withBase(post.permalink)">{{ post.title }}</a>
           </div>
           <div class="post__excerpt" v-if="post.excerpt">{{ post.excerpt }}</div>
         </div>
