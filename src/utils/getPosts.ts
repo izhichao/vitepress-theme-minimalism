@@ -25,11 +25,6 @@ export const getPosts = async ({ pageSize = 10, index = true, folder = 'posts' }
         !data.datetime && (data.datetime = await generateBirthtime(postPath));
         !data.permalink && (data.permalink = `${folder}/${generateRandomString(6)}`);
 
-        // date
-        let ISOString = new Date(data.datetime).toISOString().split('T');
-        const date = ISOString[0];
-        const time = ISOString[1].split('.')[0];
-
         // permalink
         rewrites[postPath.replace(/[+()]/g, '\\$&')] = `${data.permalink}.md`.replace(/[+()]/g, '\\$&');
 
@@ -53,8 +48,6 @@ export const getPosts = async ({ pageSize = 10, index = true, folder = 'posts' }
 
         return {
           ...data,
-          date,
-          time,
           excerpt: contents,
           path: `/${data.permalink}.html`
         } as IPost;
@@ -143,6 +136,10 @@ const generateRandomString = (length: number) => {
 
 const generateBirthtime = async (path: string) => {
   const stats = await fs.stat(path);
-  const date = new Date(stats.birthtime);
-  return `${date.toLocaleDateString()} ${date.toLocaleTimeString()}`;
+
+  let ISOString = stats.birthtime.toISOString().split('T');
+  const date = ISOString[0];
+  const time = ISOString[1].split('.')[0];
+
+  return `${date} ${time}`;
 };

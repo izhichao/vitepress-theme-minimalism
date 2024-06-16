@@ -27,7 +27,7 @@ export const groupByTags = (posts: IPost[]) => {
 export const groupByYears = (posts: IPost[]) => {
   const data: ITag = {};
   posts.forEach((post) => {
-    const year = new Date(post.date).getFullYear();
+    const year = new Date(post.datetime).getFullYear();
     if (year) {
       if (!data[year]) {
         data[year] = [];

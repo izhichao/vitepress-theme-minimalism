@@ -11,7 +11,7 @@
         </div>
         <div>
           <span class="iconfont">&#xe7eb;</span>
-          <span class="post__date">{{ post.date }}</span>
+          <span class="post__date">{{ post.datetime.split(' ')[0] }}</span>
           <span class="iconfont" v-if="post.tags">&#xe869;</span>
           <a
             :href="withBase(`/pages/tags.html?tag=${item.replaceAll('&', '%26')}`)"
