@@ -61,7 +61,8 @@ export const getPosts = async ({
       }
 
       if (!data.datetime) {
-        data.datetime = await generateBirthtime(postPath);
+        const stats = await fs.stat(postPath);
+        data.datetime = formatDate(stats.birthtime);
         flag = true;
       }
 
@@ -182,12 +183,17 @@ const generateRandomString = (length: number) => {
   return randomCode;
 };
 
-const generateBirthtime = async (path: string) => {
-  const stats = await fs.stat(path);
+const formatDate = (date: string | Date) => {
+  if (typeof date === 'string') {
+    date = new Date(date);
+  }
 
-  let ISOString = stats.birthtime.toISOString().split('T');
-  const date = ISOString[0];
-  const time = ISOString[1].split('.')[0];
+  let year = date.getFullYear();
+  let month = String(date.getMonth() + 1).padStart(2, '0');
+  let day = String(date.getDate()).padStart(2, '0');
+  let hours = String(date.getHours()).padStart(2, '0');
+  let minutes = String(date.getMinutes()).padStart(2, '0');
+  let seconds = String(date.getSeconds()).padStart(2, '0');
 
-  return `${date} ${time}`;
+  return `${year}-${month}-${day} ${hours}:${minutes}:${seconds}`;
 };

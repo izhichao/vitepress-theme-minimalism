@@ -1,6 +1,6 @@
 ---
 title: 文章 9 - 图片 demo
-datetime: '2023/10/10 10:00:00'
+datetime: '2023-10-10 10:00:00'
 permalink: /posts/0e1cd7
 outline: deep
 tags:
