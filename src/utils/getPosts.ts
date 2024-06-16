@@ -49,15 +49,12 @@ export const getPosts = async ({ pageSize = 10, index = true, folder = 'posts', 
 
     // date sort
     posts.sort((a, b) => {
+      if (a.pinned !== b.pinned) {
+        return a.pinned ? -1 : 1;
+      }
       const timeDiff = new Date(b.datetime).getTime() - new Date(a.datetime).getTime();
 
-      if (a.pinned && !b.pinned) {
-        return -1;
-      } else if (!a.pinned && b.pinned) {
-        return 1;
-      } else {
-        return timeDiff;
-      }
+      return timeDiff;
     });
 
     await generatePages({ pageSize, index, total: paths.length });
