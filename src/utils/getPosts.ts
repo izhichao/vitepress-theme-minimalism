@@ -5,7 +5,7 @@ import fg from 'fast-glob';
 import removeMd from 'remove-markdown';
 import { IPost } from '../types';
 
-export const getPosts = async ({ pageSize = 10, index = true, folder = 'posts' }) => {
+export const getPosts = async ({ pageSize = 10, index = true, folder = 'posts', autoExcerpt = 0 }) => {
   const rewrites = {};
   try {
     const paths = await fg(`${folder}/**/*.md`);
@@ -29,13 +29,7 @@ export const getPosts = async ({ pageSize = 10, index = true, folder = 'posts' }
         rewrites[postPath.replace(/[+()]/g, '\\$&')] = `${data.permalink}.md`.replace(/[+()]/g, '\\$&');
 
         // excerpt
-        const contents = removeMd(excerpt)
-          .trim()
-          .split(/\r\n|\n|\r/)
-          .slice(1)
-          .join('')
-          .replace(/\s{2,}/g, '')
-          .trim();
+        const contents = data.description || removeMdPro(excerpt) || removeMdPro(content).slice(0, autoExcerpt);
 
         if (tag) {
           const matters = ['title', 'datetime', 'permalink', 'outline', 'pinned', 'tags'];
@@ -111,6 +105,17 @@ layout: page
     `.trim();
     await fs.writeFile(indexPath, page);
   }
+};
+
+const removeMdPro = (str: string) => {
+  return removeMd(str.replace(/```.*?```/gs, ''))
+    .trim()
+    .split(/\r\n|\n|\r/)
+    .slice(1)
+    .join(' ')
+    .replace(/\s{2,}/g, ' ')
+    .replace(/:::.*?:::/gs, '')
+    .trim();
 };
 
 const fileExists = async (filePath: string) => {
