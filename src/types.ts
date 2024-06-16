@@ -17,7 +17,6 @@ export interface IPost {
   pinned: boolean;
   tags?: string[];
   excerpt: string;
-  path: string;
 }
 
 export interface IPage {

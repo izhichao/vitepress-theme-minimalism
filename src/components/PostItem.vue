@@ -1,5 +1,5 @@
 <template>
-  <a :href="withBase(post.path)" v-for="post in posts" :key="post.title" class="post">
+  <a :href="withBase('/' + post.permalink)" v-for="post in posts" :key="post.title" class="post">
     <div class="post__title">
       {{ post.title }}
     </div>
