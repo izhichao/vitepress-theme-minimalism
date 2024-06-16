@@ -1,7 +1,7 @@
 ---
 title: 文章 6
 datetime: '2023/10/06 10:00:00'
-permalink: posts/c10a87
+permalink: /posts/c10a87
 outline: deep
 tags:
   - 子文章

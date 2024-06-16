@@ -1,7 +1,7 @@
 ---
 title: 文章 1
 datetime: '2023/10/01 10:00:00'
-permalink: posts/cd49a3
+permalink: /posts/cd49a3
 outline: deep
 pinned: true
 tags:
