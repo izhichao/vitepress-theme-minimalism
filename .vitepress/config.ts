@@ -19,7 +19,8 @@ export default defineConfigWithTheme<ThemeConfig>({
       pinned: '[置顶]'
     },
     comment: {
-      serverURL: 'https://domain.com'
+      serverURL: 'https://domain.com',
+      reaction: true
     },
     logo: '/profile.png',
     outline: { level: 2 },

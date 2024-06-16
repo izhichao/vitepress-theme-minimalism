@@ -1,7 +1,9 @@
 <template>
   <Layout>
-    <template #doc-after>
+    <template #doc-footer-before>
       <PostInfoItem />
+    </template>
+    <template #doc-after>
       <CommentItem />
     </template>
   </Layout>
