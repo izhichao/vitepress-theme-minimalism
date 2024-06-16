@@ -45,6 +45,18 @@ export interface ICommnet {
   reaction?: boolean | string[];
 }
 
+export interface IAdsense {
+  client?: String;
+  'page-top'?: String;
+  'page-bottom'?: String;
+  'sidebar-nav-before'?: String;
+  'sidebar-nav-after'?: String;
+  'aside-outline-before'?: String;
+  'aside-outline-after'?: String;
+  'doc-before'?: String;
+  'doc-after'?: String;
+}
+
 export interface ITag {
   [key: string]: IPost[];
 }
@@ -58,4 +70,5 @@ export interface ThemeConfig extends DefaultTheme.Config {
   posts: IPost[];
   page?: IPage;
   comment?: ICommnet;
+  adsense?: IAdsense;
 }
