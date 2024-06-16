@@ -3,7 +3,9 @@
     <div class="post__title">
       {{ post.title }}
     </div>
-    <div class="post__date">{{ date === 'full' ? post.date : post.date.slice(5) }}</div>
+    <div class="post__date">
+      {{ date === 'full' ? post.datetime.split(' ')[0] : post.datetime.split(' ')[0].slice(5) }}
+    </div>
   </a>
 </template>
 

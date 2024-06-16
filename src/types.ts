@@ -17,8 +17,6 @@ export interface IPost {
   pinned: boolean;
   tags?: string[];
   excerpt: string;
-  date: string;
-  time: string;
   path: string;
 }
 
