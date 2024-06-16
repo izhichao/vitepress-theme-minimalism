@@ -42,8 +42,7 @@ export const getPosts = async ({ pageSize = 10, index = true, folder = 'posts', 
 
         return {
           ...data,
-          excerpt: contents,
-          path: `/${data.permalink}.html`
+          excerpt: contents
         } as IPost;
       })
     );
