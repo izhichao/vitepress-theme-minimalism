@@ -5,6 +5,12 @@ permalink: /posts/d4bad3
 outline: deep
 tags:
   - 文章
+prev:
+  text: 文章 4
+  link: /posts/73a18e
+next:
+  text: 文章 2
+  link: /posts/1e9071
 ---
 
 # 文章 3

@@ -5,6 +5,12 @@ permalink: /posts/0e1cd7
 outline: deep
 tags:
   - 子文章
+prev:
+  text: 文章 10 - 摘要 demo
+  link: /posts/36fb63
+next:
+  text: 文章 8
+  link: /posts/2fc5ad
 ---
 
 # 文章 9
