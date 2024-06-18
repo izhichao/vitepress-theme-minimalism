@@ -103,7 +103,7 @@ export const getPosts = async ({
         const nextPost = posts[postIndex + 1];
         const nextDiff = data?.next?.text !== nextPost?.title || data?.next?.link !== nextPost?.permalink;
 
-        if (prev && prevPost && prevDiff) {
+        if (prev && prevPost && prevDiff && !prevPost.pinned) {
           data.prev = { text: prevPost.title, link: prevPost.permalink };
           flag = true;
         } else if (!prevPost || prevPost.pinned) {
