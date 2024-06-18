@@ -23,6 +23,36 @@ export const getPosts = async ({
           excerpt_separator: '<!-- more -->'
         });
 
+        let flag = false;
+        if (!data.title) {
+          data.title = path.basename(postPath, path.extname(postPath));
+          flag = true;
+        }
+
+        if (!data.datetime) {
+          const stats = await fs.stat(postPath);
+          data.datetime = formatDate(stats.birthtime);
+          flag = true;
+        }
+
+        if (!data.permalink) {
+          data.permalink = `/${folder}/${generateRandomString(6)}`;
+          flag = true;
+        }
+
+        // avoid null / undefined
+        if (data.tags) {
+          data.tags.forEach((tag, index) => {
+            data.tags[index] = tag + '';
+          });
+        }
+
+        // writeMarkdown
+        flag && (await writeMd(postPath, content, data));
+
+        // rewrites
+        rewrites[postPath.replace(/[+()]/g, '\\$&')] = `${data.permalink}.md`.slice(1).replace(/[+()]/g, '\\$&');
+
         // excerpt
         const contents = data.description || removeMdPro(excerpt) || removeMdPro(content).slice(0, autoExcerpt);
 
@@ -33,7 +63,7 @@ export const getPosts = async ({
       })
     );
 
-    // date sort
+    // sort posts by datetime
     posts.sort((a, b) => {
       if (a.pinned !== b.pinned) {
         return a.pinned ? -1 : 1;
@@ -43,67 +73,55 @@ export const getPosts = async ({
       return timeDiff;
     });
 
-    // frontMatter
-    paths.map(async (postPath) => {
-      const { data, content } = matter.read(postPath);
+    // prev / next
+    if (prev || next) {
+      paths.map(async (postPath) => {
+        const { data, content } = matter.read(postPath);
 
-      let postIndex = 0;
-      for (let index in posts) {
-        if (posts[index].permalink === data.permalink) {
-          postIndex = +index;
+        // remove pinned posts prev / next
+        if (data.pinned) {
+          if (data.prev || data.next) {
+            delete data.prev;
+            delete data.next;
+            await writeMd(postPath, content, data);
+            return;
+          } else {
+            return;
+          }
         }
-      }
 
-      let flag = false;
-      if (!data.title) {
-        data.title = path.basename(postPath, path.extname(postPath));
-        flag = true;
-      }
+        let postIndex = 0;
+        for (let index in posts) {
+          if (posts[index].permalink === data.permalink) {
+            postIndex = +index;
+          }
+        }
 
-      if (!data.datetime) {
-        const stats = await fs.stat(postPath);
-        data.datetime = formatDate(stats.birthtime);
-        flag = true;
-      }
+        let flag = true;
+        const prevPost = posts[postIndex - 1];
+        const prevDiff = data?.prev?.text !== prevPost?.title || data?.prev?.link !== prevPost?.permalink;
+        const nextPost = posts[postIndex + 1];
+        const nextDiff = data?.next?.text !== nextPost?.title || data?.next?.link !== nextPost?.permalink;
 
-      if (!data.permalink) {
-        data.permalink = `/${folder}/${generateRandomString(6)}`;
-        flag = true;
-      }
+        if (prev && prevPost && prevDiff) {
+          data.prev = { text: prevPost.title, link: prevPost.permalink };
+          flag = true;
+        } else if (!prevPost || prevPost.pinned) {
+          delete data.prev;
+          flag = true;
+        }
 
-      const prevPost = posts[postIndex - 1];
-      const prevDiff = data?.prev?.text !== prevPost?.title || data?.prev?.link !== prevPost?.permalink;
-      const nextPost = posts[postIndex + 1];
-      const nextDiff = data?.next?.text !== nextPost?.title || data?.next?.link !== nextPost?.permalink;
+        if (next && nextPost && nextDiff) {
+          data.next = { text: nextPost.title, link: nextPost.permalink };
+          flag = true;
+        } else if (!nextPost) {
+          delete data.next;
+          flag = true;
+        }
 
-      if (prev && prevPost && prevDiff) {
-        data.prev = { text: prevPost.title, link: prevPost.permalink };
-        flag = true;
-      } else if (!prevPost) {
-        delete data.prev;
-        flag = true;
-      }
-
-      if (next && nextPost && nextDiff) {
-        data.next = { text: nextPost.title, link: nextPost.permalink };
-        flag = true;
-      } else if (!nextPost) {
-        delete data.next;
-        flag = true;
-      }
-
-      if (flag) {
-        const matters = ['title', 'datetime', 'permalink', 'outline', 'pinned', 'tags', 'prev', 'next'];
-        const newMarkdown = matter.stringify(content, data, {
-          // @ts-ignore
-          sortKeys: (a: string, b: string) => matters.indexOf(a) - matters.indexOf(b)
-        });
-        await fs.writeFile(postPath, newMarkdown, 'utf8');
-      }
-
-      // rewrites
-      rewrites[postPath.replace(/[+()]/g, '\\$&')] = `${data.permalink}.md`.slice(1).replace(/[+()]/g, '\\$&');
-    });
+        flag && (await writeMd(postPath, content, data));
+      });
+    }
 
     await generatePages({ pageSize, index, total: paths.length });
 
@@ -149,6 +167,15 @@ layout: page
     `.trim();
     await fs.writeFile(indexPath, page);
   }
+};
+
+const writeMd = async (path: string, content: string, data: { [key: string]: any }) => {
+  const matters = ['title', 'datetime', 'permalink', 'outline', 'pinned', 'tags', 'prev', 'next'];
+  const newMarkdown = matter.stringify(content, data, {
+    // @ts-ignore
+    sortKeys: (a: string, b: string) => matters.indexOf(a) - matters.indexOf(b)
+  });
+  await fs.writeFile(path, newMarkdown, 'utf8');
 };
 
 const removeMdPro = (str: string) => {
