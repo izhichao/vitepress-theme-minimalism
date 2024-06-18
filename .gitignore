@@ -4,3 +4,6 @@ node_modules
 /*.md
 !README.md
 !README_en-US.md
+!about.md
+!tags.md
+!archives.md
