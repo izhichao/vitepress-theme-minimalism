@@ -9,7 +9,9 @@
       </div>
       <div class="tag__header">{{ selectTag }}</div>
 
-      <PostItem :posts="posts[selectTag]" date="full"></PostItem>
+      <ul>
+        <PostLiteItem :posts="posts[selectTag]" date="full"></PostLiteItem>
+      </ul>
     </div>
   </div>
 </template>
@@ -18,7 +20,7 @@
 import { computed, ref } from 'vue';
 import { useData } from 'vitepress';
 import { groupByTags } from '../utils/groupPosts';
-import PostItem from '../components/PostItem.vue';
+import PostLiteItem from '../components/PostLiteItem.vue';
 
 const { theme } = useData();
 const posts = computed(() => groupByTags(theme.value.posts));

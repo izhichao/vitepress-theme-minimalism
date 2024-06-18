@@ -3,7 +3,9 @@
     <div class="main-content">
       <div v-for="item in posts">
         <div class="archive">{{ item.year }}</div>
-        <PostItem :posts="item.data"></PostItem>
+        <ul>
+          <PostLiteItem :posts="item.data"></PostLiteItem>
+        </ul>
       </div>
     </div>
   </div>
@@ -13,7 +15,7 @@
 import { useData } from 'vitepress';
 import { computed } from 'vue';
 import { groupByYears } from '../utils/groupPosts';
-import PostItem from '../components/PostItem.vue';
+import PostLiteItem from '../components/PostLiteItem.vue';
 const { theme } = useData();
 const posts = computed(() => groupByYears(theme.value.posts));
 </script>
