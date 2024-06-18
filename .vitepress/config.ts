@@ -2,13 +2,19 @@ import { defineConfigWithTheme } from 'vitepress';
 import type { ThemeConfig } from '../src/types';
 import { getPosts } from '../src/utils/getPosts';
 
-const { posts, rewrites } = await getPosts({ pageSize: 7, index: false, folder: 'posts' });
+const { posts, rewrites } = await getPosts({
+  pageSize: 7,
+  index: false,
+  folder: 'posts',
+  autoExcerpt: 50,
+  prev: true,
+  next: true
+});
 
 export default defineConfigWithTheme<ThemeConfig>({
   title: '只抄',
   titleTemplate: 'VitePress Theme Minimalism',
   description: 'VitePress Theme Minimalism',
-  base: '/vitepress-theme-minimalism/',
   rewrites,
   cleanUrls: true,
   ignoreDeadLinks: true,
@@ -28,8 +34,8 @@ export default defineConfigWithTheme<ThemeConfig>({
       { text: 'Home', link: '/' },
       { text: 'Posts', link: '/page-1' },
       { text: 'Docs', link: '/docs/doc1' },
-      { text: 'Archives', link: '/pages/archives' },
-      { text: 'Tags', link: '/pages/tags' }
+      { text: 'Archives', link: '/archives' },
+      { text: 'Tags', link: '/tags' }
     ],
     sidebar: {
       '/docs': [
@@ -60,5 +66,5 @@ export default defineConfigWithTheme<ThemeConfig>({
     theme: 'dark-plus',
     lineNumbers: true
   },
-  srcExclude: ['README.md', 'README_zh-CN.md']
+  srcExclude: ['README.md', 'README_en-US.md']
 });

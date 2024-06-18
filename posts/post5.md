@@ -6,6 +6,9 @@ outline: deep
 pinned: true
 tags:
   - 文章
+next:
+  text: 文章 1
+  link: /posts/cd49a3
 ---
 
 # 文章 5
