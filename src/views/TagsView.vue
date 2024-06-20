@@ -1,9 +1,11 @@
 <template>
   <div class="main-container">
     <div class="main-content">
-      <AdItem v-if="ads?.pageTop" :ads="ads?.pageTop" />
-      <AdsenseItem v-if="adsense?.pageTop" :client="adsense.client" :slot="adsense?.pageTop" />
-
+      <AdItem
+        v-if="ads?.pageTop || adsense?.pageTop"
+        :ads="ads?.pageTop"
+        :adsense="{ client: adsense?.client, slot: adsense?.pageTop }"
+      />
       <div class="tag">
         <span @click="handleTag(tag)" v-for="tag in orderedTags" :key="tag" class="tag__item">
           {{ tag }}
@@ -11,13 +13,14 @@
         </span>
       </div>
       <div class="tag__header">{{ selectTag }}</div>
-
       <ul>
         <PostLiteItem :posts="posts[selectTag]" date="full"></PostLiteItem>
       </ul>
-
-      <AdItem v-if="ads?.pageBottom" :ads="ads?.pageBottom" />
-      <AdsenseItem v-if="adsense?.pageBottom" :client="adsense.client" :slot="adsense?.pageBottom" />
+      <AdItem
+        v-if="ads?.pageBottom || adsense?.pageBottom"
+        :ads="ads?.pageBottom"
+        :adsense="{ client: adsense?.client, slot: adsense?.pageBottom }"
+      />
     </div>
   </div>
 </template>
@@ -27,7 +30,6 @@ import { computed, ref } from 'vue';
 import { useData } from 'vitepress';
 import { groupByTags } from '../utils/groupPosts';
 import PostLiteItem from '../components/PostLiteItem.vue';
-import AdsenseItem from '../components/AdsenseItem.vue';
 import AdItem from '../components/AdItem.vue';
 
 const { theme } = useData();

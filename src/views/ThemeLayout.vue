@@ -1,28 +1,46 @@
 <template>
   <Layout>
     <template #sidebar-nav-before>
-      <AdItem v-if="ads?.sidebarNavBefore" :ads="ads?.sidebarNavBefore" />
-      <AdsenseItem v-if="adsense?.sidebarNavBefore" :client="adsense.client" :slot="adsense?.sidebarNavBefore" />
+      <AdItem
+        v-if="ads?.sidebarNavBefore || adsense?.sidebarNavBefore"
+        :ads="ads?.sidebarNavBefore"
+        :adsense="{ client: adsense?.client, slot: adsense?.sidebarNavBefore }"
+      />
     </template>
     <template #sidebar-nav-after>
-      <AdItem v-if="ads?.sidebarNavAfter" :ads="ads?.sidebarNavAfter" />
-      <AdsenseItem v-if="adsense?.sidebarNavAfter" :client="adsense.client" :slot="adsense?.sidebarNavAfter" />
+      <AdItem
+        v-if="ads?.sidebarNavAfter || adsense?.sidebarNavAfter"
+        :ads="ads?.sidebarNavAfter"
+        :adsense="{ client: adsense?.client, slot: adsense?.sidebarNavAfter }"
+      />
     </template>
     <template #aside-outline-before>
-      <AdItem v-if="ads?.asideOutlineAfter" :ads="ads?.asideOutlineAfter" />
-      <AdsenseItem v-if="adsense?.asideOutlineAfter" :client="adsense.client" :slot="adsense?.asideOutlineAfter" />
+      <AdItem
+        v-if="ads?.asideOutlineBefore || adsense?.asideOutlineBefore"
+        :ads="ads?.asideOutlineBefore"
+        :adsense="{ client: adsense?.client, slot: adsense?.asideOutlineBefore }"
+      />
     </template>
     <template #aside-outline-after>
-      <AdItem v-if="ads?.asideOutlineAfter" :ads="ads?.asideOutlineAfter" />
-      <AdsenseItem v-if="adsense?.asideOutlineAfter" :client="adsense.client" :slot="adsense?.asideOutlineAfter" />
+      <AdItem
+        v-if="ads?.asideOutlineAfter || adsense?.asideOutlineAfter"
+        :ads="ads?.asideOutlineAfter"
+        :adsense="{ client: adsense?.client, slot: adsense?.asideOutlineAfter }"
+      />
     </template>
     <template #doc-before>
-      <AdItem v-if="ads?.docBefore" :ads="ads?.docBefore" />
-      <AdsenseItem v-if="adsense?.docBefore" :client="adsense.client" :slot="adsense?.docBefore" />
+      <AdItem
+        v-if="ads?.docBefore || adsense?.docBefore"
+        :ads="ads?.docBefore"
+        :adsense="{ client: adsense?.client, slot: adsense?.docBefore }"
+      />
     </template>
     <template #doc-after>
-      <AdItem v-if="ads?.docAfter" :ads="ads?.docAfter" />
-      <AdsenseItem v-if="adsense?.docAfter" :client="adsense.client" :slot="adsense?.docAfter" />
+      <AdItem
+        v-if="ads?.docAfter || adsense?.docAfter"
+        :ads="ads?.docAfter"
+        :adsense="{ client: adsense?.client, slot: adsense?.docAfter }"
+      />
       <CommentItem />
     </template>
     <template #doc-footer-before><PostInfoItem /></template>
@@ -33,7 +51,6 @@
 import DefaultTheme from 'vitepress/theme';
 import CommentItem from '../components/CommentItem.vue';
 import PostInfoItem from '../components/PostInfoItem.vue';
-import AdsenseItem from '../components/AdsenseItem.vue';
 import AdItem from '../components/AdItem.vue';
 import { useData } from 'vitepress';
 const { Layout } = DefaultTheme;
