@@ -1,52 +1,36 @@
 <template>
   <Layout>
     <template #page-top>
-      <AdItem v-if="ads && ads['page-top']" :ads="ads['page-top']" />
-      <AdsenseItem v-if="adsense && adsense['page-top']" :client="adsense.client" :slot="adsense['page-top']" />
+      <AdItem v-if="ads?.pageTop" :ads="ads?.pageTop" />
+      <AdsenseItem v-if="adsense?.pageTop" :client="adsense.client" :slot="adsense?.pageTop" />
     </template>
     <template #page-bottom>
-      <AdItem v-if="ads && ads['page-bottom']" :ads="ads['page-bottom']" />
-      <AdsenseItem v-if="adsense && adsense['page-bottom']" :client="adsense.client" :slot="adsense['page-bottom']" />
+      <AdItem v-if="ads?.pageBottom" :ads="ads?.pageBottom" />
+      <AdsenseItem v-if="adsense?.pageBottom" :client="adsense.client" :slot="adsense?.pageBottom" />
     </template>
     <template #sidebar-nav-before>
-      <AdItem v-if="ads && ads['sidebar-nav-before']" :ads="ads['sidebar-nav-before']" />
-      <AdsenseItem
-        v-if="adsense && adsense['sidebar-nav-before']"
-        :client="adsense.client"
-        :slot="adsense['sidebar-nav-before']"
-      />
+      <AdItem v-if="ads?.sidebarNavBefore" :ads="ads?.sidebarNavBefore" />
+      <AdsenseItem v-if="adsense?.sidebarNavBefore" :client="adsense.client" :slot="adsense?.sidebarNavBefore" />
     </template>
     <template #sidebar-nav-after>
-      <AdItem v-if="ads && ads['sidebar-nav-after']" :ads="ads['sidebar-nav-after']" />
-      <AdsenseItem
-        v-if="adsense && adsense['sidebar-nav-after']"
-        :client="adsense.client"
-        :slot="adsense['sidebar-nav-after']"
-      />
+      <AdItem v-if="ads?.sidebarNavAfter" :ads="ads?.sidebarNavAfter" />
+      <AdsenseItem v-if="adsense?.sidebarNavAfter" :client="adsense.client" :slot="adsense?.sidebarNavAfter" />
     </template>
     <template #aside-outline-before>
-      <AdItem v-if="ads && ads['aside-outline-before']" :ads="ads['aside-outline-before']" />
-      <AdsenseItem
-        v-if="adsense && adsense['aside-outline-before']"
-        :client="adsense.client"
-        :slot="adsense['aside-outline-before']"
-      />
+      <AdItem v-if="ads?.asideOutlineAfter" :ads="ads?.asideOutlineAfter" />
+      <AdsenseItem v-if="adsense?.asideOutlineAfter" :client="adsense.client" :slot="adsense?.asideOutlineAfter" />
     </template>
     <template #aside-outline-after>
-      <AdItem v-if="ads && ads['aside-outline-after']" :ads="ads['aside-outline-after']" />
-      <AdsenseItem
-        v-if="adsense && adsense['aside-outline-after']"
-        :client="adsense.client"
-        :slot="adsense['aside-outline-after']"
-      />
+      <AdItem v-if="ads?.asideOutlineAfter" :ads="ads?.asideOutlineAfter" />
+      <AdsenseItem v-if="adsense?.asideOutlineAfter" :client="adsense.client" :slot="adsense?.asideOutlineAfter" />
     </template>
     <template #doc-before>
-      <AdItem v-if="ads && ads['doc-before']" :ads="ads['doc-before']" />
-      <AdsenseItem v-if="adsense && adsense['doc-before']" :client="adsense.client" :slot="adsense['doc-before']" />
+      <AdItem v-if="ads?.docBefore" :ads="ads?.docBefore" />
+      <AdsenseItem v-if="adsense?.docBefore" :client="adsense.client" :slot="adsense?.docBefore" />
     </template>
     <template #doc-after>
-      <AdItem v-if="ads && ads['doc-after']" :ads="ads['doc-after']" />
-      <AdsenseItem v-if="adsense && adsense['doc-after']" :client="adsense.client" :slot="adsense['doc-after']" />
+      <AdItem v-if="ads?.docAfter" :ads="ads?.docAfter" />
+      <AdsenseItem v-if="adsense?.docAfter" :client="adsense.client" :slot="adsense?.docAfter" />
       <CommentItem />
     </template>
     <template #doc-footer-before><PostInfoItem /></template>

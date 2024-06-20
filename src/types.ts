@@ -52,26 +52,26 @@ export interface IAd {
 }
 
 export interface IAds {
-  'page-top'?: (IAd | IAd[])[];
-  'page-bottom'?: (IAd | IAd[])[];
-  'sidebar-nav-before'?: (IAd | IAd[])[];
-  'sidebar-nav-after'?: (IAd | IAd[])[];
-  'aside-outline-before'?: (IAd | IAd[])[];
-  'aside-outline-after'?: (IAd | IAd[])[];
-  'doc-before'?: (IAd | IAd[])[];
-  'doc-after'?: (IAd | IAd[])[];
+  pageTop?: (IAd | IAd[])[];
+  pageBottom?: (IAd | IAd[])[];
+  sidebarNavBefore?: (IAd | IAd[])[];
+  sidebarNavAfter?: (IAd | IAd[])[];
+  asideOutlineBefore?: (IAd | IAd[])[];
+  asideOutlineAfter?: (IAd | IAd[])[];
+  docBefore?: (IAd | IAd[])[];
+  docAfter?: (IAd | IAd[])[];
 }
 
 export interface IAdsense {
   client?: string;
-  'page-top'?: string;
-  'page-bottom'?: string;
-  'sidebar-nav-before'?: string;
-  'sidebar-nav-after'?: string;
-  'aside-outline-before'?: string;
-  'aside-outline-after'?: string;
-  'doc-before'?: string;
-  'doc-after'?: string;
+  pageTop?: string;
+  pageBottom?: string;
+  sidebarNavBefore?: string;
+  sidebarNavAfter?: string;
+  asideOutlineBefore?: string;
+  asideOutlineAfter?: string;
+  docBefore?: string;
+  docAfter?: string;
 }
 
 export interface ITag {
