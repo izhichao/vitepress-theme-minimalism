@@ -1,6 +1,8 @@
 <template>
   <div class="main-container">
     <div class="main-content">
+      <AdItem v-if="ads?.pageTop" :ads="ads?.pageTop" />
+      <AdsenseItem v-if="adsense?.pageTop" :client="adsense.client" :slot="adsense?.pageTop" />
       <div v-for="post in posts" :key="post.title" class="post">
         <div>
           <div class="post__title">
@@ -44,13 +46,17 @@
           &#xe86b;
         </a>
       </div>
+      <AdItem v-if="ads?.pageBottom" :ads="ads?.pageBottom" />
+      <AdsenseItem v-if="adsense?.pageBottom" :client="adsense.client" :slot="adsense?.pageBottom" />
     </div>
   </div>
 </template>
 
 <script lang="ts" setup>
 import { ref } from 'vue';
-import { withBase } from 'vitepress';
+import { withBase, useData } from 'vitepress';
+import AdsenseItem from '../components/AdsenseItem.vue';
+import AdItem from '../components/AdItem.vue';
 import { IPost } from '../types';
 const props = defineProps({
   posts: Array<IPost>,
@@ -61,6 +67,13 @@ const props = defineProps({
   index: Boolean
 });
 
+// ads
+const { theme } = useData();
+const ads = theme.value.ads;
+const adsense = theme.value.adsense;
+const margin_bottom = ads?.pageBottom || adsense?.pageBottom ? '32px' : '';
+
+// pagination
 const pages = ref(findNeighbors(props.pageCurrent, props.pageTotal, props.pageMax));
 
 function findNeighbors(target: number, total: number, max: number) {
@@ -168,6 +181,7 @@ function findNeighbors(target: number, total: number, max: number) {
 
 .pagination {
   margin-top: 32px;
+  margin-bottom: v-bind(margin_bottom);
   display: flex;
   justify-content: center;
 

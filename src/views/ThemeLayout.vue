@@ -1,13 +1,5 @@
 <template>
   <Layout>
-    <template #page-top>
-      <AdItem v-if="ads?.pageTop" :ads="ads?.pageTop" />
-      <AdsenseItem v-if="adsense?.pageTop" :client="adsense.client" :slot="adsense?.pageTop" />
-    </template>
-    <template #page-bottom>
-      <AdItem v-if="ads?.pageBottom" :ads="ads?.pageBottom" />
-      <AdsenseItem v-if="adsense?.pageBottom" :client="adsense.client" :slot="adsense?.pageBottom" />
-    </template>
     <template #sidebar-nav-before>
       <AdItem v-if="ads?.sidebarNavBefore" :ads="ads?.sidebarNavBefore" />
       <AdsenseItem v-if="adsense?.sidebarNavBefore" :client="adsense.client" :slot="adsense?.sidebarNavBefore" />
