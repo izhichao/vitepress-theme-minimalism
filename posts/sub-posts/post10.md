@@ -5,9 +5,6 @@ permalink: /posts/36fb63
 outline: deep
 tags:
   - 子文章
-prev:
-  text: 文章 1
-  link: /posts/cd49a3
 next:
   text: 文章 9 - 图片 demo
   link: /posts/0e1cd7
