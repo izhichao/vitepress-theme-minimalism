@@ -1,6 +1,6 @@
 <template>
   <div class="amazing" v-if="ads">
-    <a class="amazing__link" :href="item.link || '#'" v-for="item in computedAds">
+    <a class="amazing__link" :href="item.link || '#'" target="_blank" v-for="item in computedAds">
       <img class="amazing__img" :src="item.img" :title="item.title" :alt="item.title" />
     </a>
   </div>
