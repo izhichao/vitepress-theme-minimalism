@@ -2,9 +2,10 @@
   <div class="main-container">
     <div class="main-content">
       <AdItem
-        v-if="ads?.pageTop || adsense?.pageTop"
-        :ads="ads?.pageTop"
-        :adsense="{ client: adsense?.client, slot: adsense?.pageTop }"
+        v-if="ads?.docBefore || adsense?.docBefore"
+        :ads="ads?.docBefore"
+        :adsense="{ client: adsense?.client, slot: adsense?.docBefore }"
+        type="doc"
       />
       <div v-for="post in posts" :key="post.title" class="post">
         <div>
@@ -50,9 +51,10 @@
         </a>
       </div>
       <AdItem
-        v-if="ads?.pageBottom || adsense?.pageBottom"
-        :ads="ads?.pageBottom"
-        :adsense="{ client: adsense?.client, slot: adsense?.pageBottom }"
+        v-if="ads?.docAfter || adsense?.docAfter"
+        :ads="ads?.docAfter"
+        :adsense="{ client: adsense?.client, slot: adsense?.docAfter }"
+        type="doc"
       />
     </div>
   </div>
@@ -76,7 +78,7 @@ const props = defineProps({
 const { theme } = useData();
 const ads = theme.value.ads;
 const adsense = theme.value.adsense;
-const margin_bottom = ads?.pageBottom || adsense?.pageBottom ? '32px' : '';
+const margin_bottom = ads?.docAfter || adsense?.docAfter ? '32px' : '';
 
 // pagination
 const pages = ref(findNeighbors(props.pageCurrent as number, props.pageTotal, props.pageMax));

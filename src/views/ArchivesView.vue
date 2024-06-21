@@ -2,9 +2,10 @@
   <div class="main-container">
     <div class="main-content">
       <AdItem
-        v-if="ads?.pageTop || adsense?.pageTop"
-        :ads="ads?.pageTop"
-        :adsense="{ client: adsense?.client, slot: adsense?.pageTop }"
+        v-if="ads?.docBefore || adsense?.docBefore"
+        :ads="ads?.docBefore"
+        :adsense="{ client: adsense?.client, slot: adsense?.docBefore }"
+        type="doc"
       />
       <div v-for="item in posts">
         <div class="archive">{{ item.year }}</div>
@@ -13,9 +14,10 @@
         </ul>
       </div>
       <AdItem
-        v-if="ads?.pageBottom || adsense?.pageBottom"
-        :ads="ads?.pageBottom"
-        :adsense="{ client: adsense?.client, slot: adsense?.pageBottom }"
+        v-if="ads?.docAfter || adsense?.docAfter"
+        :ads="ads?.docAfter"
+        :adsense="{ client: adsense?.client, slot: adsense?.docAfter }"
+        type="doc"
       />
     </div>
   </div>

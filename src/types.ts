@@ -52,8 +52,6 @@ export interface IAd {
 }
 
 export interface IAds {
-  pageTop?: (IAd | IAd[])[];
-  pageBottom?: (IAd | IAd[])[];
   sidebarNavBefore?: (IAd | IAd[])[];
   sidebarNavAfter?: (IAd | IAd[])[];
   asideOutlineBefore?: (IAd | IAd[])[];
@@ -64,8 +62,6 @@ export interface IAds {
 
 export interface IAdsense {
   client?: string;
-  pageTop?: string;
-  pageBottom?: string;
   sidebarNavBefore?: string;
   sidebarNavAfter?: string;
   asideOutlineBefore?: string;
