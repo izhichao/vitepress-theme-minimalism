@@ -5,6 +5,7 @@
         v-if="ads?.sidebarNavBefore || adsense?.sidebarNavBefore"
         :ads="ads?.sidebarNavBefore"
         :adsense="{ client: adsense?.client, slot: adsense?.sidebarNavBefore }"
+        type="sidebar"
       />
     </template>
     <template #sidebar-nav-after>
@@ -12,6 +13,7 @@
         v-if="ads?.sidebarNavAfter || adsense?.sidebarNavAfter"
         :ads="ads?.sidebarNavAfter"
         :adsense="{ client: adsense?.client, slot: adsense?.sidebarNavAfter }"
+        type="sidebar"
       />
     </template>
     <template #aside-outline-before>
@@ -19,6 +21,7 @@
         v-if="ads?.asideOutlineBefore || adsense?.asideOutlineBefore"
         :ads="ads?.asideOutlineBefore"
         :adsense="{ client: adsense?.client, slot: adsense?.asideOutlineBefore }"
+        type="aside"
       />
     </template>
     <template #aside-outline-after>
@@ -26,6 +29,7 @@
         v-if="ads?.asideOutlineAfter || adsense?.asideOutlineAfter"
         :ads="ads?.asideOutlineAfter"
         :adsense="{ client: adsense?.client, slot: adsense?.asideOutlineAfter }"
+        type="aside"
       />
     </template>
     <template #doc-before>
@@ -33,6 +37,7 @@
         v-if="ads?.docBefore || adsense?.docBefore"
         :ads="ads?.docBefore"
         :adsense="{ client: adsense?.client, slot: adsense?.docBefore }"
+        type="doc"
       />
     </template>
     <template #doc-after>
@@ -40,6 +45,7 @@
         v-if="ads?.docAfter || adsense?.docAfter"
         :ads="ads?.docAfter"
         :adsense="{ client: adsense?.client, slot: adsense?.docAfter }"
+        type="doc"
       />
       <CommentItem />
     </template>

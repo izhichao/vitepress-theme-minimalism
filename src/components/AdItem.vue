@@ -22,7 +22,8 @@ import { IAd } from '../types';
 
 const props = defineProps({
   ads: Array<IAd | IAd[]>,
-  adsense: Object as PropType<{ client: string; slot: string }>
+  adsense: Object as PropType<{ client: string; slot: string }>,
+  type: String as PropType<'sidebar' | 'aside' | 'doc'>
 });
 
 // ads
@@ -49,10 +50,27 @@ onMounted(() => {
     console.log(e);
   }
 });
+
+let padding = '0';
+
+if (props.type === 'aside') {
+  padding = '.5rem 1rem';
+} else if (props.type === 'sidebar') {
+  padding = '.5rem .5rem 0';
+} else if (props.type === 'doc') {
+  padding = '1rem 0';
+}
 </script>
 
 <style lang="less" scoped>
 .amazing {
+  padding: v-bind(padding);
+
+  &__link {
+    display: flex;
+    justify-content: center;
+  }
+
   &__img {
     width: 100%;
   }
