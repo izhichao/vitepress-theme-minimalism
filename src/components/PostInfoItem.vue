@@ -6,7 +6,7 @@
     </div>
     <div class="tags">
       <a
-        :href="withBase(`/pages/tags.html?tag=${item.replaceAll('&', '%26')}`)"
+        :href="withBase(`/tags.html??tag=${item.replaceAll('&', '%26')}`)"
         v-for="item in $frontmatter.tags"
         class="tag"
       >

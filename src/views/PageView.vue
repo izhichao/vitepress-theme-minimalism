@@ -20,7 +20,7 @@
           <span class="post__date">{{ post.datetime.split(' ')[0] }}</span>
           <span class="iconfont" v-if="post.tags">&#xe869;</span>
           <a
-            :href="withBase(`/pages/tags.html?tag=${item.replaceAll('&', '%26')}`)"
+            :href="withBase(`/tags.html??tag=${item.replaceAll('&', '%26')}`)"
             v-for="item in post.tags"
             class="post__tag"
           >
