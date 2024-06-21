@@ -52,13 +52,17 @@ onMounted(() => {
 });
 
 let padding = '0';
+let margin = '0';
 
 if (props.type === 'aside') {
   padding = '.5rem 1rem';
+  margin = '0';
 } else if (props.type === 'sidebar') {
-  padding = '.5rem .5rem 0';
+  padding = '.5rem 0 0';
+  margin = '0';
 } else if (props.type === 'doc') {
   padding = '1rem 0';
+  margin = '0 -24px';
 }
 </script>
 
@@ -73,6 +77,12 @@ if (props.type === 'aside') {
 
   &__img {
     width: 100%;
+  }
+}
+
+@media (max-width: 768px) {
+  .amazing {
+    margin: v-bind(margin);
   }
 }
 </style>

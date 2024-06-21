@@ -1,6 +1,6 @@
 <template>
-  <div class="main-container">
-    <div class="main-content">
+  <div class="ZCContainer">
+    <div class="ZCContent">
       <AdItem
         v-if="ads?.docBefore || adsense?.docBefore"
         :ads="ads?.docBefore"
