@@ -2,10 +2,14 @@ import fs from 'fs/promises';
 import path from 'path';
 import matter from 'gray-matter';
 import fg from 'fast-glob';
-import removeMd from 'remove-markdown';
 import { IPost } from '../types';
+import { generatePages } from '../utils/generatePages';
+import { generateString } from '../utils/generateString';
+import { removeMdPro } from '../utils/removeMdPro';
+import { writeMd } from '../utils/writeMd';
+import { formatDate } from '../utils/formatDate';
 
-export const getPosts = async ({
+export const usePosts = async ({
   pageSize = 10,
   index = true,
   folder = 'posts',
@@ -36,7 +40,7 @@ export const getPosts = async ({
         }
 
         if (!data.permalink) {
-          data.permalink = `/${folder}/${generateRandomString(6)}`;
+          data.permalink = `/${folder}/${generateString(6)}`;
           flag = true;
         }
 
@@ -54,7 +58,7 @@ export const getPosts = async ({
         rewrites[postPath.replace(/[+()]/g, '\\$&')] = `${data.permalink}.md`.slice(1).replace(/[+()]/g, '\\$&');
 
         // excerpt
-        const contents = data.description || removeMdPro(excerpt) || removeMdPro(content).slice(0, autoExcerpt);
+        const contents = data.description || removeMdPro(excerpt + '') || removeMdPro(content).slice(0, autoExcerpt);
 
         return {
           ...data,
@@ -131,96 +135,4 @@ export const getPosts = async ({
     await generatePages({});
     return { posts: [], rewrites };
   }
-};
-
-const generatePages = async ({ pageSize = 10, index = true, total = 0 }) => {
-  const indexPath = path.resolve('index.md');
-  const indexExist = await fileExists(indexPath);
-  let pageTotal = Math.ceil(total / pageSize);
-
-  if (total > 0) {
-    for (let i = 1; i <= pageTotal; i++) {
-      const page = `
----${i === 1 && index ? '' : `\ntitle: 第${i}页`}
-layout: page
----
-<script setup>
-import { useData } from "vitepress";
-const { theme } = useData();
-const page = theme.value.page;
-const posts = theme.value.posts.slice(${pageSize * (i - 1)},${pageSize * i});
-</script>
-
-<Page :posts="posts" :page="page" :current="${i}" :total="${pageTotal}" :index="${index}" />
-`.trim();
-      const pagePath = i === 1 && index ? indexPath : path.resolve(`page-${i}.md`);
-      await fs.writeFile(pagePath, page);
-    }
-  }
-
-  if ((total === 0 || !index) && !indexExist) {
-    const page = `
----
-layout: page
----
-<Home imgUrl="/profile.png" title="只抄" desc="Less is more." :links="[{ url: 'https://github.com/izhichao/vitepress-theme-minimalism', text: 'Github ->' }]" />
-    `.trim();
-    await fs.writeFile(indexPath, page);
-  }
-};
-
-const writeMd = async (path: string, content: string, data: { [key: string]: any }) => {
-  const matters = ['title', 'datetime', 'permalink', 'outline', 'pinned', 'tags', 'prev', 'next'];
-  const newMarkdown = matter.stringify(content, data, {
-    // @ts-ignore
-    sortKeys: (a: string, b: string) => matters.indexOf(a) - matters.indexOf(b)
-  });
-  await fs.writeFile(path, newMarkdown, 'utf8');
-};
-
-const removeMdPro = (str: string) => {
-  return removeMd(str.replace(/```.*?```/gs, ''))
-    .trim()
-    .split(/\r\n|\n|\r/)
-    .slice(1)
-    .join(' ')
-    .replace(/\s{2,}/g, ' ')
-    .replace(/:::.*?:::/gs, '')
-    .trim();
-};
-
-const fileExists = async (filePath: string) => {
-  try {
-    await fs.access(filePath, fs.constants.F_OK);
-    return true;
-  } catch {
-    return false;
-  }
-};
-
-const generateRandomString = (length: number) => {
-  const charset = '0123456789abcdef';
-  let randomCode = '';
-
-  for (let i = 0; i < length; i++) {
-    const randomIndex = Math.floor(Math.random() * charset.length);
-    randomCode += charset[randomIndex];
-  }
-
-  return randomCode;
-};
-
-const formatDate = (date: string | Date) => {
-  if (typeof date === 'string') {
-    date = new Date(date);
-  }
-
-  let year = date.getFullYear();
-  let month = String(date.getMonth() + 1).padStart(2, '0');
-  let day = String(date.getDate()).padStart(2, '0');
-  let hours = String(date.getHours()).padStart(2, '0');
-  let minutes = String(date.getMinutes()).padStart(2, '0');
-  let seconds = String(date.getSeconds()).padStart(2, '0');
-
-  return `${year}-${month}-${day} ${hours}:${minutes}:${seconds}`;
 };
