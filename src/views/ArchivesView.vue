@@ -26,13 +26,42 @@
 <script lang="ts" setup>
 import { useData } from 'vitepress';
 import { computed } from 'vue';
-import { groupByYears } from '../utils/groupPosts';
+import { useAds } from '../composables/useAds';
+import type { IPost, ITag, IArchive } from '../types';
 import PostLiteItem from '../components/PostLiteItem.vue';
 import AdItem from '../components/AdItem.vue';
 
+const { ads, adsense } = useAds();
 const { theme } = useData();
-const ads = theme.value.ads;
-const adsense = theme.value.adsense;
+
+const groupByYears = (posts: IPost[]) => {
+  const data: ITag = {};
+  posts.forEach((post) => {
+    const year = new Date(post.datetime).getFullYear();
+    if (year) {
+      if (!data[year]) {
+        data[year] = [];
+      }
+      data[year].push(post);
+    }
+  });
+
+  // get years and sort by year
+  const years = Object.keys(data).sort((a, b) => parseInt(b) - parseInt(a));
+
+  const sortedData: IArchive[] = [];
+  years.forEach((year) => {
+    sortedData.push({ year, data: data[year] });
+  });
+
+  // sort by datetime
+  sortedData.forEach((item) => {
+    item.data.sort((a, b) => {
+      return new Date(b.datetime).getTime() - new Date(a.datetime).getTime();
+    });
+  });
+  return sortedData;
+};
 
 const posts = computed(() => groupByYears(theme.value.posts));
 </script>

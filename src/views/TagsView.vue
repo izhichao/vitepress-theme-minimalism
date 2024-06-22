@@ -30,13 +30,36 @@
 <script lang="ts" setup>
 import { computed, ref } from 'vue';
 import { useData } from 'vitepress';
-import { groupByTags } from '../utils/groupPosts';
+import { useAds } from '../composables/useAds';
+import type { IPost, ITag } from '../types';
 import PostLiteItem from '../components/PostLiteItem.vue';
 import AdItem from '../components/AdItem.vue';
 
+const { ads, adsense } = useAds();
 const { theme } = useData();
-const ads = theme.value.ads;
-const adsense = theme.value.adsense;
+
+const groupByTags = (posts: IPost[]) => {
+  const data: ITag = {};
+  posts.forEach((post) => {
+    const tags = post.tags;
+    if (tags) {
+      tags.forEach((tag) => {
+        if (!data[tag]) {
+          data[tag] = [];
+        }
+        data[tag].push(post);
+      });
+    }
+  });
+
+  // sort by datetime
+  for (let i in data) {
+    data[i].sort((a, b) => {
+      return new Date(b.datetime).getTime() - new Date(a.datetime).getTime();
+    });
+  }
+  return data;
+};
 
 const posts = computed(() => groupByTags(theme.value.posts));
 // sort tags
