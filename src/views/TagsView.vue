@@ -13,7 +13,7 @@
           <span>{{ posts[tag].length }}</span>
         </span>
       </div>
-      <div class="tag__header">{{ selectTag }}</div>
+      <div class="tag__title">{{ selectTag }}</div>
       <ul>
         <PostLiteItem :posts="posts[selectTag]" date="full"></PostLiteItem>
       </ul>
@@ -106,9 +106,9 @@ const handleTag = (tag: string) => {
     }
   }
 
-  &__header {
+  &__title {
     font-size: 1.25rem;
-    font-weight: 500;
+    font-weight: 700;
     margin: 1rem 0;
     text-align: left;
   }
@@ -116,7 +116,7 @@ const handleTag = (tag: string) => {
 
 @media screen and (max-width: 768px) {
   .tag {
-    &__header {
+    &__title {
       font-size: 1.5rem;
     }
   }
