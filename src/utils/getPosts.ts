@@ -151,7 +151,7 @@ const page = theme.value.page;
 const posts = theme.value.posts.slice(${pageSize * (i - 1)},${pageSize * i});
 </script>
 
-<Page :posts="posts" :pageConfig="page" :pageCurrent="${i}" :pageTotal="${pageTotal}" :index="${index}" :pageMax="page?.max || 5" :pinned="page?.pinned || '[置顶]'"/>
+<Page :posts="posts" :page="page" :current="${i}" :total="${pageTotal}" :index="${index}" />
 `.trim();
       const pagePath = i === 1 && index ? indexPath : path.resolve(`page-${i}.md`);
       await fs.writeFile(pagePath, page);
