@@ -6,7 +6,7 @@
   </div>
 
   <ins
-    v-if="adsense.slot"
+    v-if="adsense?.slot"
     class="adsbygoogle"
     style="display: block"
     :data-ad-client="adsense.client"
@@ -29,15 +29,17 @@ const props = defineProps({
 // ads
 const computedAds = computed(() => {
   const newArr: IAd[] = [];
-  props.ads.forEach((item) => {
-    // ramdom ads
-    if (Array.isArray(item)) {
-      const random = item[Math.floor(Math.random() * item.length)];
-      newArr.push(random);
-    } else {
-      newArr.push(item);
-    }
-  });
+  if (props.ads) {
+    props.ads.forEach((item) => {
+      // ramdom ads
+      if (Array.isArray(item)) {
+        const random = item[Math.floor(Math.random() * item.length)];
+        newArr.push(random);
+      } else {
+        newArr.push(item);
+      }
+    });
+  }
   return newArr;
 });
 

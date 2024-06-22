@@ -15,7 +15,7 @@
       </div>
       <div class="tag__title">{{ selectTag }}</div>
       <ul>
-        <PostLiteItem :posts="posts[selectTag]" date="full"></PostLiteItem>
+        <PostListLite :posts="posts[selectTag]" date="full"></PostListLite>
       </ul>
       <AdItem
         v-if="ads?.docAfter || adsense?.docAfter"
@@ -32,7 +32,7 @@ import { computed, ref } from 'vue';
 import { useData } from 'vitepress';
 import { useAds } from '../composables/useAds';
 import type { IPost, ITag } from '../types';
-import PostLiteItem from '../components/PostLiteItem.vue';
+import PostListLite from '../components/PostListLite.vue';
 import AdItem from '../components/AdItem.vue';
 
 const { ads, adsense } = useAds();
