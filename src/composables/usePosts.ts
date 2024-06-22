@@ -5,6 +5,7 @@ import fg from 'fast-glob';
 import { IPost } from '../types';
 import { generatePages } from '../utils/generatePages';
 import { generateString } from '../utils/generateString';
+import { generateMd } from '../utils/generateMd';
 import { removeMdPro } from '../utils/removeMdPro';
 import { writeMd } from '../utils/writeMd';
 import { formatDate } from '../utils/formatDate';
@@ -20,12 +21,17 @@ export const usePosts = async ({
   const rewrites = {};
   try {
     const paths = await fg(`${folder}/**/*.md`);
+    let categoryFlag = false;
+    let tagFlag = false;
     const posts = await Promise.all(
       paths.map(async (postPath) => {
         const { data, excerpt, content } = matter.read(postPath, {
           excerpt: true,
           excerpt_separator: '<!-- more -->'
         });
+
+        data.category && (categoryFlag = true);
+        data.tags && (tagFlag = true);
 
         let flag = false;
         if (!data.title) {
@@ -126,6 +132,9 @@ export const usePosts = async ({
         flag && (await writeMd(postPath, content, data));
       });
     }
+
+    tagFlag && await generateMd('Tags');
+    categoryFlag && await generateMd('Category');
 
     await generatePages({ pageSize, index, total: paths.length });
 

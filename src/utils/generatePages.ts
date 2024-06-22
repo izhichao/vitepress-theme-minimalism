@@ -1,5 +1,6 @@
 import fs from 'fs/promises';
 import path from 'path';
+import { fileExists } from './fileExists';
 
 export const generatePages = async ({ pageSize = 10, index = true, total = 0 }) => {
   const indexPath = path.resolve('index.md');
@@ -34,14 +35,5 @@ layout: page
 <Home imgUrl="/profile.png" title="只抄" desc="Less is more." :links="[{ url: 'https://github.com/izhichao/vitepress-theme-minimalism', text: 'Github ->' }]" />
     `.trim();
     await fs.writeFile(indexPath, page);
-  }
-};
-
-const fileExists = async (filePath: string) => {
-  try {
-    await fs.access(filePath, fs.constants.F_OK);
-    return true;
-  } catch {
-    return false;
   }
 };
