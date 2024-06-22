@@ -3,8 +3,9 @@ title: 文章 9 - 图片 demo
 datetime: '2023-10-10 10:00:00'
 permalink: /posts/0e1cd7
 outline: deep
+category: 子文章
 tags:
-  - 子文章
+  - 文章 9
 prev:
   text: 文章 10 - 摘要 demo
   link: /posts/36fb63

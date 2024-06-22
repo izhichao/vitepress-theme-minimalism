@@ -3,8 +3,9 @@ title: 文章 3
 datetime: '2023-10-03 10:00:00'
 permalink: /posts/d4bad3
 outline: deep
+category: 文章
 tags:
-  - 文章
+  - 文章 3
 prev:
   text: 文章 4
   link: /posts/73a18e

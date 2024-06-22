@@ -3,8 +3,9 @@ title: 文章 8
 datetime: '2023-10-08 10:00:00'
 permalink: /posts/2fc5ad
 outline: deep
+category: 子文章
 tags:
-  - 子文章
+  - 文章 8
 prev:
   text: 文章 9 - 图片 demo
   link: /posts/0e1cd7
