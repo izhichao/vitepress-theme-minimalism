@@ -1,8 +1,8 @@
 import { defineConfigWithTheme } from 'vitepress';
+import { usePosts } from '../src/composables/usePosts';
 import type { ThemeConfig } from '../src/types';
-import { getPosts } from '../src/utils/getPosts';
 
-const { posts, rewrites } = await getPosts({
+const { posts, rewrites } = await usePosts({
   pageSize: 7,
   index: false,
   folder: 'posts',
@@ -27,6 +27,29 @@ export default defineConfigWithTheme<ThemeConfig>({
     comment: {
       serverURL: 'https://domain.com',
       reaction: true
+    },
+    ads: {
+      asideOutlineAfter: [
+        {
+          title: 'ouo.io - 縮短網址也可以賺錢',
+          img: 'https://ouo.io/images/banners/r5.jpg',
+          link: 'http://ouo.io/ref/QQbUaFAo'
+        }
+      ],
+      sidebarNavAfter: [
+        {
+          title: 'ouo.io - 縮短網址也可以賺錢',
+          img: 'https://ouo.io/images/banners/r5.jpg',
+          link: 'http://ouo.io/ref/QQbUaFAo'
+        }
+      ],
+      docAfter: [
+        {
+          title: 'ouo.io - 縮短網址也可以賺錢',
+          img: 'https://ouo.io/images/banners/r1.jpg',
+          link: 'http://ouo.io/ref/QQbUaFAo'
+        }
+      ]
     },
     logo: '/profile.png',
     outline: { level: 2 },
