@@ -16,6 +16,7 @@ export interface IPost {
   permalink: string;
   pinned: boolean;
   tags?: string[];
+  category?: string;
   excerpt: string;
 }
 
