@@ -10,7 +10,7 @@
       <div v-for="item in posts">
         <div class="archive">{{ item.year }}</div>
         <ul>
-          <PostLiteItem :posts="item.data"></PostLiteItem>
+          <PostListLite :posts="item.data" />
         </ul>
       </div>
       <AdItem
@@ -28,7 +28,7 @@ import { useData } from 'vitepress';
 import { computed } from 'vue';
 import { useAds } from '../composables/useAds';
 import type { IPost, ITag, IArchive } from '../types';
-import PostLiteItem from '../components/PostLiteItem.vue';
+import PostListLite from '../components/PostListLite.vue';
 import AdItem from '../components/AdItem.vue';
 
 const { ads, adsense } = useAds();
