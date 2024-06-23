@@ -5,10 +5,8 @@ import type { ThemeConfig } from '../src/types';
 const { posts, rewrites } = await usePosts({
   pageSize: 7,
   index: false,
-  folder: 'posts',
-  autoExcerpt: 50,
-  prev: true,
-  next: true
+  srcDir: 'posts',
+  autoExcerpt: 50
 });
 
 export default defineConfigWithTheme<ThemeConfig>({

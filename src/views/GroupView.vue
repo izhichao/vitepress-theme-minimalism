@@ -16,7 +16,7 @@
 
       <template v-else-if="type === 'category' || type === 'tags'">
         <LinkList @change="handleChange" :links="keys" :posts="posts" />
-        <div v-show="select" class="title bold">{{ type === 'category' ? '分类：' : '' }}{{ select }}</div>
+        <div v-show="select" class="title bold">{{ type === 'category' ? titles[lang] : '' }}{{ select }}</div>
 
         <PostList v-if="type === 'category'" :posts="posts[select]" />
         <PostListLite v-else-if="type === 'tags'" :posts="posts[select]" date="full" />
@@ -46,8 +46,17 @@ const props = defineProps({
   type: {
     type: String,
     required: true
+  },
+  lang: {
+    type: String,
+    default: 'zh'
   }
 });
+
+const titles = {
+  zh: '分类：',
+  en: 'Category: '
+};
 
 const { ads, adsense } = useAds();
 const { theme } = useData();
@@ -59,7 +68,6 @@ const select = ref(params.get(props.type) || '');
 const handleChange = (tag: string) => {
   select.value = tag;
 };
-console.log();
 </script>
 
 <style lang="less" scoped>
