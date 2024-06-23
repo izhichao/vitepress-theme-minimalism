@@ -8,8 +8,10 @@
         type="doc"
       />
 
-      <PostList :posts="posts" :pinned="pinned" />
-      <Pagination :current="current" :total="props.total" :index="index" :max="page?.max" />
+      <template v-if="posts">
+        <PostList :posts="posts" :pinned="pinned" />
+        <Pagination :current="current" :total="props.total" :index="index" :max="page?.max" />
+      </template>
 
       <AdItem
         v-if="ads?.docAfter || adsense?.docAfter"

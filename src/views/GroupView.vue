@@ -33,7 +33,7 @@
 </template>
 
 <script lang="ts" setup>
-import { ref, defineProps } from 'vue';
+import { ref } from 'vue';
 import { useData } from 'vitepress';
 import { useAds } from '../composables/useAds';
 import { useGroup } from '../composables/useGroup';
@@ -51,7 +51,7 @@ const props = defineProps({
 
 const { ads, adsense } = useAds();
 const { theme } = useData();
-const { keys, data: posts } = useGroup(theme.value.posts, props.type);
+const { keys, data: posts } = useGroup(theme.value?.posts || [], props.type);
 
 const url = location.href.split('?')[1];
 const params = new URLSearchParams(url);

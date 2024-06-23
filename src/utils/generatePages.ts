@@ -17,7 +17,7 @@ layout: page
 import { useData } from "vitepress";
 const { theme } = useData();
 const page = theme.value.page;
-const posts = theme.value.posts.slice(${pageSize * (i - 1)},${pageSize * i});
+const posts = theme.value.posts?.slice(${pageSize * (i - 1)},${pageSize * i});
 </script>
 
 <Page :posts="posts" :page="page" :current="${i}" :total="${pageTotal}" :index="${index}" />
