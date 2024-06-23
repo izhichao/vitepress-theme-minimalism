@@ -47,7 +47,7 @@ const computedAds = computed(() => {
 onMounted(() => {
   try {
     // @ts-ignore
-    window.addAds();
+    props.adsense?.slot && window.addAds();
   } catch (e) {
     console.log(e);
   }
