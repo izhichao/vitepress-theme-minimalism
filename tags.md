@@ -1,4 +1,6 @@
 ---
 title: Tags
-layout: Tags
+layout: page
 ---
+
+<Group type='tags' />

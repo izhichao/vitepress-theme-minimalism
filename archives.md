@@ -1,4 +1,6 @@
 ---
 title: Archives
-layout: Archives
+layout: page
 ---
+
+<Group type='archives' />

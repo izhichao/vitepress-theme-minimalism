@@ -3,9 +3,7 @@ import { useRoute } from 'vitepress';
 import DefaultTheme from 'vitepress/theme';
 import mediumZoom from 'medium-zoom';
 import Home from './views/HomeView.vue';
-import Category from './views/CategoryView.vue';
-import Archives from './views/ArchivesView.vue';
-import Tags from './views/TagsView.vue';
+import Group from './views/GroupView.vue';
 import Page from './views/PageView.vue';
 import ThemeLayout from './views/ThemeLayout.vue';
 import './styles/index.less';
@@ -15,9 +13,7 @@ export default {
   Layout: ThemeLayout,
   enhanceApp({ app }) {
     app.component('Home', Home);
-    app.component('Tags', Tags);
-    app.component('Archives', Archives);
-    app.component('Category', Category);
+    app.component('Group', Group);
     app.component('Page', Page);
   },
   setup() {

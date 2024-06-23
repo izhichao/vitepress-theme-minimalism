@@ -1,14 +1,16 @@
 <template>
-  <li v-for="post in posts" :key="post.title">
-    <a :href="withBase(post.permalink)"  class="post">
-      <div class="post__title">
-        {{ post.title }}
-      </div>
-      <div class="post__date">
-        {{ date === 'full' ? post.datetime.split(' ')[0] : post.datetime.split(' ')[0].slice(5) }}
-      </div>
-    </a>
-  </li>
+  <ul>
+    <li v-for="post in posts" :key="post.title">
+      <a :href="withBase(post.permalink)" class="post">
+        <div class="post__title">
+          {{ post.title }}
+        </div>
+        <div class="post__date">
+          {{ date === 'full' ? post.datetime.split(' ')[0] : post.datetime.split(' ')[0].slice(5) }}
+        </div>
+      </a>
+    </li>
+  </ul>
 </template>
 
 <script lang="ts" setup>
@@ -22,7 +24,7 @@ defineProps({
 
 <style lang="less" scoped>
 li {
-  list-style: none
+  list-style: none;
 }
 
 .post {

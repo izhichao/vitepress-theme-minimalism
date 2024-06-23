@@ -71,13 +71,8 @@ export interface IAdsense {
   docAfter?: string;
 }
 
-export interface ITag {
+export interface IGroup {
   [key: string]: IPost[];
-}
-
-export interface IArchive {
-  year: string;
-  data: IPost[];
 }
 
 export interface ThemeConfig extends DefaultTheme.Config {
