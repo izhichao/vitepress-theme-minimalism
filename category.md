@@ -1,4 +1,6 @@
 ---
 title: Category
-layout: Category
+layout: page
 ---
+
+<Group type='category' />

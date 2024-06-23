@@ -9,8 +9,10 @@ export const generateMd = async (type: string) => {
   const page = `
 ---
 title: ${type}
-layout: ${type}
+layout: page
 ---
+
+<Group type='${type.toLowerCase()}' />
     `.trim();
   await fs.writeFile(path.resolve(filePath), page);
 };
