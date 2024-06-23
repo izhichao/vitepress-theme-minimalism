@@ -76,7 +76,7 @@ export interface IGroup {
 }
 
 export interface ThemeConfig extends DefaultTheme.Config {
-  posts: IPost[];
+  posts?: IPost[];
   page?: IPage;
   comment?: ICommnet;
   ads?: IAds;
