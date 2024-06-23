@@ -57,6 +57,7 @@ export default defineConfigWithTheme<ThemeConfig>({
       { text: 'Home', link: '/' },
       { text: 'Posts', link: '/page-1' },
       { text: 'Docs', link: '/docs/doc1' },
+      { text: 'Category', link: '/category' },
       { text: 'Archives', link: '/archives' },
       { text: 'Tags', link: '/tags' }
     ],
