@@ -13,14 +13,16 @@ import { formatDate } from '../utils/formatDate';
 export const usePosts = async ({
   pageSize = 10,
   index = true,
-  folder = 'posts',
+  srcDir = 'posts',
+  outDir = '',
+  lang = 'zh',
   autoExcerpt = 0,
-  prev = false,
-  next = false
+  prev = true,
+  next = true
 }) => {
   const rewrites = {};
   try {
-    const paths = await fg(`${folder}/**/*.md`);
+    const paths = await fg(`${srcDir}/**/*.md`);
     let categoryFlag = false;
     let tagFlag = false;
     const posts = await Promise.all(
@@ -46,7 +48,7 @@ export const usePosts = async ({
         }
 
         if (!data.permalink) {
-          data.permalink = `/${folder}/${generateString(6)}`;
+          data.permalink = `/${srcDir}/${generateString(6)}`;
           flag = true;
         }
 
@@ -133,15 +135,15 @@ export const usePosts = async ({
       });
     }
 
-    tagFlag && await generateMd('Tags');
-    categoryFlag && await generateMd('Category');
+    tagFlag && (await generateMd('tags', outDir, lang));
+    categoryFlag && (await generateMd('category', outDir, lang));
 
-    await generatePages({ pageSize, index, total: paths.length });
+    await generatePages(outDir, lang, pageSize, index, paths.length);
 
     return { posts, rewrites };
   } catch (e) {
     console.log(e);
-    await generatePages({});
+    await generatePages();
     return { posts: [], rewrites };
   }
 };

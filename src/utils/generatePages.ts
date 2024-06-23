@@ -2,15 +2,23 @@ import fs from 'fs/promises';
 import path from 'path';
 import { fileExists } from './fileExists';
 
-export const generatePages = async ({ pageSize = 10, index = true, total = 0 }) => {
-  const indexPath = path.resolve('index.md');
+export const generatePages = async (
+  outDir?: string,
+  lang?: string,
+  pageSize?: number,
+  index?: boolean,
+  total?: number
+) => {
+  const indexPath = path.resolve(outDir, 'index.md');
+
   const indexExist = await fileExists(indexPath);
   let pageTotal = Math.ceil(total / pageSize);
 
   if (total > 0) {
     for (let i = 1; i <= pageTotal; i++) {
+      const title = i === 1 && index ? '' : lang === 'zh' ? `\ntitle: 第${i}页` : `\ntitle: Page ${i}`;
       const page = `
----${i === 1 && index ? '' : `\ntitle: 第${i}页`}
+---${title}
 layout: page
 ---
 <script setup>
@@ -22,7 +30,7 @@ const posts = theme.value.posts?.slice(${pageSize * (i - 1)},${pageSize * i});
 
 <Page :posts="posts" :page="page" :current="${i}" :total="${pageTotal}" :index="${index}" />
 `.trim();
-      const pagePath = i === 1 && index ? indexPath : path.resolve(`page-${i}.md`);
+      const pagePath = i === 1 && index ? indexPath : path.resolve(outDir, `page-${i}.md`);
       await fs.writeFile(pagePath, page);
     }
   }
