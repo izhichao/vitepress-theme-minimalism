@@ -1,6 +1,6 @@
 ---
-title: Category
+title: 分类
 layout: page
 ---
 
-<Group type='category' />
+<Group type='category' lang='zh' />

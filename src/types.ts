@@ -23,6 +23,7 @@ export interface IPost {
 export interface IPage {
   max?: number;
   pinned?: string;
+  outDir?: string;
 }
 
 export interface ICommnet {

@@ -13,7 +13,7 @@
       <span class="post__category" v-if="post.category">
         <span class="iconfont">&#xe86d;</span>
         <a
-          :href="withBase(`/category.html?category=${post.category.replaceAll('&', '%26')}`)"
+          :href="withBase(`${outDir}/category.html?category=${post.category.replaceAll('&', '%26')}`)"
           class="post__category__item"
         >
           {{ post.category }}
@@ -22,7 +22,7 @@
       <span class="post__tag" v-if="post.tags">
         <span class="iconfont">&#xe869;</span>
         <a
-          :href="withBase(`/tags.html?tag=${item.replaceAll('&', '%26')}`)"
+          :href="withBase(`${outDir}/tags.html?tags=${item.replaceAll('&', '%26')}`)"
           v-for="item in post.tags"
           class="post__tag__item"
         >
@@ -36,6 +36,8 @@
 <script lang="ts" setup>
 import { withBase } from 'vitepress';
 import { IPost } from '../types';
+import { useOutDir } from '../composables/useOutDir';
+const { outDir } = useOutDir();
 
 defineProps({
   posts: Array<IPost>,

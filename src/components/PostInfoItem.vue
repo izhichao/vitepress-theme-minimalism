@@ -4,13 +4,21 @@
       <span class="iconfont">&#xe7eb;</span>
       <span>{{ $frontmatter.datetime.substring(0, 16) }}</span>
     </div>
-    <div class="tags">
+    <div>
+      <span class="iconfont">&#xe869;</span>
       <a
-        :href="withBase(`/tags.html??tag=${item.replaceAll('&', '%26')}`)"
+        :href="withBase(`${outDir}/tags.html?tags=${item.replaceAll('&', '%26')}`)"
         v-for="item in $frontmatter.tags"
         class="tag"
       >
         {{ item }}
+      </a>
+      <span class="iconfont">&#xe86d;</span>
+      <a
+        :href="withBase(`${outDir}/category.html?category=${$frontmatter.category.replaceAll('&', '%26')}`)"
+        class="category"
+      >
+        {{ $frontmatter.category }}
       </a>
     </div>
   </div>
@@ -18,6 +26,8 @@
 
 <script lang="ts" setup>
 import { withBase } from 'vitepress';
+import { useOutDir } from '../composables/useOutDir';
+const { outDir } = useOutDir();
 </script>
 
 <style lang="less" scoped>
@@ -27,18 +37,20 @@ import { withBase } from 'vitepress';
   margin-bottom: 16px;
 }
 
+.iconfont {
+  font-size: 14px;
+  margin-right: 6px;
+  vertical-align: bottom;
+}
+
 .date {
-  .iconfont {
-    font-size: 14px;
-    margin-right: 4px;
-    vertical-align: bottom;
-  }
   font-size: 14px;
   font-weight: 500;
   color: var(--vp-c-text-2);
 }
 
-.tag {
+.tag,
+.category {
   font-size: 14px;
   display: inline-block;
   padding: 0 8px;
