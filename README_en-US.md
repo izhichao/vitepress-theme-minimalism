@@ -6,7 +6,7 @@
 
 Based on the VitePress default theme extends the leading page, posts list page, post page, archives page, tabs page, can be fully compatible with the default theme's document mode (with Sidebar).
 
-[Demo1](https://zhichao.org) | [Demo2](https://vitepress.tsx.us.kg) | [Documentation](https://zhichao.org/posts/minimalism.html#vitepress-theme-minimalism-documentation)
+[Demo1](https://zhichao.org) | [Demo2](https://vitepress.tsx.us.kg) | [Documentation](https://zhichao.org/en/posts/minimalism.html)
 
 ## Feature 
 
@@ -14,11 +14,15 @@ Based on the VitePress default theme extends the leading page, posts list page, 
 
 - [x] Archives
 - [x] Tabs
+- [x] Category
 - [x] Permalink
 - [x] Summary `<!--more-->`
 - [x] Pin
+- [x] Previous / Next
 - [x] Zoom Images
 - [x] Comments (with Waline)
+- [x] Customized Ads / Adsense
+- [ ] Locale
 
 ## Home Page
 
