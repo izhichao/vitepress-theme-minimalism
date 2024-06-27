@@ -1,6 +1,6 @@
 ---
-title: Tags
+title: 标签
 layout: page
 ---
 
-<Group type='tags' />
+<Group type='tags' lang='zh' />
