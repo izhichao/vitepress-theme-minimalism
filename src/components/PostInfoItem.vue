@@ -5,21 +5,25 @@
       <span>{{ $frontmatter.datetime.substring(0, 16) }}</span>
     </div>
     <div>
-      <span class="iconfont">&#xe869;</span>
-      <a
-        :href="withBase(`${outDir}/tags.html?tags=${item.replaceAll('&', '%26')}`)"
-        v-for="item in $frontmatter.tags"
-        class="tag"
-      >
-        {{ item }}
-      </a>
-      <span class="iconfont">&#xe86d;</span>
-      <a
-        :href="withBase(`${outDir}/category.html?category=${$frontmatter.category.replaceAll('&', '%26')}`)"
-        class="category"
-      >
-        {{ $frontmatter.category }}
-      </a>
+      <template v-if="$frontmatter.tags">
+        <span class="iconfont">&#xe869;</span>
+        <a
+          :href="withBase(`${outDir}/tags.html?tags=${item.replaceAll('&', '%26')}`)"
+          v-for="item in $frontmatter.tags"
+          class="tag"
+        >
+          {{ item }}
+        </a>
+      </template>
+      <template v-if="$frontmatter.category">
+        <span class="iconfont">&#xe86d;</span>
+        <a
+          :href="withBase(`${outDir}/category.html?category=${$frontmatter.category.replaceAll('&', '%26')}`)"
+          class="category"
+        >
+          {{ $frontmatter.category }}
+        </a>
+      </template>
     </div>
   </div>
 </template>
