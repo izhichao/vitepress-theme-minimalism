@@ -6,7 +6,7 @@
 
 基于 VitePress 默认主题拓展了引导页、文章列表页、文章页、归档页、标签页，可以与默认主题的文档模式 (带 Sidebar) 完全兼容。
 
-[演示站1](https://zhichao.org) | [演示站2](https://vitepress.tsx.us.kg) | [使用文档](https://zhichao.org/posts/minimalism.html)
+[演示站1](https://zhichao.org) | [演示站2](https://link.zhichao.org/vitepress) | [使用文档](https://zhichao.org/posts/minimalism.html)
 
 ## 功能
 
@@ -32,7 +32,7 @@
 
 ![vitepress-theme-minimalism1](https://minio.zhichao.org/images/vitepress-theme-minimalism1.webp)
 
-2. 引导页作为主页（参考[演示站2](https://vitepress.tsx.us.kg)）
+2. 引导页作为主页（参考[演示站2](https://link.zhichao.org/vitepress)）
 
 ![vitepress-theme-minimalism2](https://minio.zhichao.org/images/vitepress-theme-minimalism2.webp)
 
