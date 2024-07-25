@@ -63,7 +63,7 @@ if (props.type === 'aside') {
   padding = '.5rem 0 0';
   margin = '0';
 } else if (props.type === 'doc') {
-  padding = '1rem 0';
+  padding = '3rem 0 1rem';
   margin = '0 -24px';
 }
 </script>
