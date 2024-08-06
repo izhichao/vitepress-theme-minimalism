@@ -21,7 +21,8 @@ import { ref } from 'vue';
 import { useData, withBase } from 'vitepress';
 
 const { theme } = useData();
-const { max } = theme.value.page;
+const page = theme.value.page;
+const max = page?.max || 5;
 
 const props = defineProps({
   pagination: { type: Number, required: true },
