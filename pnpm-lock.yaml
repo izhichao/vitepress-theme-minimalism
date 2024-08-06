@@ -33,8 +33,8 @@ importers:
         specifier: ^0.5.0
         version: 0.5.0
       vitepress:
-        specifier: 1.3.1
-        version: 1.3.1(@algolia/client-search@4.19.1)(@types/node@20.6.0)(less@4.2.0)(postcss@8.4.39)(search-insights@2.8.2)
+        specifier: 1.3.2
+        version: 1.3.2(@algolia/client-search@4.19.1)(@types/node@20.6.0)(less@4.2.0)(postcss@8.4.39)(search-insights@2.8.2)
       vue:
         specifier: ^3.3.4
         version: 3.3.4
@@ -825,10 +825,6 @@ packages:
     resolution: {integrity: sha512-u5U8qYpBCpN13BsiEB0CbR1Hhh4Gc0zLFuedrHJKMctHCHAGrMdG0PRM/KErzAL3CU6/eckEtmHNB3x6e3c0vA==}
     engines: {node: ^10 || ^12 || >=14}
 
-  postcss@8.4.38:
-    resolution: {integrity: sha512-Wglpdk03BSfXkHoQa3b/oulrotAkwrlLDRSOb9D0bN86FdRyE9lppSp33aHNPgBa0JKCoB+drFLZkQoRRYae5A==}
-    engines: {node: ^10 || ^12 || >=14}
-
   postcss@8.4.39:
     resolution: {integrity: sha512-0vzE+lAiG7hZl1/9I8yzKLx3aR9Xbof3fBHKunvMfOCYAtMhrsnccJY2iTURb9EZd5+pLuiNV9/c/GZJOHsgIw==}
     engines: {node: ^10 || ^12 || >=14}
@@ -952,8 +948,8 @@ packages:
       terser:
         optional: true
 
-  vitepress@1.3.1:
-    resolution: {integrity: sha512-soZDpg2rRVJNIM/IYMNDPPr+zTHDA5RbLDHAxacRu+Q9iZ2GwSR0QSUlLs+aEZTkG0SOX1dc8RmUYwyuxK8dfQ==}
+  vitepress@1.3.2:
+    resolution: {integrity: sha512-6gvecsCuR6b1Cid4w19KQiQ02qkpgzFRqiG0v1ZBekGkrZCzsxdDD5y4WH82HRXAOhU4iZIpzA1CsWqs719rqA==}
     hasBin: true
     peerDependencies:
       markdown-it-mathjax3: ^4
@@ -1376,7 +1372,7 @@ snapshots:
       '@vue/shared': 3.4.31
       estree-walker: 2.0.2
       magic-string: 0.30.10
-      postcss: 8.4.38
+      postcss: 8.4.39
       source-map-js: 1.2.0
 
   '@vue/compiler-ssr@3.3.4':
@@ -1808,12 +1804,6 @@ snapshots:
       picocolors: 1.0.0
       source-map-js: 1.0.2
 
-  postcss@8.4.38:
-    dependencies:
-      nanoid: 3.3.7
-      picocolors: 1.0.0
-      source-map-js: 1.2.0
-
   postcss@8.4.39:
     dependencies:
       nanoid: 3.3.7
@@ -1917,7 +1907,7 @@ snapshots:
       fsevents: 2.3.3
       less: 4.2.0
 
-  vitepress@1.3.1(@algolia/client-search@4.19.1)(@types/node@20.6.0)(less@4.2.0)(postcss@8.4.39)(search-insights@2.8.2):
+  vitepress@1.3.2(@algolia/client-search@4.19.1)(@types/node@20.6.0)(less@4.2.0)(postcss@8.4.39)(search-insights@2.8.2):
     dependencies:
       '@docsearch/css': 3.6.0
       '@docsearch/js': 3.6.0(@algolia/client-search@4.19.1)(search-insights@2.8.2)
