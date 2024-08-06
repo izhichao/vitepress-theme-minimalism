@@ -12,7 +12,7 @@ import { formatDate } from '../utils/formatDate';
 
 export const usePosts = async ({
   pageSize = 10,
-  index = true,
+  homepage = true,
   srcDir = 'posts',
   outDir = '',
   lang = 'zh',
@@ -76,14 +76,7 @@ export const usePosts = async ({
     );
 
     // sort posts by datetime
-    posts.sort((a, b) => {
-      if (a.pinned !== b.pinned) {
-        return a.pinned ? -1 : 1;
-      }
-      const timeDiff = new Date(b.datetime).getTime() - new Date(a.datetime).getTime();
-
-      return timeDiff;
-    });
+    posts.sort((a, b) => new Date(b.datetime).getTime() - new Date(a.datetime).getTime());
 
     // prev / next
     paths.map(async (postPath) => {
@@ -144,7 +137,7 @@ export const usePosts = async ({
     tagFlag && (await generateMd('tags', outDir, lang));
     categoryFlag && (await generateMd('category', outDir, lang));
 
-    await generatePages(outDir, lang, pageSize, index, paths.length);
+    await generatePages(outDir, lang, pageSize, homepage, paths.length);
 
     return { posts, rewrites };
   } catch (e) {

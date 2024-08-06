@@ -4,7 +4,7 @@ import type { ThemeConfig } from '../src/types';
 
 const { posts, rewrites } = await usePosts({
   pageSize: 7,
-  index: false,
+  homepage: false,
   srcDir: 'posts',
   autoExcerpt: 50
 });

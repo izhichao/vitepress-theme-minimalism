@@ -6,36 +6,28 @@ export const generatePages = async (
   outDir?: string,
   lang?: string,
   pageSize?: number,
-  index?: boolean,
+  homepage?: boolean,
   total?: number
 ) => {
   const indexPath = path.resolve(outDir, 'index.md');
 
   const indexExist = await fileExists(indexPath);
-  let pageTotal = Math.ceil(total / pageSize);
+  const pageTotal = total > 0 ? Math.ceil(total / pageSize) : 0;
 
-  if (total > 0) {
-    for (let i = 1; i <= pageTotal; i++) {
-      const title = i === 1 && index ? '' : lang === 'zh' ? `\ntitle: 第${i}页` : `\ntitle: Page ${i}`;
-      const page = `
+  for (let i = 1; i <= pageTotal; i++) {
+    const title = i === 1 && homepage ? '' : lang === 'zh' ? `\ntitle: 第${i}页` : `\ntitle: Page ${i}`;
+    const page = `
 ---${title}
 layout: page
 ---
-<script setup>
-import { useData } from "vitepress";
-const { theme } = useData();
-const page = theme.value.page;
-const posts = theme.value.posts?.slice(${pageSize * (i - 1)},${pageSize * i});
-</script>
 
-<Page :posts="posts" :page="page" :current="${i}" :total="${pageTotal}" :index="${index}" />
+<Page :pagination="${i}" :total="${pageTotal}" :size="${pageSize}" :homepage="${homepage}" />
 `.trim();
-      const pagePath = i === 1 && index ? indexPath : path.resolve(outDir, `page-${i}.md`);
-      await fs.writeFile(pagePath, page);
-    }
+    const pagePath = i === 1 && homepage ? indexPath : path.resolve(outDir, `page-${i}.md`);
+    await fs.writeFile(pagePath, page);
   }
 
-  if ((total === 0 || !index) && !indexExist) {
+  if ((total === 0 || !homepage) && !indexExist) {
     const page = `
 ---
 layout: page
