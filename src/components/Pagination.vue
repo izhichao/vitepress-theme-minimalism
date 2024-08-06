@@ -1,14 +1,14 @@
 <template>
   <div class="pagination">
-    <a class="pagination__link iconfont" :href="withBase(index ? '/index.html' : '/page-1.html')" v-if="total > max">
+    <a class="pagination__link iconfont" :href="withBase(homepage ? '/index.html' : '/page-1.html')" v-if="total > max">
       &#xe86a;
     </a>
     <a
       class="pagination__link"
       v-for="page in pages"
       :key="page"
-      :href="withBase(page === 1 && index ? '/index.html' : `/page-${page}.html`)"
-      :class="{ 'pagination__link--active': current === page }"
+      :href="withBase(page === 1 && homepage ? '/index.html' : `/page-${page}.html`)"
+      :class="{ 'pagination__link--active': pagination === page }"
     >
       {{ page }}
     </a>
@@ -18,16 +18,18 @@
 
 <script lang="ts" setup>
 import { ref } from 'vue';
-import { withBase } from 'vitepress';
+import { useData, withBase } from 'vitepress';
+
+const { theme } = useData();
+const { max } = theme.value.page;
 
 const props = defineProps({
-  current: { type: Number, required: true },
+  pagination: { type: Number, required: true },
   total: { type: Number, required: true },
-  index: { type: Boolean, default: true },
-  max: { type: Number, default: 5 }
+  homepage: { type: Boolean, default: true }
 });
 
-const pages = ref(findNeighbors(props.current, props.total, props.max));
+const pages = ref(findNeighbors(props.pagination, props.total, max));
 
 function findNeighbors(target: number, total: number, max: number) {
   const result: number[] = [];

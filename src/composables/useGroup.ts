@@ -15,13 +15,6 @@ export const useGroup = (posts: IPost[], type: string) => {
     }
   });
 
-  // sort by datetime
-  for (let i in data) {
-    data[i].sort((a, b) => {
-      return new Date(b.datetime).getTime() - new Date(a.datetime).getTime();
-    });
-  }
-
   const keys = Object.keys(data).sort((a, b) => {
     if (type === 'tags' || type === 'category') {
       return a.localeCompare(b);
