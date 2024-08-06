@@ -101,19 +101,27 @@ export const usePosts = async ({
         }
       }
 
-      let postIndex = 0;
-      for (let index in posts) {
-        if (posts[index].permalink === data.permalink) {
-          postIndex = +index;
-        }
+      const postIndex = posts.findIndex((post) => post.permalink === data.permalink);
+      let prevPostIndex = postIndex - 1;
+      let nextPostIndex = postIndex + 1;
+
+      // Find the previous post that is not pinned
+      while (prevPostIndex >= 0 && posts[prevPostIndex].pinned) {
+        prevPostIndex--;
       }
 
-      let flag = true;
-      const prevPost = posts[postIndex - 1];
+      // Find the next post that is not pinned
+      while (nextPostIndex < posts.length && posts[nextPostIndex].pinned) {
+        nextPostIndex++;
+      }
+
+      const prevPost = posts[prevPostIndex];
+      const nextPost = posts[nextPostIndex];
+
       const prevDiff = data?.prev?.text !== prevPost?.title || data?.prev?.link !== prevPost?.permalink;
-      const nextPost = posts[postIndex + 1];
       const nextDiff = data?.next?.text !== nextPost?.title || data?.next?.link !== nextPost?.permalink;
 
+      let flag = true;
       if (prev && prevPost && prevDiff && !prevPost.pinned) {
         data.prev = { text: prevPost.title, link: prevPost.permalink };
         flag = true;
