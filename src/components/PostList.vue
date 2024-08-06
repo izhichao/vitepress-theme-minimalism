@@ -2,7 +2,9 @@
   <div v-for="post in posts" :key="post.title" class="post">
     <div>
       <div class="post__title">
-        <span class="post__pinned" v-if="post.pinned && pinned">{{ pinned }}</span>
+        <span class="post__pinned" v-if="post.pinned && type !== 'category'">
+          {{ post.pinned === true ? pinned : post.pinned }}
+        </span>
         <a :href="withBase(post.permalink)">{{ post.title }}</a>
       </div>
       <div class="post__excerpt" v-if="post.excerpt">{{ post.excerpt }}</div>
@@ -34,15 +36,19 @@
 </template>
 
 <script lang="ts" setup>
-import { withBase } from 'vitepress';
+import { useData, withBase } from 'vitepress';
 import { IPost } from '../types';
 import { useOutDir } from '../composables/useOutDir';
 const { outDir } = useOutDir();
 
 defineProps({
   posts: Array<IPost>,
-  pinned: String
+  type: String
 });
+
+const { theme } = useData();
+const page = theme.value.page;
+const pinned = (page?.pinned as string) || '[置顶]';
 </script>
 
 <style lang="less" scoped>
