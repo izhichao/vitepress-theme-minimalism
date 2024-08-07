@@ -40,17 +40,15 @@ const props = defineProps({
 
 const { ads, adsense } = useAds();
 const { theme } = useData();
-const posts: IPost[] = theme.value.posts
-  ? [...theme.value.posts]
-  : []
-      .sort((a, b) => {
-        if (a.pinned !== b.pinned) {
-          return a.pinned ? -1 : 1;
-        } else {
-          return 0;
-        }
-      })
-      .slice(props.size * (props.pagination - 1), props.size * props.pagination);
+const posts: IPost[] = (theme.value.posts ? [...theme.value.posts] : [])
+  .sort((a, b) => {
+    if (a.pinned !== b.pinned) {
+      return a.pinned ? -1 : 1;
+    } else {
+      return 0;
+    }
+  })
+  .slice(props.size * (props.pagination - 1), props.size * props.pagination);
 </script>
 
 <style lang="less" scoped>
