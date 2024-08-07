@@ -1,5 +1,5 @@
 <template>
-  <div class="pagination">
+  <div class="pagination" v-if="posts">
     <a class="pagination__link iconfont" :href="withBase(homepage ? '/index.html' : '/page-1.html')" v-if="total > max">
       &#xe86a;
     </a>
@@ -20,15 +20,16 @@
 import { ref } from 'vue';
 import { useData, withBase } from 'vitepress';
 
-const { theme } = useData();
-const page = theme.value.page;
-const max = page?.max || 5;
-
 const props = defineProps({
   pagination: { type: Number, required: true },
   total: { type: Number, required: true },
   homepage: { type: Boolean, default: true }
 });
+
+const { theme } = useData();
+const posts = theme.value.posts;
+const page = theme.value.page;
+const max = page?.max || 5;
 
 const pages = ref(findNeighbors(props.pagination, props.total, max));
 
