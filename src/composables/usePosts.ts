@@ -83,7 +83,7 @@ export const usePosts = async ({
       const { data, content } = matter.read(postPath);
 
       // remove pinned posts prev / next
-      if (data.pinned) {
+      if (data.order) {
         if (data.prev || data.next) {
           delete data.prev;
           delete data.next;
@@ -99,12 +99,12 @@ export const usePosts = async ({
       let nextPostIndex = postIndex + 1;
 
       // Find the previous post that is not pinned
-      while (prevPostIndex >= 0 && posts[prevPostIndex].pinned) {
+      while (prevPostIndex >= 0 && posts[prevPostIndex].order) {
         prevPostIndex--;
       }
 
       // Find the next post that is not pinned
-      while (nextPostIndex < posts.length && posts[nextPostIndex].pinned) {
+      while (nextPostIndex < posts.length && posts[nextPostIndex].order) {
         nextPostIndex++;
       }
 
@@ -115,10 +115,10 @@ export const usePosts = async ({
       const nextDiff = data?.next?.text !== nextPost?.title || data?.next?.link !== nextPost?.permalink;
 
       let flag = true;
-      if (prev && prevPost && prevDiff && !prevPost.pinned) {
+      if (prev && prevPost && prevDiff && !prevPost.order) {
         data.prev = { text: prevPost.title, link: prevPost.permalink };
         flag = true;
-      } else if (!prev || !prevPost || prevPost.pinned) {
+      } else if (!prev || !prevPost || prevPost.order) {
         delete data.prev;
         flag = true;
       }

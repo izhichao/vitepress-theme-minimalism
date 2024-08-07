@@ -2,8 +2,8 @@
   <div v-for="post in posts" :key="post.title" class="post">
     <div>
       <div class="post__title">
-        <span class="post__pinned" v-if="post.pinned && type !== 'category'">
-          {{ post.pinned === true ? pinned : post.pinned }}
+        <span class="post__pinned" v-if="post.order && type !== 'category'">
+            {{ post.pinned || page?.pinned || '[置顶]' }}
         </span>
         <a :href="withBase(post.permalink)">{{ post.title }}</a>
       </div>
@@ -48,7 +48,6 @@ defineProps({
 
 const { theme } = useData();
 const page = theme.value.page;
-const pinned = (page?.pinned as string) || '[置顶]';
 </script>
 
 <style lang="less" scoped>
