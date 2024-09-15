@@ -97,6 +97,14 @@ function findNeighbors(target: number, total: number, max: number) {
       background: var(--vp-c-text-1);
       border: 1px solid var(--vp-c-text-1);
     }
+
+    &:first-of-type {
+      margin-left: 0;
+    }
+
+    &:last-of-type {
+      margin-right: 0;
+    }
   }
 }
 </style>
