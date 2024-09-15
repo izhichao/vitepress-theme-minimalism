@@ -67,7 +67,11 @@ pre::-webkit-scrollbar {
 .vp-doc {
   // 去除 a 下划线
   a {
-    // text-decoration: none;
+    text-decoration: none;
+    &:hover {
+      text-decoration: underline dotted;
+      text-underline-offset: 0.3rem;
+    }
   }
 
   img {
