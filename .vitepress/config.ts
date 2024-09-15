@@ -54,7 +54,7 @@ export default defineConfigWithTheme<ThemeConfig>({
           {
             title: 'RackNerd - 美国 163 直连线路',
             img: 'https://minio.zhichao.org/assets/rn.png',
-            link: 'https://my.racknerd.com/aff.php?aff=6884&pid=810'
+            link: 'https://my.racknerd.com/aff.php?aff=6884&pid=792'
           }
         ]
       ]
