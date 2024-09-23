@@ -81,6 +81,7 @@ const page = theme.value.page;
   }
 
   &__excerpt {
+    font-size: 15px;
     color: var(--vp-c-text-2);
     margin-bottom: 8px;
     display: -webkit-box;
