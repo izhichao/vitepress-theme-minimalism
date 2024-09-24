@@ -28,33 +28,46 @@ export default defineConfigWithTheme<ThemeConfig>({
     },
     ads: {
       asideOutlineAfter: [
-        {
-          title: '关注微信公众号',
-          img: 'https://minio.zhichao.org/assets/wechat.png'
-        }
+        [
+          {
+            title: 'Spotify - 每月低于 10 元',
+            img: 'https://minio.zhichao.org/assets/spotify.png',
+            link: 'https://nf.video/tST8B/?gid=4'
+          },
+          {
+            title: 'Netflix - 每月低至 25 元',
+            img: 'https://minio.zhichao.org/assets/netflix.png',
+            link: 'https://nf.video/tST8B/?gid=1'
+          }
+        ]
       ],
       sidebarNavAfter: [
         {
-          title: '关注微信公众号',
-          img: 'https://minio.zhichao.org/assets/wechat.png'
+          title: 'ouo.io - 縮短網址也可以賺錢',
+          img: 'https://ouo.io/images/banners/r5.jpg',
+          link: 'https://ouo.io/ref/QQbUaFAo'
         }
       ],
       docAfter: [
+        {
+          title: '关注微信公众号',
+          img: 'https://minio.zhichao.org/assets/wechat-big.png'
+        },
         [
           {
             title: 'V.PS- 美国 CN2 GIA / 9929 / CMIN2 顶级线路',
             img: 'https://minio.zhichao.org/assets/vps.png',
-            link: 'https://vps.hosting/?cmd=cart&action=add&affid=816&id=144'
+            link: 'https://link.zhichao.org/vps'
           },
           {
             title: '搬瓦工 - 美国 CN2 优化线路',
             img: 'https://minio.zhichao.org/assets/bwh.png',
-            link: 'https://bwh81.net/aff.php?aff=46644&pid=44'
+            link: 'https://link.zhichao.org/bwh'
           },
           {
             title: 'RackNerd - 美国 163 直连线路',
             img: 'https://minio.zhichao.org/assets/rn.png',
-            link: 'https://my.racknerd.com/aff.php?aff=6884&pid=792'
+            link: 'https://link.zhichao.org/rn'
           }
         ]
       ]
