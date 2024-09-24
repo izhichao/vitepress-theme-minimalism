@@ -8,6 +8,15 @@
   --vp-code-line-number-color: rgba(235, 235, 245, 0.38);
   --shiki-light: #d4d4d4;
   --font-family-number: 'Noto Sans', 'Roboto Mono', 'Roboto', 'Microsoft YaHei', 'Arial', 'sans-serif';
+  // Nav 透明度
+  --vp-nav-bg-color: rgba(255, 255, 255, 0.7);
+  --vp-local-nav-bg-color: rgba(255, 255, 255, 0.7);
+}
+
+.dark {
+  // Nav 透明度
+  --vp-nav-bg-color: rgba(27, 27, 31, 0.7);
+  --vp-local-nav-bg-color: rgba(27, 27, 31, 0.7);
 }
 
 // 整体布局
@@ -47,9 +56,36 @@ pre::-webkit-scrollbar {
 .VPFooter {
   transition: none !important;
   border: none !important;
+}
 
-  .divider {
-    display: none;
+// Nav 高斯模糊 / 分割线
+.VPLocalNav {
+  backdrop-filter: blur(10px);
+}
+
+.VPNavBar {
+  &:not(.has-sidebar) {
+    backdrop-filter: blur(10px);
+  }
+
+  &.has-sidebar {
+    .content-body {
+      backdrop-filter: blur(10px);
+    }
+  }
+}
+
+@media (min-width: 960px) {
+  .VPNavBar {
+    &:not(.has-sidebar) {
+      &:not(.top) {
+        box-shadow: 0 0.3125rem 0.3125rem -0.3125rem rgba(0, 0, 0, 0.117);
+      }
+
+      .divider {
+        display: none;
+      }
+    }
   }
 }
 
