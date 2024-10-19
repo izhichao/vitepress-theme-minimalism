@@ -3,11 +3,13 @@
     <div>
       <div class="post__title">
         <span class="post__pinned" v-if="post.order && type !== 'category'">
-            {{ post.pinned || page?.pinned || '[置顶]' }}
+          {{ post.pinned || page?.pinned || '[置顶]' }}
         </span>
         <a :href="withBase(post.permalink)">{{ post.title }}</a>
       </div>
-      <div class="post__excerpt" v-if="post.excerpt">{{ post.excerpt }}</div>
+      <div class="post__excerpt" v-if="post.excerpt">
+        <a :href="withBase(post.permalink)">{{ post.excerpt }}</a>
+      </div>
     </div>
     <div>
       <span class="iconfont">&#xe7eb;</span>
