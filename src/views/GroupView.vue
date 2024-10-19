@@ -62,11 +62,14 @@ const { ads, adsense } = useAds();
 const { theme } = useData();
 const { keys, data: posts } = useGroup(theme.value?.posts || [], props.type);
 
-const url = location.href.split('?')[1];
-const params = new URLSearchParams(url);
+const url = location.href.split('?')[0];
+const search = location.href.split('?')[1];
+const params = new URLSearchParams(search);
 const select = ref(params.get(props.type) || '');
-const handleChange = (tag: string) => {
-  select.value = tag;
+const handleChange = (link: string) => {
+  select.value = link;
+  const newUrl = `${url}?${props.type}=${link.replaceAll('&', '%26')}`;
+  window.history.replaceState(null, '', newUrl);
 };
 </script>
 
