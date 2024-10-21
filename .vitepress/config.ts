@@ -3,10 +3,10 @@ import { usePosts } from '../src/composables/usePosts';
 import type { ThemeConfig } from '../src/types';
 
 const { posts, rewrites } = await usePosts({
-  pageSize: 7,
+  pageSize: 6,
   homepage: false,
   srcDir: 'posts',
-  autoExcerpt: 50
+  autoExcerpt: 150
 });
 
 export default defineConfigWithTheme<ThemeConfig>({
@@ -19,8 +19,7 @@ export default defineConfigWithTheme<ThemeConfig>({
   themeConfig: {
     posts,
     page: {
-      max: 5,
-      pinned: '[置顶]'
+      max: 5
     },
     comment: {
       serverURL: 'https://domain.com',
@@ -75,23 +74,23 @@ export default defineConfigWithTheme<ThemeConfig>({
     logo: '/profile.png',
     outline: { level: 2 },
     nav: [
-      { text: 'Home', link: '/' },
-      { text: 'Posts', link: '/page-1' },
-      { text: 'Docs', link: '/docs/doc1' },
-      { text: 'Category', link: '/category' },
-      { text: 'Archives', link: '/archives' },
-      { text: 'Tags', link: '/tags' }
+      { text: '首页', link: '/' },
+      { text: '文章', link: '/page-1' },
+      { text: '文档', link: '/docs/doc1' },
+      { text: '分类', link: '/category' },
+      { text: '标签', link: '/tags' },
+      { text: '归档', link: '/archives' }
     ],
     sidebar: {
       '/docs': [
         {
-          text: 'Docs',
+          text: '如何使用电饭煲',
           items: [
-            { text: 'Doc 1', link: '/docs/doc1' },
-            { text: 'Doc 2', link: '/docs/doc2' },
-            { text: 'Doc 3', link: '/docs/doc3' },
-            { text: 'Doc 4', link: '/docs/doc4' },
-            { text: 'Doc 5', link: '/docs/doc5' }
+            { text: '选择合适的电饭煲', link: '/docs/doc1' },
+            { text: '煮出松软米饭的技巧', link: '/docs/doc2' },
+            { text: '电饭煲的多功能用途', link: '/docs/doc3' },
+            { text: '电饭煲的清洁与保养', link: '/docs/doc4' },
+            { text: '电饭煲常见问题处理', link: '/docs/doc5' }
           ]
         }
       ]
