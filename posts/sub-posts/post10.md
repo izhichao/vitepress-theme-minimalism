@@ -1,18 +1,16 @@
 ---
-title: 文章 10 - 摘要 demo
+title: 一杯茶的时光
 datetime: '2023-10-10 10:00:00'
 permalink: /posts/36fb63
 outline: deep
 category: 子文章
 tags:
-  - 文章 10
+  - 一杯茶的时光
 next:
-  text: 文章 9 - 图片 demo
+  text: 音乐的魔力
   link: /posts/0e1cd7
 ---
 
-# 文章 10 - 摘要 demo
-Lorem ipsum dolor sit amet consectetur adipisicing elit. Soluta voluptas consectetur voluptatibus quos corporis culpa esse iure dolor pariatur minus! Ea commodi odit omnis fuga recusandae modi harum quidem vero.lorem
-Lorem ipsum dolor, sit amet consectetur adipisicing elit. Placeat aliquam suscipit, reiciendis quam ut iure esse aspernatur architecto tempore non error cum vero velit consequuntur accusamus doloremque fugiat. Necessitatibus, quam.
-Lorem ipsum dolor sit amet consectetur adipisicing elit. Sed et odio expedita asperiores, tempore corporis ad perferendis assumenda temporibus saepe ipsam inventore cupiditate animi, perspiciatis doloremque ex minus cum ullam.
-<!-- more -->
+# 一杯茶的时光
+
+泡一杯茶，静待水开，是我最喜欢的放松方式。每当茶香四溢，我都会感到心灵的平静。选择一款合适的茶叶，注入热水的瞬间，香气飘散，似乎将所有的烦恼都驱散了。品味茶的过程，如同品味生活的点滴，细腻而深刻。无论是忙碌的一天，还是闲适的周末，茶总能让我找到片刻的宁静，享受生活的美好。茶的温度和滋味，像是时光的延续，伴随我度过每一个平凡的日子。
