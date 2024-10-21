@@ -41,9 +41,10 @@ const emit = defineEmits(['change']);
       background-color: var(--vp-c-gutter);
     }
 
+    // 数字
     span {
       color: var(--vp-c-brand);
-      font-weight: 600;
+      font-weight: 700;
     }
   }
 

@@ -1,5 +1,5 @@
 @import './post.less';
-@import './iconfont.less';
+@import './font.less';
 :root {
   // 白天模式下 代码块背景颜色
   --vp-code-block-bg: rgb(30, 30, 30);
@@ -7,7 +7,9 @@
   --vp-code-lang-color: rgba(235, 235, 245, 0.38);
   --vp-code-line-number-color: rgba(235, 235, 245, 0.38);
   --shiki-light: #d4d4d4;
-  --font-family-number: 'Noto Sans', 'Roboto Mono', 'Roboto', 'Microsoft YaHei', 'Arial', 'sans-serif';
+  --vp-font-family-base: 'HarmonyOS Sans', 'Inter', ui-sans-serif, system-ui, sans-serif, 'Apple Color Emoji',
+    'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji';
+  --font-family-number: 'HarmonyOS Sans', 'Noto Sans', 'Roboto Mono', 'Roboto', 'Microsoft YaHei', 'Arial', 'sans-serif';
   // Nav 透明度
   --vp-nav-bg-color: rgba(255, 255, 255, 0.7);
   --vp-local-nav-bg-color: rgba(255, 255, 255, 0.7);
@@ -143,13 +145,14 @@ pre::-webkit-scrollbar {
   h1,
   h2,
   h3 {
+    font-weight: 700;
     .header-anchor {
       top: auto;
     }
 
     a {
       &:not(.header-anchor) {
-        font-weight: 600;
+        font-weight: 700;
         color: var(--vp-c-text-1);
 
         &:hover {

@@ -82,7 +82,7 @@ const handleChange = (link: string) => {
 }
 
 .bold {
-  font-weight: 600;
+  font-weight: 700;
 }
 
 @media screen and (max-width: 768px) {
