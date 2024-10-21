@@ -83,7 +83,7 @@ const page = theme.value.page;
   }
 
   &__excerpt {
-    font-size: 15px;
+    font-size: 0.9375rem;
     color: var(--vp-c-text-2);
     margin-bottom: 8px;
     display: -webkit-box;
