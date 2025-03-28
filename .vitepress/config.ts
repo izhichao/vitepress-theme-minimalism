@@ -104,7 +104,6 @@ export default defineConfigWithTheme<ThemeConfig>({
     search: { provider: 'local' }
   },
   markdown: {
-    theme: 'dark-plus',
     lineNumbers: true
   },
   srcExclude: ['README.md', 'README_en-US.md']
