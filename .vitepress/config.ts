@@ -1,7 +1,6 @@
 import { defineConfigWithTheme } from 'vitepress';
 import { usePosts } from '../src/composables/usePosts';
 import type { ThemeConfig } from '../src/types';
-
 const { posts, rewrites } = await usePosts({
   pageSize: 6,
   homepage: false,
@@ -51,24 +50,7 @@ export default defineConfigWithTheme<ThemeConfig>({
         {
           title: '关注微信公众号',
           img: 'https://minio.zhichao.org/assets/wechat-big.png'
-        },
-        [
-          {
-            title: 'V.PS- 美国 CN2 GIA / 9929 / CMIN2 顶级线路',
-            img: 'https://minio.zhichao.org/assets/vps.png',
-            link: 'https://link.zhichao.org/vps'
-          },
-          {
-            title: '搬瓦工 - 美国 CN2 优化线路',
-            img: 'https://minio.zhichao.org/assets/bwh.png',
-            link: 'https://link.zhichao.org/bwh'
-          },
-          {
-            title: 'RackNerd - 美国 163 直连线路',
-            img: 'https://minio.zhichao.org/assets/rn.png',
-            link: 'https://link.zhichao.org/rn'
-          }
-        ]
+        }
       ]
     },
     logo: '/profile.png',
@@ -99,7 +81,7 @@ export default defineConfigWithTheme<ThemeConfig>({
     footer: {
       message:
         'Theme by <a href="https://github.com/izhichao/vitepress-theme-minimalism" target="_blank">Minimalism</a>',
-      copyright: 'Copyright © 2017-2024 <a href="https://github.com/izhichao" target="_blank">只抄</a>'
+      copyright: 'Copyright © 2017-2025 <a href="https://github.com/izhichao" target="_blank">只抄</a>'
     },
     search: { provider: 'local' }
   },
