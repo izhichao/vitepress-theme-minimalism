@@ -20,35 +20,6 @@ export default defineConfigWithTheme<ThemeConfig>({
     page: {
       max: 5
     },
-    ads: {
-      asideOutlineAfter: [
-        [
-          {
-            title: 'Spotify - 每月低于 10 元',
-            img: 'https://minio.zhichao.org/assets/spotify.png',
-            link: 'https://nf.video/tST8B/?gid=4'
-          },
-          {
-            title: 'Netflix - 每月低至 25 元',
-            img: 'https://minio.zhichao.org/assets/netflix.png',
-            link: 'https://nf.video/tST8B/?gid=1'
-          }
-        ]
-      ],
-      sidebarNavAfter: [
-        {
-          title: 'ouo.io - 縮短網址也可以賺錢',
-          img: 'https://ouo.io/images/banners/r5.jpg',
-          link: 'https://ouo.io/ref/QQbUaFAo'
-        }
-      ],
-      docAfter: [
-        {
-          title: '关注微信公众号',
-          img: 'https://minio.zhichao.org/assets/wechat-big.png'
-        }
-      ]
-    },
     logo: '/profile.png',
     outline: { level: 2 },
     nav: [
