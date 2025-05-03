@@ -54,23 +54,9 @@ export interface IAd {
   link?: string;
 }
 
-export interface IAds {
-  sidebarNavBefore?: (IAd | IAd[])[];
-  sidebarNavAfter?: (IAd | IAd[])[];
-  asideOutlineBefore?: (IAd | IAd[])[];
-  asideOutlineAfter?: (IAd | IAd[])[];
-  docBefore?: (IAd | IAd[])[];
-  docAfter?: (IAd | IAd[])[];
-}
-
 export interface IAdsense {
-  client?: string;
-  sidebarNavBefore?: string;
-  sidebarNavAfter?: string;
-  asideOutlineBefore?: string;
-  asideOutlineAfter?: string;
-  docBefore?: string;
-  docAfter?: string;
+  client: string;
+  slot: string;
 }
 
 export interface IGroup {
@@ -80,7 +66,4 @@ export interface IGroup {
 export interface ThemeConfig extends DefaultTheme.Config {
   posts?: IPost[];
   page?: IPage;
-  comment?: ICommnet;
-  ads?: IAds;
-  adsense?: IAdsense;
 }

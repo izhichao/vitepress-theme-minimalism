@@ -1,12 +1,7 @@
 <template>
   <div class="ZCContainer">
     <div class="ZCContent">
-      <AdItem
-        v-if="ads?.docBefore || adsense?.docBefore"
-        :ads="ads?.docBefore"
-        :adsense="{ client: adsense?.client, slot: adsense?.docBefore }"
-        type="doc"
-      />
+      <slot name="docBefore"></slot>
       <template v-if="type === 'archives'">
         <template v-for="year in keys" :key="year">
           <div class="title">{{ year }}</div>
@@ -21,13 +16,7 @@
         <PostList v-if="type === 'category'" :posts="posts[select]" :type="type" />
         <PostListLite v-else-if="type === 'tags'" :posts="posts[select]" date="full" />
       </template>
-
-      <AdItem
-        v-if="ads?.docAfter || adsense?.docAfter"
-        :ads="ads?.docAfter"
-        :adsense="{ client: adsense?.client, slot: adsense?.docAfter }"
-        type="doc"
-      />
+      <slot name="docAfter"></slot>
     </div>
   </div>
 </template>
@@ -35,9 +24,7 @@
 <script lang="ts" setup>
 import { ref } from 'vue';
 import { useData } from 'vitepress';
-import { useAds } from '../composables/useAds';
 import { useGroup } from '../composables/useGroup';
-import AdItem from '../components/AdItem.vue';
 import LinkList from '../components/LinkList.vue';
 import PostList from '../components/PostList.vue';
 import PostListLite from '../components/PostListLite.vue';
@@ -58,7 +45,6 @@ const titles = {
   en: 'Category: '
 };
 
-const { ads, adsense } = useAds();
 const { theme } = useData();
 const { keys, data: posts } = useGroup(theme.value?.posts || [], props.type);
 

@@ -1,5 +1,5 @@
 <template>
-  <div class="amazing" v-if="ads">
+  <div class="amazing" v-if="custom">
     <a
       class="amazing__link"
       :style="{ 'pointer-events': item.link ? 'auto' : 'none' }"
@@ -27,7 +27,7 @@ import { PropType, computed, onMounted } from 'vue';
 import { IAd } from '../types';
 
 const props = defineProps({
-  ads: Array<IAd | IAd[]>,
+  custom: Array<IAd | IAd[]>,
   adsense: Object as PropType<{ client: string; slot: string }>,
   type: String as PropType<'sidebar' | 'aside' | 'doc'>
 });
@@ -35,8 +35,8 @@ const props = defineProps({
 // ads
 const computedAds = computed(() => {
   const newArr: IAd[] = [];
-  if (props.ads) {
-    props.ads.forEach((item) => {
+  if (props.custom) {
+    props.custom.forEach((item) => {
       // ramdom ads
       if (Array.isArray(item)) {
         const random = item[Math.floor(Math.random() * item.length)];
