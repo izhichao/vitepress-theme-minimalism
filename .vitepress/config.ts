@@ -20,10 +20,6 @@ export default defineConfigWithTheme<ThemeConfig>({
     page: {
       max: 5
     },
-    comment: {
-      serverURL: 'https://domain.com',
-      reaction: true
-    },
     ads: {
       asideOutlineAfter: [
         [
