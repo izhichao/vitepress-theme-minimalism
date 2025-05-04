@@ -1,12 +1,12 @@
 <template>
   <div class="info" v-if="$frontmatter.datetime">
     <div class="date">
-      <span class="iconfont">&#xe7eb;</span>
+      <Icon class="iconify" icon="mingcute:time-line" />
       <span>{{ $frontmatter.datetime.substring(0, 16) }}</span>
     </div>
     <div>
       <template v-if="$frontmatter.tags">
-        <span class="iconfont">&#xe869;</span>
+        <Icon class="iconify" icon="mingcute:tag-line" />
         <a
           :href="withBase(`${outDir}/tags.html?tags=${item.replaceAll('&', '%26')}`)"
           v-for="item in $frontmatter.tags"
@@ -16,7 +16,7 @@
         </a>
       </template>
       <template v-if="$frontmatter.category">
-        <span class="iconfont">&#xe86d;</span>
+        <Icon class="iconify" icon="iconamoon:category" />
         <a
           :href="withBase(`${outDir}/category.html?category=${$frontmatter.category.replaceAll('&', '%26')}`)"
           class="category"
@@ -31,20 +31,19 @@
 <script lang="ts" setup>
 import { withBase } from 'vitepress';
 import { useOutDir } from '../composables/useOutDir';
+import { Icon } from '@iconify/vue';
 const { outDir } = useOutDir();
 </script>
 
 <style lang="less" scoped>
+.iconify {
+  margin-right: 6px;
+}
+
 .info {
   display: flex;
   justify-content: space-between;
   margin-bottom: 16px;
-}
-
-.iconfont {
-  font-size: 14px;
-  margin-right: 6px;
-  vertical-align: bottom;
 }
 
 .date {

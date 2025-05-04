@@ -1,7 +1,7 @@
 <template>
   <div class="pagination" v-if="posts">
-    <a class="pagination__link iconfont" :href="withBase(homepage ? '/index.html' : '/page-1.html')" v-if="total > max">
-      &#xe86a;
+    <a class="pagination__link" :href="withBase(homepage ? '/index.html' : '/page-1.html')" v-if="total > max">
+      <Icon class="iconify" icon="material-symbols:keyboard-double-arrow-left-rounded" />
     </a>
     <a
       class="pagination__link"
@@ -12,13 +12,16 @@
     >
       {{ page }}
     </a>
-    <a class="pagination__link iconfont" :href="withBase(`/page-${total}.html`)" v-if="total > max">&#xe86b;</a>
+    <a class="pagination__link" :href="withBase(`/page-${total}.html`)" v-if="total > max">
+      <Icon class="iconify" icon="material-symbols:keyboard-double-arrow-right-rounded" />
+    </a>
   </div>
 </template>
 
 <script lang="ts" setup>
 import { ref } from 'vue';
 import { useData, withBase } from 'vitepress';
+import { Icon } from '@iconify/vue';
 
 const props = defineProps({
   pagination: { type: Number, required: true },
@@ -67,10 +70,10 @@ function findNeighbors(target: number, total: number, max: number) {
 </script>
 
 <style lang="less" scoped>
-.iconfont {
-  font-size: 14px;
-  vertical-align: bottom;
-  margin-right: 6px;
+.iconify {
+  width: 20px;
+  height: 20px;
+  vertical-align: -0.3rem;
 }
 
 .pagination {
