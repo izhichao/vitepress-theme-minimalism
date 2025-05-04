@@ -1,29 +1,34 @@
 <template>
   <div class="info" v-if="$frontmatter.datetime">
-    <div class="date">
+    <div class="date left">
       <Icon class="iconify" icon="mingcute:time-line" />
       <span>{{ $frontmatter.datetime.substring(0, 16) }}</span>
     </div>
-    <div>
-      <template v-if="$frontmatter.tags">
-        <Icon class="iconify" icon="mingcute:tag-line" />
-        <a
-          :href="withBase(`${outDir}/tags.html?tags=${item.replaceAll('&', '%26')}`)"
-          v-for="item in $frontmatter.tags"
-          class="tag"
-        >
-          {{ item }}
-        </a>
-      </template>
-      <template v-if="$frontmatter.category">
-        <Icon class="iconify" icon="iconamoon:category" />
-        <a
-          :href="withBase(`${outDir}/category.html?category=${$frontmatter.category.replaceAll('&', '%26')}`)"
-          class="category"
-        >
-          {{ $frontmatter.category }}
-        </a>
-      </template>
+    <div class="right">
+      <div class="tag">
+        <span v-if="$frontmatter.tags">
+          <Icon class="iconify" icon="mingcute:tag-line" />
+          <a
+            :href="withBase(`${outDir}/tags.html?tags=${item.replaceAll('&', '%26')}`)"
+            v-for="item in $frontmatter.tags"
+            class="tag__item"
+          >
+            {{ item }}
+          </a>
+        </span>
+      </div>
+
+      <div class="category">
+        <span v-if="$frontmatter.category">
+          <Icon class="iconify" icon="iconamoon:category" />
+          <a
+            :href="withBase(`${outDir}/category.html?category=${$frontmatter.category.replaceAll('&', '%26')}`)"
+            class="category__item"
+          >
+            {{ $frontmatter.category }}
+          </a>
+        </span>
+      </div>
     </div>
   </div>
 </template>
@@ -44,31 +49,44 @@ const { outDir } = useOutDir();
   display: flex;
   justify-content: space-between;
   margin-bottom: 16px;
+  color: var(--vp-c-text-2);
+  font-size: 14px;
+}
+
+.right {
+  display: flex;
+  gap: 10px;
 }
 
 .date {
-  font-size: 14px;
   font-weight: 500;
-  color: var(--vp-c-text-2);
 }
 
 .tag,
 .category {
-  font-size: 14px;
-  display: inline-block;
-  padding: 0 8px;
-  border-radius: 2px;
-  background-color: var(--vp-c-bg-alt);
-  color: var(--vp-c-text-2);
-  transition: 0.4s;
+  &__item {
+    display: inline-block;
+    padding: 0 8px;
+    border-radius: 2px;
+    background-color: var(--vp-c-bg-alt);
+    transition: 0.4s;
 
-  &:not(:last-of-type) {
-    margin-right: 8px;
+    &:not(:last-of-type) {
+      margin-right: 8px;
+    }
+
+    &:hover {
+      color: var(--vp-c-brand);
+      background-color: var(--vp-c-gutter);
+    }
   }
+}
 
-  &:hover {
-    color: var(--vp-c-brand);
-    background-color: var(--vp-c-gutter);
+@media (max-width: 768px) {
+  .info,
+  .right {
+    flex-direction: column;
+    gap: 8px;
   }
 }
 </style>
