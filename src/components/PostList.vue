@@ -12,10 +12,12 @@
       </div>
     </div>
     <div>
-      <span class="iconfont">&#xe7eb;</span>
-      <span class="post__date">{{ post.datetime.split(' ')[0] }}</span>
+      <span class="post__date">
+        <Icon class="iconify" icon="mingcute:time-line" />
+        <span class="post__date__item">{{ post.datetime.split(' ')[0] }}</span>
+      </span>
       <span class="post__category" v-if="post.category">
-        <span class="iconfont">&#xe86d;</span>
+        <Icon class="iconify" icon="iconamoon:category" />
         <a
           :href="withBase(`${outDir}/category.html?category=${post.category.replaceAll('&', '%26')}`)"
           class="post__category__item"
@@ -24,7 +26,7 @@
         </a>
       </span>
       <span class="post__tag" v-if="post.tags">
-        <span class="iconfont">&#xe869;</span>
+        <Icon class="iconify" icon="mingcute:tag-line" />
         <a
           :href="withBase(`${outDir}/tags.html?tags=${item.replaceAll('&', '%26')}`)"
           v-for="item in post.tags"
@@ -41,6 +43,7 @@
 import { useData, withBase } from 'vitepress';
 import { IPost } from '../types';
 import { useOutDir } from '../composables/useOutDir';
+import { Icon } from '@iconify/vue';
 const { outDir } = useOutDir();
 
 defineProps({
@@ -53,9 +56,7 @@ const page = theme.value.page;
 </script>
 
 <style lang="less" scoped>
-.iconfont {
-  font-size: 14px;
-  vertical-align: bottom;
+.iconify {
   margin-right: 6px;
 }
 
@@ -93,15 +94,20 @@ const page = theme.value.page;
     text-overflow: ellipsis;
   }
 
-  &__date {
+  &__date,
+  &__view,
+  &__tag,
+  &__category {
     font-size: 14px;
+
+    &:not(:nth-of-type(1)) {
+      margin-left: 8px;
+    }
   }
 
   &__tag,
   &__category {
-    margin-left: 12px;
     &__item {
-      font-size: 14px;
       display: inline-block;
       padding: 0 8px;
       border-radius: 2px;
