@@ -13,6 +13,7 @@
   "author": "",
   "license": "ISC",
   "devDependencies": {
+    "@iconify/vue": "^5.0.0",
     "@types/node": "^20.6.0",
     "@types/remove-markdown": "^0.3.1",
     "@waline/client": "^3.1.3",
