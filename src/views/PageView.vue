@@ -1,12 +1,12 @@
 <template>
   <div class="ZCContainer">
     <div class="ZCContent">
-      <slot name="docBefore"></slot>
+      <slot name="doc-before"></slot>
       <template v-if="posts">
         <PostList :posts="posts" />
         <Pagination :pagination="pagination" :total="total" :homepage="homepage" />
       </template>
-      <slot name="docAfter"></slot>
+      <slot name="doc-after"></slot>
     </div>
   </div>
 </template>

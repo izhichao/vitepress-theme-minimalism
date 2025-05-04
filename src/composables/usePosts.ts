@@ -18,7 +18,9 @@ export const usePosts = async ({
   lang = 'zh',
   autoExcerpt = 0,
   prev = true,
-  next = true
+  next = true,
+  slot = '',
+  custom = ''
 }) => {
   const rewrites = {};
   try {
@@ -137,7 +139,7 @@ export const usePosts = async ({
     tagFlag && (await generateMd('tags', outDir, lang));
     categoryFlag && (await generateMd('category', outDir, lang));
 
-    await generatePages(outDir, lang, pageSize, homepage, paths.length);
+    await generatePages(outDir, lang, pageSize, homepage, paths.length, slot, custom);
 
     return { posts, rewrites };
   } catch (e) {
