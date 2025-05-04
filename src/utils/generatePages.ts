@@ -7,7 +7,9 @@ export const generatePages = async (
   lang?: string,
   pageSize?: number,
   homepage?: boolean,
-  total?: number
+  total?: number,
+  slot?: string,
+  custom?: string
 ) => {
   const indexPath = path.resolve(outDir, 'index.md');
 
@@ -21,7 +23,8 @@ export const generatePages = async (
 layout: page
 ---
 
-<Page :pagination="${i}" :total="${pageTotal}" :size="${pageSize}" :homepage="${homepage}" />
+<Page :pagination="${i}" :total="${pageTotal}" :size="${pageSize}" :homepage="${homepage}">${slot}</Page>
+${custom}
 `.trim();
     const pagePath = i === 1 && homepage ? indexPath : path.resolve(outDir, `page-${i}.md`);
     await fs.writeFile(pagePath, page);
