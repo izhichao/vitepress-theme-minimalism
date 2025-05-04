@@ -1,4 +1,4 @@
-import { defineConfigWithTheme } from 'vitepress';
+import { defineConfig } from 'vitepress';
 import { usePosts } from '../src/composables/usePosts';
 import type { ThemeConfig } from '../src/types';
 const { posts, rewrites } = await usePosts({
@@ -8,7 +8,7 @@ const { posts, rewrites } = await usePosts({
   autoExcerpt: 150
 });
 
-export default defineConfigWithTheme<ThemeConfig>({
+export default defineConfig<ThemeConfig>({
   title: '只抄',
   titleTemplate: 'VitePress Theme Minimalism',
   description: 'VitePress Theme Minimalism',
