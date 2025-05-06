@@ -24,11 +24,11 @@
 
 <script lang="ts" setup>
 import { PropType, computed, onMounted } from 'vue';
-import { IAd } from '../types';
+import { IAd, IAdsense } from '../types';
 
 const props = defineProps({
   custom: Array<IAd | IAd[]>,
-  adsense: Object as PropType<{ client: string; slot: string }>,
+  adsense: Object as PropType<IAdsense>,
   type: String as PropType<'sidebar' | 'aside' | 'doc'>
 });
 
