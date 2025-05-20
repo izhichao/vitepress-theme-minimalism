@@ -27,7 +27,7 @@ export const usePosts = async ({
     const paths = await fg(`${srcDir}/**/*.md`);
     let categoryFlag = false;
     let tagFlag = false;
-    const posts = await Promise.all(
+    let posts = await Promise.all(
       paths.map(async (postPath) => {
         const { data, excerpt, content } = matter.read(postPath, {
           excerpt: true,
@@ -68,7 +68,7 @@ export const usePosts = async ({
         rewrites[postPath.replace(/[+()]/g, '\\$&')] = `${data.permalink}.md`.slice(1).replace(/[+()]/g, '\\$&');
 
         // excerpt
-        const contents = data.description || removeMdPro(excerpt + '') || removeMdPro(content).slice(0, autoExcerpt);
+        const contents = data.desc || removeMdPro(excerpt + '') || removeMdPro(content).slice(0, autoExcerpt);
 
         return {
           ...data,
@@ -77,63 +77,72 @@ export const usePosts = async ({
       })
     );
 
-    // sort posts by datetime
-    posts.sort((a, b) => new Date(b.datetime).getTime() - new Date(a.datetime).getTime());
+    // 排序
+    posts = posts
+      .filter((post) => post.display !== 'none') // 过滤隐藏文章
+      .sort((a, b) => {
+        // 优先按置顶排序
+        if (a.order && b.order) return a.order - b.order;
+        if (a.order) return -1;
+        if (b.order) return 1;
+        // 再按时间降序
+        return new Date(b.datetime).getTime() - new Date(a.datetime).getTime();
+      });
 
-    // prev / next
+    // 上一篇 / 下一篇
     paths.map(async (postPath) => {
       const { data, content } = matter.read(postPath);
 
-      // remove pinned posts prev / next
-      if (data.order) {
+      const isHidden = data.display === 'none';
+      const isPinned = !!data.order;
+
+      // 如果是置顶或隐藏文章，清除 prev / next 后跳过处理
+      if (isPinned || isHidden) {
         if (data.prev || data.next) {
           delete data.prev;
           delete data.next;
           await writeMd(postPath, content, data);
-          return;
-        } else {
-          return;
         }
+        return;
       }
 
-      const postIndex = posts.findIndex((post) => post.permalink === data.permalink);
-      let prevPostIndex = postIndex - 1;
-      let nextPostIndex = postIndex + 1;
+      const index = posts.findIndex((post) => post.permalink === data.permalink);
 
-      // Find the previous post that is not pinned
-      while (prevPostIndex >= 0 && posts[prevPostIndex].order) {
-        prevPostIndex--;
-      }
+      // 向前查找：不是置顶的文章
+      const prevPost = posts
+        .slice(0, index)
+        .reverse()
+        .find((post) => !post.order);
+      // 向后查找：不是置顶也不是隐藏的文章
+      const nextPost = posts.slice(index + 1).find((post) => !post.order);
 
-      // Find the next post that is not pinned
-      while (nextPostIndex < posts.length && posts[nextPostIndex].order) {
-        nextPostIndex++;
-      }
+      let updated = false;
 
-      const prevPost = posts[prevPostIndex];
-      const nextPost = posts[nextPostIndex];
-
-      const prevDiff = data?.prev?.text !== prevPost?.title || data?.prev?.link !== prevPost?.permalink;
-      const nextDiff = data?.next?.text !== nextPost?.title || data?.next?.link !== nextPost?.permalink;
-
-      let flag = true;
-      if (prev && prevPost && prevDiff && !prevPost.order) {
-        data.prev = { text: prevPost.title, link: prevPost.permalink };
-        flag = true;
-      } else if (!prev || !prevPost || prevPost.order) {
+      if (prev && prevPost) {
+        const changed = !data.prev || data.prev.text !== prevPost.title || data.prev.link !== prevPost.permalink;
+        if (changed) {
+          data.prev = { text: prevPost.title, link: prevPost.permalink };
+          updated = true;
+        }
+      } else if (data.prev) {
         delete data.prev;
-        flag = true;
+        updated = true;
       }
 
-      if (next && nextPost && nextDiff) {
-        data.next = { text: nextPost.title, link: nextPost.permalink };
-        flag = true;
-      } else if (!next || !nextPost) {
+      if (next && nextPost) {
+        const changed = !data.next || data.next.text !== nextPost.title || data.next.link !== nextPost.permalink;
+        if (changed) {
+          data.next = { text: nextPost.title, link: nextPost.permalink };
+          updated = true;
+        }
+      } else if (data.next) {
         delete data.next;
-        flag = true;
+        updated = true;
       }
 
-      flag && (await writeMd(postPath, content, data));
+      if (updated) {
+        await writeMd(postPath, content, data);
+      }
     });
 
     tagFlag && (await generateMd('tags', outDir, lang));
