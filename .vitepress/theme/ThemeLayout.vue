@@ -19,23 +19,11 @@ import CommentItem from './components/CommentItem.vue';
 import type { IAd, IAdsense } from '../../src/types.ts';
 
 const ad: (IAd | IAd[])[] = [
-  [
-    {
-      title: 'V.PS- 美国 CN2 GIA / 9929 / CMIN2 顶级线路',
-      img: 'https://minio.zhichao.org/assets/vps.png',
-      link: 'https://link.zhichao.org/vps'
-    },
-    {
-      title: '搬瓦工 - 美国 CN2 优化线路',
-      img: 'https://minio.zhichao.org/assets/bwh.png',
-      link: 'https://link.zhichao.org/bwh'
-    },
-    {
-      title: 'RackNerd - 美国 163 直连线路',
-      img: 'https://minio.zhichao.org/assets/rn.png',
-      link: 'https://link.zhichao.org/rn'
-    }
-  ]
+  {
+    title: 'RackNerd - 洛杉矶 DC3 直连线路',
+    img: 'https://minio.zhichao.org/assets/rn.png',
+    link: 'https://link.zhichao.org/rn'
+  }
 ];
 
 const adsense: IAdsense = {
