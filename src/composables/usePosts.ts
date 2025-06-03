@@ -148,7 +148,7 @@ export const usePosts = async ({
     tagFlag && (await generateMd('tags', outDir, lang));
     categoryFlag && (await generateMd('category', outDir, lang));
 
-    await generatePages(outDir, lang, pageSize, homepage, paths.length, slot, custom);
+    await generatePages(outDir, lang, pageSize, homepage, posts.length, slot, custom);
 
     return { posts, rewrites };
   } catch (e) {
