@@ -28,11 +28,11 @@
 
 1. 文章列表作为主页（参考[演示站1](https://zhichao.org)）
 
-![vitepress-theme-minimalism1](https://minio.zhichao.org/images/vitepress-theme-minimalism1.webp)
+![vitepress-theme-minimalism1](https://zhichao.org/images/vitepress-theme-minimalism1.webp)
 
 2. 引导页作为主页（参考[演示站2](https://link.zhichao.org/vitepress)）
 
-![vitepress-theme-minimalism2](https://minio.zhichao.org/images/vitepress-theme-minimalism2.webp)
+![vitepress-theme-minimalism2](https://zhichao.org/images/vitepress-theme-minimalism2.webp)
 
 ## 感谢
 
