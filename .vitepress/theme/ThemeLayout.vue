@@ -21,7 +21,7 @@ import type { IAd, IAdsense } from '../../src/types.ts';
 const ad: (IAd | IAd[])[] = [
   {
     title: 'RackNerd - 洛杉矶 DC3 直连线路',
-    img: 'https://minio.zhichao.org/assets/rn.png',
+    img: 'https://zhichao.org/images/rn.png',
     link: 'https://link.zhichao.org/rn'
   }
 ];
