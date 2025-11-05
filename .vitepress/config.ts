@@ -4,22 +4,14 @@ import type { ThemeConfig } from '../src/types';
 
 const slot = `
 <template #doc-after>
-  <AdItem :custom="ad" type="doc" />
+  <AdItem :custom="ads" type="doc" />
 </template>
 `;
 
 const custom = `
 <script lang="ts" setup>
 import AdItem from '/src/components/AdItem.vue';
-import type { IAd } from '/src/types.ts';
-
-const ad: (IAd | IAd[])[] = [
-  {
-    title: 'RackNerd - 洛杉矶 DC3 直连线路',
-    img: 'https://zhichao.org/images/rn.png',
-    link: 'https://link.zhichao.org/rn'
-  }
-];
+import { ads } from '/src/ads.ts';
 </script>
 `;
 
