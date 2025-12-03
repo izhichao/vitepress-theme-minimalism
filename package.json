@@ -22,7 +22,7 @@
     "less": "^4.2.0",
     "medium-zoom": "^1.0.8",
     "remove-markdown": "^0.5.0",
-    "vitepress": "2.0.0-alpha.12",
+    "vitepress": "2.0.0-alpha.15",
     "vue": "^3.3.4"
   }
 }
