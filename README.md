@@ -4,7 +4,7 @@
 
 基于 VitePress 默认主题拓展了引导页、文章列表页、文章页、归档页、标签页，可以与默认主题的文档模式 (带 Sidebar) 完全兼容。
 
-[演示站1](https://zhichao.org) | [演示站2](https://link.zhichao.org/vitepress) | [使用文档](https://zhichao.org/posts/minimalism.html)
+[演示站1](https://zhichao.org) | [演示站2](https://vitepress.tsx.dpdns.org/) | [使用文档](https://zhichao.org/posts/minimalism.html)
 
 ## 功能
 
@@ -30,7 +30,7 @@
 
 ![vitepress-theme-minimalism1](https://zhichao.org/images/vitepress-theme-minimalism1.webp)
 
-2. 引导页作为主页（参考[演示站2](https://link.zhichao.org/vitepress)）
+2. 引导页作为主页（参考[演示站2](https://vitepress.tsx.dpdns.org/)）
 
 ![vitepress-theme-minimalism2](https://zhichao.org/images/vitepress-theme-minimalism2.webp)
 
@@ -42,3 +42,4 @@
 - [vitepress-blog-demo](https://github.com/brc-dd/vitepress-blog-demo) - 参考文章读取与摘要功能
 - [vitepress-blog-pure](https://github.com/airene/vitepress-blog-pure) - 参考博客样式
 - [waline](https://github.com/walinejs/waline) - 评论系统
+- [lumen](https://github.com/s-theo/lumen) - 分享功能
