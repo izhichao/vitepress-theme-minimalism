@@ -1,5 +1,8 @@
 <template>
   <Layout>
+    <template #aside-outline-before>
+      <ShareItem />
+    </template>
     <template #doc-after>
       <AdItem :custom="ads" type="doc" />
       <AdItem :adsense="adsense" type="doc" />
@@ -15,6 +18,7 @@
 import DefaultTheme from 'vitepress/theme';
 import PostInfoItem from '../../src/components/PostInfoItem.vue';
 import AdItem from '../../src/components/AdItem.vue';
+import ShareItem from '../../src/components/ShareItem.vue';
 import CommentItem from './components/CommentItem.vue';
 import type { IAdsense } from '../../src/types.ts';
 import { ads } from '../../src/ads.ts';
