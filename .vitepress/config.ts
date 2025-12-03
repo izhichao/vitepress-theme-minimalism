@@ -11,7 +11,7 @@ const slot = `
 const custom = `
 <script lang="ts" setup>
 import AdItem from '/src/components/AdItem.vue';
-import { ads } from '/src/ads.ts';
+import { ads } from '/.vitepress/theme/ads.ts';
 </script>
 `;
 

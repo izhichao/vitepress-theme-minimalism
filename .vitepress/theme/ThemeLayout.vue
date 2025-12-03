@@ -21,7 +21,7 @@ import AdItem from '../../src/components/AdItem.vue';
 import ShareItem from '../../src/components/ShareItem.vue';
 import CommentItem from './components/CommentItem.vue';
 import type { IAdsense } from '../../src/types.ts';
-import { ads } from '../../src/ads.ts';
+import { ads } from './ads.ts';
 
 const adsense: IAdsense = {
   client: 'XXXX',

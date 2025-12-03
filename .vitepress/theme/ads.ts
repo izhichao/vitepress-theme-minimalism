@@ -1,4 +1,4 @@
-import type { IAd } from './types.ts';
+import type { IAd } from '../../src/types.ts';
 
 export const ads: (IAd | IAd[])[] = [
   {
