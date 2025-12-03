@@ -5,6 +5,7 @@ import mediumZoom from 'medium-zoom';
 import Home from './views/HomeView.vue';
 import Group from './views/GroupView.vue';
 import Page from './views/PageView.vue';
+import Password from './views/PasswordView.vue';
 import './styles/index.less';
 
 export default {
@@ -13,6 +14,7 @@ export default {
     app.component('Home', Home);
     app.component('Group', Group);
     app.component('Page', Page);
+    app.component('Password', Password);
   },
   setup() {
     const route = useRoute();
