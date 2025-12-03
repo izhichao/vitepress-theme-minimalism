@@ -1,5 +1,5 @@
 ---
-title: 运动的乐趣
+title: 运动的乐趣（密码：vitepress-theme-minimalism）
 datetime: '2023-10-06 10:00:00'
 permalink: /posts/c10a87
 outline: deep

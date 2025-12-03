@@ -13,7 +13,8 @@ export const writeMd = async (path: string, content: string, data: { [key: strin
     'category',
     'tags',
     'prev',
-    'next'
+    'next',
+    'head'
   ];
   const newMarkdown = matter.stringify(content, data, {
     // @ts-ignore
