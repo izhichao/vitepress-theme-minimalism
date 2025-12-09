@@ -13,6 +13,7 @@
   "author": "",
   "license": "ISC",
   "devDependencies": {
+    "@bprogress/core": "^1.3.4",
     "@fancyapps/ui": "^6.1.7",
     "@iconify/vue": "^5.0.0",
     "@types/node": "^20.6.0",
