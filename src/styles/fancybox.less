@@ -1,0 +1,36 @@
+.fancybox__container {
+  --fancybox-backdrop-bg: none;
+  .f-carousel__toolbar {
+    --f-button-bg: none;
+    --f-button-hover-bg: rgba(var(--vp-c-bg-reverse-rgb), 0.1);
+    --f-button-color: rgba(var(--vp-c-bg-reverse-rgb), 1);
+    --f-button-hover-color: rgba(var(--vp-c-bg-reverse-rgb), 1);
+    --f-button-svg-disabled-opacity: 0.2;
+    background: rgba(var(--vp-c-bg-rgb), 0.2);
+  }
+
+  &::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 0;
+    bottom: 0;
+    right: 0;
+    background: rgba(var(--vp-c-bg-rgb), 0.5);
+    backdrop-filter: blur(10px);
+  }
+
+  .f-panzoom__content {
+    object-fit: initial;
+    border: solid 1px rgba(var(--vp-c-bg-reverse-rgb), 0.5);
+    border-radius: 10px;
+  }
+
+  .is-classic .is-nav-selected .f-thumbs__slide__button::after {
+    border-color: var(--vp-c-brand-1);
+  }
+
+  .f-caption {
+    color: var(--vp-c-text-1);
+  }
+}

@@ -13,6 +13,7 @@
   "author": "",
   "license": "ISC",
   "devDependencies": {
+    "@fancyapps/ui": "^6.1.7",
     "@iconify/vue": "^5.0.0",
     "@types/node": "^20.6.0",
     "@types/remove-markdown": "^0.3.1",
@@ -20,7 +21,6 @@
     "fast-glob": "^3.3.1",
     "gray-matter": "^4.0.3",
     "less": "^4.2.0",
-    "medium-zoom": "^1.0.8",
     "remove-markdown": "^0.5.0",
     "vitepress": "2.0.0-alpha.15",
     "vue": "^3.3.4"

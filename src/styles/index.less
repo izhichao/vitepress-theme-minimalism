@@ -1,15 +1,20 @@
 @import './post.less';
+@import './fancybox.less';
 
 :root {
   // Nav 透明度
   --vp-nav-bg-color: rgba(255, 255, 255, 0.7);
   --vp-local-nav-bg-color: rgba(255, 255, 255, 0.7);
+  --vp-c-bg-rgb: 255, 255, 255;
+  --vp-c-bg-reverse-rgb: 27, 27, 31;
 }
 
 .dark {
   // Nav 透明度
   --vp-nav-bg-color: rgba(27, 27, 31, 0.7);
   --vp-local-nav-bg-color: rgba(27, 27, 31, 0.7);
+  --vp-c-bg-rgb: 27, 27, 31;
+  --vp-c-bg-reverse-rgb: 255, 255, 255;
 }
 
 svg {
@@ -43,16 +48,6 @@ pre::-webkit-scrollbar {
       background-color: rgba(128, 128, 128, 0.8);
     }
   }
-}
-
-// 图片放大样式
-.medium-zoom-overlay {
-  z-index: 30;
-}
-
-.medium-zoom-image {
-  border-radius: 10px;
-  z-index: 31;
 }
 
 // 去除 Nav Footer 边框/过渡
