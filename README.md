@@ -43,3 +43,4 @@
 - [vitepress-blog-pure](https://github.com/airene/vitepress-blog-pure) - 参考博客样式
 - [waline](https://github.com/walinejs/waline) - 评论系统
 - [lumen](https://github.com/s-theo/lumen) - 分享功能
+- [VitePress 添加图片查看器 Fancybox](https://note.weizwz.com/vitepress/extend/vitepress-fancybox)

@@ -8,6 +8,9 @@ importers:
 
   .:
     devDependencies:
+      '@fancyapps/ui':
+        specifier: ^6.1.7
+        version: 6.1.7
       '@iconify/vue':
         specifier: ^5.0.0
         version: 5.0.0(vue@3.5.13)
@@ -29,9 +32,6 @@ importers:
       less:
         specifier: ^4.2.0
         version: 4.3.0
-      medium-zoom:
-        specifier: ^1.0.8
-        version: 1.1.0
       remove-markdown:
         specifier: ^0.5.0
         version: 0.5.5
@@ -229,6 +229,9 @@ packages:
     engines: {node: '>=18'}
     cpu: [x64]
     os: [win32]
+
+  '@fancyapps/ui@6.1.7':
+    resolution: {integrity: sha512-KHOvuy90JBFDgbNa2V1N9Jg7PE/lSQMXN9VbhR+WQSIxIEi4PV7kndeao7ezir5WeJ8OZRyDelNKJVLicXfBIg==}
 
   '@iconify-json/simple-icons@1.2.61':
     resolution: {integrity: sha512-DG6z3VEAxtDEw/SuZssZ/E8EvhjBhFQqxpEo3uckRKiia3LfZHmM4cx4RsaO2qX1Bqo9uadR5c/hYavvUQVuHw==}
@@ -782,9 +785,6 @@ packages:
   mdast-util-to-hast@13.2.0:
     resolution: {integrity: sha512-QGYKEuUsYT9ykKBCMOEDLsU5JRObWQusAolFMeko/tYPufNkRffBAQjIE+99jbA87xv6FgmjLtwjh9wBWajwAA==}
 
-  medium-zoom@1.1.0:
-    resolution: {integrity: sha512-ewyDsp7k4InCUp3jRmwHBRFGyjBimKps/AJLjRSox+2q/2H4p/PNpQf+pwONWlJiOudkBXtbdmVbFjqyybfTmQ==}
-
   merge2@1.4.1:
     resolution: {integrity: sha512-8q7VEgMJW4J8tcfVPy8g09NcQwZdbwFEqhe/WZkoIzjn/3TGDwtOCYtXGxA3O8tPzpczCCDgv+P2P5y00ZJOOg==}
     engines: {node: '>= 8'}
@@ -1171,6 +1171,8 @@ snapshots:
 
   '@esbuild/win32-x64@0.25.3':
     optional: true
+
+  '@fancyapps/ui@6.1.7': {}
 
   '@iconify-json/simple-icons@1.2.61':
     dependencies:
@@ -1736,8 +1738,6 @@ snapshots:
       unist-util-position: 5.0.0
       unist-util-visit: 5.0.0
       vfile: 6.0.3
-
-  medium-zoom@1.1.0: {}
 
   merge2@1.4.1: {}
 
