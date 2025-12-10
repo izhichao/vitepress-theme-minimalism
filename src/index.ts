@@ -9,6 +9,7 @@ import { bindFancybox, destroyFancybox } from './utils/fancybox';
 import { BProgress } from '@bprogress/core';
 import '@bprogress/core/css';
 import './styles/index.less';
+import PostMeta from './components/PostMeta.vue';
 
 export default {
   extends: DefaultTheme,
@@ -17,6 +18,7 @@ export default {
     app.component('Group', Group);
     app.component('Page', Page);
     app.component('Password', Password);
+    app.component('PostMeta', PostMeta);
     if (inBrowser) {
       BProgress.configure({ showSpinner: false });
       router.onBeforeRouteChange = () => {

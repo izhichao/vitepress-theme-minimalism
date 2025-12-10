@@ -31,6 +31,7 @@ export default defineConfig<ThemeConfig>({
   rewrites,
   cleanUrls: true,
   ignoreDeadLinks: true,
+  lastUpdated: true,
   themeConfig: {
     posts,
     page: {
@@ -69,7 +70,16 @@ export default defineConfig<ThemeConfig>({
     search: { provider: 'local' }
   },
   markdown: {
-    lineNumbers: true
+    lineNumbers: true,
+    config: (md) => {
+      md.use((md) => {
+        md.renderer.rules.heading_close = (tokens, idx, options, env, slf) => {
+          let htmlResult = slf.renderToken(tokens, idx, options);
+          if (tokens[idx].tag === 'h1') htmlResult += `<PostMeta />`;
+          return htmlResult;
+        };
+      });
+    }
   },
   srcExclude: ['README.md', 'README_en-US.md']
 });
