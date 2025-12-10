@@ -8,15 +8,11 @@
       <AdItem :adsense="adsense" type="doc" />
       <CommentItem />
     </template>
-    <template #doc-footer-before>
-      <PostInfoItem />
-    </template>
   </Layout>
 </template>
 
 <script lang="ts" setup>
 import DefaultTheme from 'vitepress/theme';
-import PostInfoItem from '../../src/components/PostInfoItem.vue';
 import AdItem from '../../src/components/AdItem.vue';
 import ShareItem from '../../src/components/ShareItem.vue';
 import CommentItem from './components/CommentItem.vue';
