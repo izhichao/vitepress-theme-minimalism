@@ -36,7 +36,6 @@ const emit = defineEmits(['change']);
   flex-wrap: wrap;
   gap: 0.5rem;
   -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
-  -webkit-tap-highlight-color: transparent;
 
   &__item {
     display: inline-block;
@@ -53,15 +52,13 @@ const emit = defineEmits(['change']);
     &--tag {
       padding: 0.5rem 0.75rem;
       border-radius: 9999px;
-      // font-size: 0.875rem;
-      // font-size: 0.75rem;
       line-height: 1rem;
     }
 
     &:hover,
     &--active {
-      background-color: var(--vp-c-text-1);
-      color: var(--vp-c-bg-alt);
+      color: var(--vp-c-brand);
+      background-color: var(--vp-c-brand-soft);
     }
 
     // 数字
