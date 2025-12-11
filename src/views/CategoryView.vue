@@ -16,10 +16,10 @@
       <template v-if="tagTabs">
         <div class="title bold">标签</div>
         <TabList
-          @change="(tab) => handleChange(tab, 'tags')"
-          type="tags"
+          @change="(tab) => handleChange(tab, 'tag')"
+          type="tag"
           :tabs="tagTabs"
-          :selected="currentType === 'tags' ? select : null"
+          :selected="currentType === 'tag' ? select : null"
           :posts="tagPosts"
         />
       </template>
@@ -28,7 +28,7 @@
         {{ currentType === 'category' ? '分类：' : '标签：' }}{{ select }}
       </div>
       <PostList v-if="currentType === 'category'" :posts="categoryPosts[select]" type="category" />
-      <PostList v-else-if="currentType === 'tags'" :posts="tagPosts[select]" type="category" />
+      <PostList v-else-if="currentType === 'tag'" :posts="tagPosts[select]" type="category" />
 
       <slot name="doc-after"></slot>
     </div>
@@ -70,11 +70,11 @@ const params = new URLSearchParams(search);
 
 // 确定初始类型和选中值
 const initCategory = params.get('category');
-const initTag = params.get('tags');
+const initTag = params.get('tag');
 const select = ref(initCategory || initTag || '');
-const currentType = ref<'category' | 'tags'>(initCategory ? 'category' : 'tags');
+const currentType = ref<'category' | 'tag'>(initCategory ? 'category' : 'tag');
 
-const handleChange = (tab: string, type: 'category' | 'tags') => {
+const handleChange = (tab: string, type: 'category' | 'tag') => {
   select.value = tab;
   currentType.value = type;
   const newUrl = `${url}?${type}=${tab.replaceAll('&', '%26')}`;

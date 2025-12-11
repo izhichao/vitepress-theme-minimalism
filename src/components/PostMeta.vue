@@ -53,7 +53,7 @@
           <a
             v-for="tag in $frontmatter.tags"
             :key="tag"
-            :href="withBase(`${outDir}/tags.html?tags=${tag.replaceAll('&', '%26')}`)"
+            :href="withBase(`${outDir}/category.html?tag=${tag.replaceAll('&', '%26')}`)"
             class="post-info__badge post-info__badge--tag"
           >
             {{ tag }}
