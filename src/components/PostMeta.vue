@@ -86,10 +86,7 @@ function formatDate(datetime: string): string {
 .post-info {
   padding: 16px 20px;
   background-color: var(--vp-c-bg-soft);
-  // border-radius: 4px;
-  border: 1px solid var(--vp-c-gray-1);
-  border-left: 0;
-  border-right: 0;
+  border-radius: 1rem;
   margin: 20px 0;
 
   // 行容器
