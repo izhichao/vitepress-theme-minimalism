@@ -145,8 +145,8 @@ export const usePosts = async ({
       }
     });
 
-    tagFlag && (await generateMd('tags', outDir, lang));
-    categoryFlag && (await generateMd('category', outDir, lang));
+    // 生成分类页面
+    (categoryFlag || tagFlag) && (await generateMd('category', outDir));
 
     await generatePages(outDir, lang, pageSize, homepage, posts.length, slot, custom);
 

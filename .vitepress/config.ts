@@ -44,7 +44,6 @@ export default defineConfig<ThemeConfig>({
       { text: '文章', link: '/page-1' },
       { text: '文档', link: '/docs/doc1' },
       { text: '分类', link: '/category' },
-      { text: '标签', link: '/tags' },
       { text: '归档', link: '/archives' }
     ],
     sidebar: {

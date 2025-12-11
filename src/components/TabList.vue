@@ -15,7 +15,7 @@
 
 <script lang="ts" setup>
 import { PropType } from 'vue';
-import type { IGroup } from '../types';
+import type { IPostObject } from '../types';
 
 defineProps({
   type: {
@@ -23,7 +23,7 @@ defineProps({
     required: true
   },
   tabs: { type: Array as PropType<string[]>, required: true },
-  posts: Object as PropType<IGroup>,
+  posts: Object as PropType<IPostObject>,
   selected: { type: String as PropType<string | null>, default: null }
 });
 
