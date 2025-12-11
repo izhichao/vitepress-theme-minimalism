@@ -2,6 +2,7 @@ import type { IPost, IGroup } from '../types';
 
 export const useGroup = (posts: IPost[], type: string) => {
   const data: IGroup = {};
+
   posts.forEach((post) => {
     if (type === 'archives') {
       const year = new Date(post.datetime).getFullYear();
@@ -23,6 +24,24 @@ export const useGroup = (posts: IPost[], type: string) => {
   });
 
   return { keys, data };
+};
+
+export const useFilter = (posts: IPost[]) => {
+  const categoryPosts: IGroup = {};
+  const tagPosts: IGroup = {};
+
+  posts.forEach((post) => {
+    const category = post.category;
+    const tags = post.tags;
+
+    addToData(categoryPosts, category, post);
+    tags && tags.forEach((tag) => addToData(tagPosts, tag, post));
+  });
+
+  const categoryTabs = Object.keys(categoryPosts).sort((a, b) => a.localeCompare(b));
+  const tagTabs = Object.keys(tagPosts).sort((a, b) => a.localeCompare(b));
+
+  return { categoryTabs, tagTabs, categoryPosts, tagPosts };
 };
 
 function addToData(obj: IGroup, key: any, value: IPost) {
