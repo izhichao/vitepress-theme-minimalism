@@ -29,7 +29,7 @@ export interface IAdsense {
   slot: string;
 }
 
-export interface IGroup {
+export interface IPostObject {
   [key: string]: IPost[];
 }
 
