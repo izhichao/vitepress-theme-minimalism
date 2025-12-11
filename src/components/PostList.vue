@@ -28,7 +28,7 @@
       <span class="post__tag" v-if="post.tags">
         <Icon class="iconify" icon="mingcute:tag-line" />
         <a
-          :href="withBase(`${outDir}/tags.html?tags=${item.replaceAll('&', '%26')}`)"
+          :href="withBase(`${outDir}/category.html?tag=${item.replaceAll('&', '%26')}`)"
           v-for="item in post.tags"
           class="post__tag__item"
         >

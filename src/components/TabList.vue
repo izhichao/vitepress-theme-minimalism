@@ -5,7 +5,7 @@
       v-for="tab in tabs"
       :key="tab"
       class="tab__item"
-      :class="{ 'tab__item--active': selected === tab, 'tab__item--tag': type === 'tags' }"
+      :class="{ 'tab__item--active': selected === tab, 'tab__item--tag': type === 'tag' }"
     >
       {{ tab }}
       <span v-if="posts && type === 'category'">({{ posts[tab].length }})</span>
