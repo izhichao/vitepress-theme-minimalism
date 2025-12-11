@@ -14,7 +14,7 @@
     <a
       class="pagination__item pagination__item--nav"
       :class="{ 'pagination__item--disabled': pagination === 1 }"
-      :href="withBase(pagination === 1 ? (homepage ? '/index.html' : '/page-1.html') : `/page-${pagination - 1}.html`)"
+      :href="withBase(pagination === 2 && homepage ? '/index.html' : `/page-${pagination - 1}.html`)"
     >
       <Icon icon="mingcute:left-line" />
     </a>
@@ -34,7 +34,7 @@
     <a
       class="pagination__item pagination__item--nav"
       :class="{ 'pagination__item--disabled': pagination === total }"
-      :href="withBase(pagination === total ? `/page-${total}.html` : `/page-${pagination + 1}.html`)"
+      :href="withBase(`/page-${pagination + 1}.html`)"
     >
       <Icon icon="mingcute:right-line" />
     </a>
@@ -152,6 +152,27 @@ function findNeighbors(target: number, total: number, max: number) {
 
     &--page {
       min-width: 2.25rem;
+    }
+  }
+}
+
+@media screen and (max-width: 768px) {
+  .pagination {
+    gap: 0.25rem;
+
+    &__item {
+      min-width: 2rem;
+      height: 2rem;
+      font-size: 0.8125rem;
+
+      &--nav {
+        min-width: 2rem;
+        padding: 0 0.25rem;
+      }
+
+      &--page {
+        min-width: 2rem;
+      }
     }
   }
 }
