@@ -240,8 +240,7 @@ function formatDate(datetime: string): string {
     }
 
     &__badge {
-      font-size: 12px;
-      padding: 3px 12px;
+      font-size: 0.75rem;
     }
   }
 }
