@@ -4,7 +4,7 @@
       <!-- 标题和分类同一行 -->
       <div class="post-item__header">
         <h2 class="post-item__title">
-          <span v-if="post.order && type !== 'category'" class="post-item__pinned">
+          <span v-if="post.order && showPinned" class="post-item__pinned">
             <Icon class="post-item__pinned-icon" icon="mingcute:fire-fill" />
             HOT
           </span>
@@ -57,7 +57,7 @@
 </template>
 
 <script lang="ts" setup>
-import { useData, withBase } from 'vitepress';
+import { withBase } from 'vitepress';
 import { IPost } from '../types';
 import { useOutDir } from '../composables/useOutDir';
 import { Icon } from '@iconify/vue';
@@ -66,7 +66,7 @@ const { outDir } = useOutDir();
 
 defineProps({
   posts: Array<IPost>,
-  type: String
+  showPinned: { type: Boolean, default: true }
 });
 </script>
 
@@ -74,7 +74,7 @@ defineProps({
 .post-list {
   display: flex;
   flex-direction: column;
-  padding-top: 1rem;
+  padding-top: 1.5rem;
   gap: 1rem;
 }
 
@@ -92,6 +92,14 @@ defineProps({
   &:hover {
     border-color: var(--vp-c-brand-soft);
     box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px -1px rgba(0, 0, 0, 0.1);
+
+    & .post-item__title {
+      color: var(--vp-c-brand);
+    }
+
+    & .post-item__excerpt {
+      color: var(--vp-c-text-1);
+    }
   }
 
   &__header {
@@ -109,6 +117,7 @@ defineProps({
     line-height: 1.4;
     color: var(--vp-c-text-1);
     margin: 0;
+    transition: all 0.3s ease;
   }
 
   &__pinned {
@@ -162,11 +171,7 @@ defineProps({
     -webkit-box-orient: vertical;
     overflow: hidden;
     text-overflow: ellipsis;
-    transition: all 0.15s ease;
-
-    &:hover {
-      color: var(--vp-c-text-1);
-    }
+    transition: all 0.3s ease;
   }
 
   &__footer {

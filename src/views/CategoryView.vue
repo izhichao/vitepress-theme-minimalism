@@ -27,8 +27,8 @@
       <div v-show="select" class="title title--last bold">
         {{ currentType === 'category' ? '分类：' : '标签：' }}{{ select }}
       </div>
-      <PostList v-if="currentType === 'category'" :posts="categoryPosts[select]" type="category" />
-      <PostList v-else-if="currentType === 'tag'" :posts="tagPosts[select]" type="category" />
+      <PostList v-if="currentType === 'category'" :posts="categoryPosts[select]" :showPinned="false" />
+      <PostList v-else-if="currentType === 'tag'" :posts="tagPosts[select]" :showPinned="false" />
 
       <slot name="doc-after"></slot>
     </div>
