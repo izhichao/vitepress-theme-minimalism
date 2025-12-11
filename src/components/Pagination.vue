@@ -1,21 +1,54 @@
 <template>
-  <div class="pagination" v-if="posts">
-    <a class="pagination__link" :href="withBase(homepage ? '/index.html' : '/page-1.html')" v-if="total > max">
-      <Icon class="iconify" icon="material-symbols:keyboard-double-arrow-left-rounded" />
-    </a>
+  <nav class="pagination" v-if="posts">
+    <!-- First Page (只在超过max页时显示) -->
     <a
-      class="pagination__link"
+      v-if="total > max"
+      class="pagination__item pagination__item--nav"
+      :class="{ 'pagination__item--disabled': pagination === 1 }"
+      :href="withBase(homepage ? '/index.html' : '/page-1.html')"
+    >
+      <Icon icon="mingcute:arrows-left-line" />
+    </a>
+
+    <!-- Previous Page (始终显示) -->
+    <a
+      class="pagination__item pagination__item--nav"
+      :class="{ 'pagination__item--disabled': pagination === 1 }"
+      :href="withBase(pagination === 1 ? (homepage ? '/index.html' : '/page-1.html') : `/page-${pagination - 1}.html`)"
+    >
+      <Icon icon="mingcute:left-line" />
+    </a>
+
+    <!-- Page Numbers -->
+    <a
       v-for="page in pages"
       :key="page"
+      class="pagination__item pagination__item--page"
+      :class="{ 'pagination__item--active': pagination === page }"
       :href="withBase(page === 1 && homepage ? '/index.html' : `/page-${page}.html`)"
-      :class="{ 'pagination__link--active': pagination === page }"
     >
       {{ page }}
     </a>
-    <a class="pagination__link" :href="withBase(`/page-${total}.html`)" v-if="total > max">
-      <Icon class="iconify" icon="material-symbols:keyboard-double-arrow-right-rounded" />
+
+    <!-- Next Page (始终显示) -->
+    <a
+      class="pagination__item pagination__item--nav"
+      :class="{ 'pagination__item--disabled': pagination === total }"
+      :href="withBase(pagination === total ? `/page-${total}.html` : `/page-${pagination + 1}.html`)"
+    >
+      <Icon icon="mingcute:right-line" />
     </a>
-  </div>
+
+    <!-- Last Page (只在超过max页时显示) -->
+    <a
+      v-if="total > max"
+      class="pagination__item pagination__item--nav"
+      :class="{ 'pagination__item--disabled': pagination === total }"
+      :href="withBase(`/page-${total}.html`)"
+    >
+      <Icon icon="mingcute:arrows-right-line" />
+    </a>
+  </nav>
 </template>
 
 <script lang="ts" setup>
@@ -70,43 +103,55 @@ function findNeighbors(target: number, total: number, max: number) {
 </script>
 
 <style lang="less" scoped>
-.iconify {
-  width: 20px;
-  height: 20px;
-  vertical-align: -0.3rem;
-}
-
 .pagination {
   margin-top: 32px;
-  // margin-bottom: v-bind(margin_bottom);
   display: flex;
   justify-content: center;
+  align-items: center;
+  gap: 0.375rem;
 
-  &__link {
-    display: inline-block;
-    width: 36px;
-    height: 36px;
-    line-height: 34px;
-    text-align: center;
-    border: 1px var(--vp-c-divider) solid;
-    margin: 0 0.2rem;
-    font-weight: 400;
-    transition: color 0.3s, background 0.5s, border 0.5s;
+  &__item {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-width: 2.25rem;
+    height: 2.25rem;
+    padding: 0 0.5rem;
+    background-color: var(--vp-c-bg);
     color: var(--vp-c-text-1);
+    border: 1px solid var(--vp-c-divider);
+    border-radius: 0.375rem;
+    font-size: 0.875rem;
+    font-weight: 500;
+    text-decoration: none;
+    transition: all 0.2s ease;
+    cursor: pointer;
 
-    &:hover,
+    &:hover:not(&--disabled):not(&--active) {
+      background-color: var(--vp-c-bg-soft);
+      border-color: var(--vp-c-text-2);
+    }
+
     &--active {
-      color: var(--vp-c-bg-soft);
-      background: var(--vp-c-text-1);
-      border: 1px solid var(--vp-c-text-1);
+      background-color: var(--vp-c-text-1);
+      color: var(--vp-c-bg);
+      border-color: var(--vp-c-text-1);
+      cursor: default;
     }
 
-    &:first-of-type {
-      margin-left: 0;
+    &--disabled {
+      opacity: 0.4;
+      cursor: not-allowed;
+      pointer-events: none;
     }
 
-    &:last-of-type {
-      margin-right: 0;
+    &--nav {
+      padding: 0 0.375rem;
+      min-width: 2.25rem;
+    }
+
+    &--page {
+      min-width: 2.25rem;
     }
   }
 }
