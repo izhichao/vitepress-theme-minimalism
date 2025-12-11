@@ -35,6 +35,8 @@ const emit = defineEmits(['change']);
   display: flex;
   flex-wrap: wrap;
   gap: 0.5rem;
+  -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+  -webkit-tap-highlight-color: transparent;
 
   &__item {
     display: inline-block;
@@ -51,7 +53,8 @@ const emit = defineEmits(['change']);
     &--tag {
       padding: 0.5rem 0.75rem;
       border-radius: 9999px;
-      font-size: 0.75rem;
+      // font-size: 0.875rem;
+      // font-size: 0.75rem;
       line-height: 1rem;
     }
 
