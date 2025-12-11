@@ -3,6 +3,7 @@ import { EnhanceAppContext, inBrowser } from 'vitepress';
 import DefaultTheme from 'vitepress/theme';
 import Home from './views/HomeView.vue';
 import Group from './views/GroupView.vue';
+import Category from './views/CategoryView.vue';
 import Page from './views/PageView.vue';
 import Password from './views/PasswordView.vue';
 import { bindFancybox, destroyFancybox } from './utils/fancybox';
@@ -16,6 +17,7 @@ export default {
   enhanceApp({ app, router }: EnhanceAppContext) {
     app.component('Home', Home);
     app.component('Group', Group);
+    app.component('Category', Category);
     app.component('Page', Page);
     app.component('Password', Password);
     app.component('PostMeta', PostMeta);

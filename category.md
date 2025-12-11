@@ -3,11 +3,11 @@ title: 分类
 layout: page
 ---
 
-<Group type='category' lang='zh'>
+<Category>
   <template #doc-after>
     <AdItem :custom="ads" type="doc" />
   </template>
-</Group>
+</Category>
 
 <script lang="ts" setup>
 import AdItem from '/src/components/AdItem.vue';
