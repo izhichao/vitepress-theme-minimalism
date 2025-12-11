@@ -3,11 +3,11 @@ title: 归档
 layout: page
 ---
 
-<Group type='archives'>
+<Archives>
   <template #doc-after>
     <AdItem :custom="ads" type="doc" />
   </template>
-</Group>
+</Archives>
 
 <script lang="ts" setup>
 import AdItem from '/src/components/AdItem.vue';

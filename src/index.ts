@@ -2,7 +2,7 @@ import { onMounted, onUnmounted } from 'vue';
 import { EnhanceAppContext, inBrowser } from 'vitepress';
 import DefaultTheme from 'vitepress/theme';
 import Home from './views/HomeView.vue';
-import Group from './views/GroupView.vue';
+import Archives from './views/ArchivesView.vue';
 import Category from './views/CategoryView.vue';
 import Page from './views/PageView.vue';
 import Password from './views/PasswordView.vue';
@@ -16,7 +16,7 @@ export default {
   extends: DefaultTheme,
   enhanceApp({ app, router }: EnhanceAppContext) {
     app.component('Home', Home);
-    app.component('Group', Group);
+    app.component('Archives', Archives);
     app.component('Category', Category);
     app.component('Page', Page);
     app.component('Password', Password);
