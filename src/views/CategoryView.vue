@@ -15,16 +15,18 @@
       </template>
       <template v-if="tagTabs">
         <div class="title bold">标签</div>
-        <TabList 
-          @change="(tab) => handleChange(tab, 'tags')" 
-          type="tags" 
-          :tabs="tagTabs" 
-          :selected="currentType === 'tags' ? select : null" 
-          :posts="tagPosts" 
+        <TabList
+          @change="(tab) => handleChange(tab, 'tags')"
+          type="tags"
+          :tabs="tagTabs"
+          :selected="currentType === 'tags' ? select : null"
+          :posts="tagPosts"
         />
       </template>
 
-      <div v-show="select" class="title title--last bold">{{ currentType === 'category' ? '分类：' : '标签：' }}{{ select }}</div>
+      <div v-show="select" class="title title--last bold">
+        {{ currentType === 'category' ? '分类：' : '标签：' }}{{ select }}
+      </div>
       <PostList v-if="currentType === 'category'" :posts="categoryPosts[select]" type="category" />
       <PostList v-else-if="currentType === 'tags'" :posts="tagPosts[select]" type="category" />
 
@@ -36,9 +38,28 @@
 <script lang="ts" setup>
 import { ref } from 'vue';
 import { useData } from 'vitepress';
-import { useFilter } from '../composables/useGroup';
 import TabList from '../components/TabList.vue';
 import PostList from '../components/PostList.vue';
+import { addToData } from '../utils/addToData';
+import { IPost, IPostObject } from '../types';
+
+const useFilter = (posts: IPost[]) => {
+  const categoryPosts: IPostObject = {};
+  const tagPosts: IPostObject = {};
+
+  posts.forEach((post) => {
+    const category = post.category;
+    const tags = post.tags;
+
+    addToData(categoryPosts, category, post);
+    tags && tags.forEach((tag) => addToData(tagPosts, tag, post));
+  });
+
+  const categoryTabs = Object.keys(categoryPosts).sort((a, b) => a.localeCompare(b));
+  const tagTabs = Object.keys(tagPosts).sort((a, b) => a.localeCompare(b));
+
+  return { categoryTabs, tagTabs, categoryPosts, tagPosts };
+};
 
 const { theme } = useData();
 const { categoryTabs, categoryPosts, tagTabs, tagPosts } = useFilter(theme.value?.posts || []);
