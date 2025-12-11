@@ -182,12 +182,12 @@ function formatDate(datetime: string): string {
   // 徽章通用样式
   &__badge {
     display: inline-block;
-    padding: 2px 10px;
-    border-radius: 12px;
-    font-size: 13px;
+    padding: 0.075rem 0.625rem;
+    border-radius: 0.5rem;
+    font-size: 0.8rem;
     color: var(--vp-c-text-2);
     text-decoration: none;
-    transition: all 0.3s;
+    transition: all 0.3s ease;
     font-weight: 500;
 
     // 分类徽章
@@ -195,13 +195,14 @@ function formatDate(datetime: string): string {
       background-color: var(--vp-c-gray-2);
 
       &:hover {
-        background-color: var(--vp-c-gray-1);
+        background-color: var(--vp-c-brand-soft);
         text-decoration: none;
       }
     }
 
     // 标签徽章
     &--tag {
+      border-radius: 9999px;
       background-color: var(--vp-c-bg);
       border: 1px solid var(--vp-c-divider);
 

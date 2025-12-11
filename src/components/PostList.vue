@@ -88,7 +88,6 @@ defineProps({
   padding: 1.25rem;
   transition: all 0.15s ease;
   -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
-  -webkit-tap-highlight-color: transparent;
 
   &:hover {
     border-color: var(--vp-c-brand-soft);
@@ -138,18 +137,18 @@ defineProps({
     align-items: center;
     padding: 0.25rem 0.625rem;
     background-color: var(--vp-c-bg-alt);
-    color: var(--vp-c-text-1);
+    color: var(--vp-c-text-2);
     font-size: 0.875rem;
     font-weight: 500;
     line-height: 1.4;
     border-radius: 0.5rem;
     white-space: nowrap;
     text-decoration: none;
-    transition: all 0.15s ease;
+    transition: all 0.3s ease;
 
     &:hover {
-      background-color: var(--vp-c-text-1);
-      color: var(--vp-c-bg-alt);
+      color: var(--vp-c-brand);
+      background-color: var(--vp-c-brand-soft);
     }
   }
 
@@ -212,18 +211,21 @@ defineProps({
     align-items: center;
     gap: 0.25rem;
     padding: 0.25rem 0.625rem;
-    background-color: var(--vp-c-bg-alt);
-    color: var(--vp-c-text-1);
+    background-color: var(--vp-c-bg);
+    color: var(--vp-c-text-2);
     font-size: 0.75rem;
     font-weight: 500;
     line-height: 1rem;
+    border: 1px solid var(--vp-c-divider);
     border-radius: 9999px;
     text-decoration: none;
-    transition: all 0.15s ease;
+    transition: all 0.3s ease;
 
     &:hover {
-      background-color: var(--vp-c-text-1);
-      color: var(--vp-c-bg-alt);
+      background-color: var(--vp-c-brand-soft);
+      color: var(--vp-c-brand);
+      border-color: var(--vp-c-brand);
+      text-decoration: none;
     }
   }
 
