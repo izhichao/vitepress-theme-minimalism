@@ -25,6 +25,13 @@ const useArchives = (posts: IPost[]) => {
     addToData(yearPosts, year, post);
   });
 
+  // 对每年的文章按时间倒序排序（最新的在前）
+  Object.keys(yearPosts).forEach((year) => {
+    yearPosts[year].sort((a, b) => {
+      return new Date(b.datetime).getTime() - new Date(a.datetime).getTime();
+    });
+  });
+
   const years = Object.keys(yearPosts).sort((a, b) => parseInt(b) - parseInt(a));
 
   return { years, yearPosts };
