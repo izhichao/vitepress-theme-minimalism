@@ -2,20 +2,26 @@
   <div class="ZCContainer">
     <div class="ZCContent">
       <slot name="doc-before"></slot>
-      <template v-for="(value, key) in posts">
-        <div class="title">{{ key === 'category' ? '分类' : '标签' }}</div>
-        <TabList
-          @change="(tab) => handleChange(tab, key)"
-          :type="key"
-          :tabs="tabs[key]"
-          :selected="currentType === key ? select : null"
-          :posts="value"
-        />
-      </template>
 
-      <div v-show="select" class="title">
-        {{ currentType === 'category' ? '分类：' : '标签：' }}{{ select }}
-      </div>
+      <div class="title">分类</div>
+      <TabList
+        @change="(tab) => handleChange(tab, 'category')"
+        type="category"
+        :tabs="tabs.category"
+        :selected="currentType === 'category' ? select : null"
+        :posts="posts.category"
+      />
+
+      <div class="title">标签</div>
+      <TabList
+        @change="(tab) => handleChange(tab, 'tag')"
+        type="tag"
+        :tabs="tabs.tag"
+        :selected="currentType === 'tag' ? select : null"
+        :posts="posts.tag"
+      />
+
+      <div v-show="select" class="title">{{ currentType === 'category' ? '分类：' : '标签：' }}{{ select }}</div>
 
       <PostList :posts="posts[currentType][select]" :showPinned="false" />
 
@@ -29,39 +35,10 @@ import { ref, onMounted } from 'vue';
 import { useData } from 'vitepress';
 import TabList from '../components/TabList.vue';
 import PostList from '../components/PostList.vue';
-import { addToData } from '../utils/addToData';
-import { sortPostsByTime } from '../utils/sortPostsByTime';
-import { IPost } from '../types';
-
-const useFilter = (posts: IPost[]) => {
-  const filterPosts = {
-    category: {},
-    tag: {}
-  };
-
-  const tabs = {
-    category: [],
-    tag: []
-  };
-
-  posts.forEach((post) => {
-    const category = post.category;
-    const tags = post.tags;
-
-    addToData(filterPosts.category, category, post);
-    tags && tags.forEach((tag) => addToData(filterPosts.tag, tag, post));
-  });
-
-  tabs.category = Object.keys(filterPosts.category).sort((a, b) => a.localeCompare(b));
-  tabs.tag = Object.keys(filterPosts.tag).sort((a, b) => a.localeCompare(b));
-
-  return { tabs, posts: filterPosts };
-};
+import { useGroup } from '../composables/useGroup';
 
 const { theme } = useData();
-// 先按时间排序，再传入分类过滤函数
-const sortedPosts = sortPostsByTime(theme.value?.posts || []);
-const { tabs, posts } = useFilter(sortedPosts);
+const { tabs, posts } = useGroup(theme.value?.posts || []);
 
 // 初始化状态
 const select = ref('');

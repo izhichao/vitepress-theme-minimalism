@@ -19,7 +19,7 @@ import { IPostObject } from '../types';
 
 defineProps({
   type: {
-    type: String as PropType<'category' | 'tag'>,
+    type: String as PropType<'category' | 'tag' | 'archive'>,
     required: true
   },
   tabs: { type: Array as PropType<string[]>, required: true },
