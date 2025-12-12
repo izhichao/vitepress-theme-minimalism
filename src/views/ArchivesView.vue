@@ -2,9 +2,9 @@
   <div class="ZCContainer">
     <div class="ZCContent">
       <slot name="doc-before"></slot>
-      <template v-for="year in years" :key="year">
+      <template v-for="year in tabs.archive" :key="year">
         <div class="title">{{ year }}</div>
-        <PostListLite :posts="yearPosts[year]" />
+        <PostListLite :posts="posts.archive[year]" />
       </template>
       <slot name="doc-after"></slot>
     </div>
@@ -14,27 +14,11 @@
 <script lang="ts" setup>
 import { useData } from 'vitepress';
 import PostListLite from '../components/PostListLite.vue';
-import { addToData } from '../utils/addToData';
-import { sortPostsByTime } from '../utils/sortPostsByTime';
-import type { IPost, IPostObject } from '../types';
+import { useGroup } from '../composables/useGroup';
 
-const useArchives = (posts: IPost[]) => {
-  const yearPosts: IPostObject = {};
-
-  posts.forEach((post) => {
-    const year = new Date(post.datetime).getFullYear();
-    addToData(yearPosts, year, post);
-  });
-
-  const years = Object.keys(yearPosts).sort((a, b) => parseInt(b) - parseInt(a));
-
-  return { years, yearPosts };
-};
 
 const { theme } = useData();
-// 先按时间排序，再传入归档函数
-const sortedPosts = sortPostsByTime(theme.value?.posts || []);
-const { years, yearPosts } = useArchives(sortedPosts);
+const { tabs, posts } = useGroup(theme.value?.posts || []);
 </script>
 
 <style lang="less" scoped>
