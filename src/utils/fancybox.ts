@@ -44,20 +44,30 @@ export const bindFancybox = () => {
     Fancybox.bind('[data-fancybox="gallery"]', {
       Hash: false,
       caption: false,
-      zoomEffect: false,
       Carousel: {
         Zoomable: {
           Panzoom: {
-            clickAction: 'iterateZoom',
+            clickAction: false, // 禁用单击放大
+            dblClickAction: PanzoomAction.IterateZoom, // 双击放大
             maxScale: 2,
-            minScale: 0.8
+            on: {
+              // 单击关闭 Fancybox
+              singleClick: () => {
+                Fancybox.close();
+              }
+              // 打开时自动放大
+              // ready: (instance) => {
+              //   instance.execute(PanzoomAction.ToggleFull);
+              // }
+            }
           }
         },
         Toolbar: {
+          absolute: false,
           display: {
             left: ['counter'],
             middle: ['zoomIn', 'zoomOut', 'toggle1to1', 'rotateCCW', 'rotateCW', 'flipX', 'flipY', 'reset'],
-            right: ['autoplay', 'thumbs', 'close']
+            right: ['thumbs', 'close'] // 'autoplay' 自动播放
           }
         },
         Thumbs: {
