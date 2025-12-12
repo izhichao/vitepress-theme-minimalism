@@ -13,12 +13,12 @@
 
 <script lang="ts" setup>
 import { withBase } from 'vitepress';
-import { ref, onMounted } from 'vue';
+import { ref, onMounted, onBeforeUnmount } from 'vue';
 defineProps({
   imgUrl: { type: String, required: true },
   title: { type: String, required: true },
   desc: { type: String },
-  links: { type: Array<{ url: string; text: string }> }
+  links: { type: Array<{ url: string; text: string }>}
 });
 const contentHeight = ref('');
 
@@ -47,12 +47,22 @@ const debounce = (fn, delay = 100) => {
 };
 
 // first entry
+const debouncedHandleHeight = debounce(handleHeight);
+
 onMounted(() => {
+  if (typeof window === 'undefined') return;
+  
   handleHeight();
+  // resize
+  window.addEventListener('resize', debouncedHandleHeight);
 });
 
-// resize
-window.addEventListener('resize', debounce(handleHeight));
+// 清理事件监听器
+onBeforeUnmount(() => {
+  if (typeof window !== 'undefined') {
+    window.removeEventListener('resize', debouncedHandleHeight);
+  }
+});
 </script>
 
 <style lang="less" scoped>
