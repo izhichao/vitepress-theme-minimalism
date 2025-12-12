@@ -10,7 +10,7 @@ import '@waline/client/style';
 
 const serverURL = 'https://waline.vercel.app';
 const path = computed(() => useRoute().path);
-const dark = 'html[class="dark"]';
+const dark = 'html[class~="dark"]';
 </script>
 
 <style scoped>
