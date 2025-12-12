@@ -15,11 +15,11 @@
 
 <script lang="ts" setup>
 import { PropType } from 'vue';
-import type { IPostObject } from '../types';
+import { IPostObject } from '../types';
 
 defineProps({
   type: {
-    type: String,
+    type: String as PropType<'category' | 'tag'>,
     required: true
   },
   tabs: { type: Array as PropType<string[]>, required: true },
