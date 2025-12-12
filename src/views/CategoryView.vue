@@ -32,32 +32,43 @@
 
 <script lang="ts" setup>
 import { ref, onMounted } from 'vue';
-import { useData } from 'vitepress';
+import { useData, useRouter } from 'vitepress';
 import TabList from '../components/TabList.vue';
 import PostList from '../components/PostList.vue';
 import { useGroup } from '../composables/useGroup';
 
 const { theme } = useData();
 const { tabs, posts } = useGroup(theme.value?.posts || []);
+const router = useRouter();
 
 // 初始化状态
 const select = ref('');
 const currentType = ref<'category' | 'tag'>('category');
 let baseUrl = '/';
 
-// 在客户端挂载时初始化 URL 相关逻辑
-onMounted(() => {
+// 根据 URL 参数更新状态
+const updateQuery = () => {
   if (typeof window === 'undefined') return;
 
-  baseUrl = location.href.split('?')[0];
   const search = location.href.split('?')[1];
   const params = new URLSearchParams(search);
 
-  // 确定初始类型和选中值
-  const initCategory = params.get('category');
-  const initTag = params.get('tag');
-  select.value = initCategory || initTag || '';
-  currentType.value = initCategory ? 'category' : 'tag';
+  // 确定类型和选中值
+  const categoryParam = params.get('category');
+  const tagParam = params.get('tag');
+  select.value = categoryParam || tagParam || '';
+  currentType.value = categoryParam ? 'category' : 'tag';
+};
+
+const themeAfter = router.onAfterRouteChange;
+router.onAfterRouteChange = (to) => {
+  themeAfter?.(to);
+  updateQuery();
+};
+
+onMounted(() => {
+  baseUrl = location.href.split('?')[0];
+  updateQuery();
 });
 
 const handleChange = (tab: string, type: 'category' | 'tag') => {
