@@ -25,7 +25,7 @@
 </template>
 
 <script lang="ts" setup>
-import { ref } from 'vue';
+import { ref, onMounted } from 'vue';
 import { useData } from 'vitepress';
 import TabList from '../components/TabList.vue';
 import PostList from '../components/PostList.vue';
@@ -63,21 +63,33 @@ const { theme } = useData();
 const sortedPosts = sortPostsByTime(theme.value?.posts || []);
 const { tabs, posts } = useFilter(sortedPosts);
 
-const url = location.href.split('?')[0];
-const search = location.href.split('?')[1];
-const params = new URLSearchParams(search);
+// 初始化状态
+const select = ref('');
+const currentType = ref<'category' | 'tag'>('category');
+let baseUrl = '/';
 
-// 确定初始类型和选中值
-const initCategory = params.get('category');
-const initTag = params.get('tag');
-const select = ref(initCategory || initTag || '');
-const currentType = ref<'category' | 'tag'>(initCategory ? 'category' : 'tag');
+// 在客户端挂载时初始化 URL 相关逻辑
+onMounted(() => {
+  if (typeof window === 'undefined') return;
+
+  baseUrl = location.href.split('?')[0];
+  const search = location.href.split('?')[1];
+  const params = new URLSearchParams(search);
+
+  // 确定初始类型和选中值
+  const initCategory = params.get('category');
+  const initTag = params.get('tag');
+  select.value = initCategory || initTag || '';
+  currentType.value = initCategory ? 'category' : 'tag';
+});
 
 const handleChange = (tab: string, type: 'category' | 'tag') => {
   select.value = tab;
   currentType.value = type;
-  const newUrl = `${url}?${type}=${tab.replaceAll('&', '%26')}`;
-  window.history.replaceState(null, '', newUrl);
+  if (typeof window !== 'undefined') {
+    const newUrl = `${baseUrl}?${type}=${tab.replaceAll('&', '%26')}`;
+    window.history.replaceState(null, '', newUrl);
+  }
 };
 </script>
 
