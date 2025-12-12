@@ -6,7 +6,7 @@
         <h2 class="post-item__title">
           <span v-if="post.order && showPinned" class="post-item__pinned">
             <Icon class="post-item__pinned-icon" icon="mingcute:fire-fill" />
-            HOT
+            {{ post.pinned || page?.pinned || 'HOT' }}
           </span>
           {{ post.title }}
         </h2>
@@ -57,12 +57,14 @@
 </template>
 
 <script lang="ts" setup>
-import { withBase } from 'vitepress';
+import { useData, withBase } from 'vitepress';
 import { IPost } from '../types';
 import { useOutDir } from '../composables/useOutDir';
 import { Icon } from '@iconify/vue';
 
 const { outDir } = useOutDir();
+const { theme } = useData();
+const page = theme.value.page;
 
 defineProps({
   posts: Array<IPost>,

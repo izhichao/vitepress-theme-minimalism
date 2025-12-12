@@ -5,6 +5,7 @@ permalink: /posts/cd49a3
 outline: deep
 desc: 自定义摘要内容
 order: 1
+pinned: 置顶
 category: 文章
 tags:
   - 生活中的小确幸
