@@ -2,33 +2,22 @@
   <div class="ZCContainer">
     <div class="ZCContent">
       <slot name="doc-before"></slot>
-
-      <template v-if="categoryTabs">
-        <div class="title bold">分类</div>
+      <template v-for="(value, key) in posts">
+        <div class="title">{{ key === 'category' ? '分类' : '标签' }}</div>
         <TabList
-          @change="(tab) => handleChange(tab, 'category')"
-          type="category"
-          :tabs="categoryTabs"
-          :selected="currentType === 'category' ? select : null"
-          :posts="categoryPosts"
-        />
-      </template>
-      <template v-if="tagTabs">
-        <div class="title bold">标签</div>
-        <TabList
-          @change="(tab) => handleChange(tab, 'tag')"
-          type="tag"
-          :tabs="tagTabs"
-          :selected="currentType === 'tag' ? select : null"
-          :posts="tagPosts"
+          @change="(tab) => handleChange(tab, key)"
+          :type="key"
+          :tabs="tabs[key]"
+          :selected="currentType === key ? select : null"
+          :posts="value"
         />
       </template>
 
-      <div v-show="select" class="title title--last bold">
+      <div v-show="select" class="title">
         {{ currentType === 'category' ? '分类：' : '标签：' }}{{ select }}
       </div>
-      <PostList v-if="currentType === 'category'" :posts="categoryPosts[select]" :showPinned="false" />
-      <PostList v-else-if="currentType === 'tag'" :posts="tagPosts[select]" :showPinned="false" />
+
+      <PostList :posts="posts[currentType][select]" :showPinned="false" />
 
       <slot name="doc-after"></slot>
     </div>
@@ -41,28 +30,38 @@ import { useData } from 'vitepress';
 import TabList from '../components/TabList.vue';
 import PostList from '../components/PostList.vue';
 import { addToData } from '../utils/addToData';
-import { IPost, IPostObject } from '../types';
+import { sortPostsByTime } from '../utils/sortPostsByTime';
+import { IPost } from '../types';
 
 const useFilter = (posts: IPost[]) => {
-  const categoryPosts: IPostObject = {};
-  const tagPosts: IPostObject = {};
+  const filterPosts = {
+    category: {},
+    tag: {}
+  };
+
+  const tabs = {
+    category: [],
+    tag: []
+  };
 
   posts.forEach((post) => {
     const category = post.category;
     const tags = post.tags;
 
-    addToData(categoryPosts, category, post);
-    tags && tags.forEach((tag) => addToData(tagPosts, tag, post));
+    addToData(filterPosts.category, category, post);
+    tags && tags.forEach((tag) => addToData(filterPosts.tag, tag, post));
   });
 
-  const categoryTabs = Object.keys(categoryPosts).sort((a, b) => a.localeCompare(b));
-  const tagTabs = Object.keys(tagPosts).sort((a, b) => a.localeCompare(b));
+  tabs.category = Object.keys(filterPosts.category).sort((a, b) => a.localeCompare(b));
+  tabs.tag = Object.keys(filterPosts.tag).sort((a, b) => a.localeCompare(b));
 
-  return { categoryTabs, tagTabs, categoryPosts, tagPosts };
+  return { tabs, posts: filterPosts };
 };
 
 const { theme } = useData();
-const { categoryTabs, categoryPosts, tagTabs, tagPosts } = useFilter(theme.value?.posts || []);
+// 先按时间排序，再传入分类过滤函数
+const sortedPosts = sortPostsByTime(theme.value?.posts || []);
+const { tabs, posts } = useFilter(sortedPosts);
 
 const url = location.href.split('?')[0];
 const search = location.href.split('?')[1];
@@ -88,14 +87,11 @@ const handleChange = (tab: string, type: 'category' | 'tag') => {
   font-size: 1.25rem;
   padding: 32px 0 18px;
   font-family: var(--font-family-number);
-}
-
-.bold {
   font-weight: 700;
 }
 
 @media screen and (max-width: 768px) {
-  .bold {
+  .title {
     font-size: 1.5rem;
   }
 }

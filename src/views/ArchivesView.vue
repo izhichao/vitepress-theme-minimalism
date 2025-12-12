@@ -15,6 +15,7 @@
 import { useData } from 'vitepress';
 import PostListLite from '../components/PostListLite.vue';
 import { addToData } from '../utils/addToData';
+import { sortPostsByTime } from '../utils/sortPostsByTime';
 import type { IPost, IPostObject } from '../types';
 
 const useArchives = (posts: IPost[]) => {
@@ -25,20 +26,15 @@ const useArchives = (posts: IPost[]) => {
     addToData(yearPosts, year, post);
   });
 
-  // 对每年的文章按时间倒序排序（最新的在前）
-  Object.keys(yearPosts).forEach((year) => {
-    yearPosts[year].sort((a, b) => {
-      return new Date(b.datetime).getTime() - new Date(a.datetime).getTime();
-    });
-  });
-
   const years = Object.keys(yearPosts).sort((a, b) => parseInt(b) - parseInt(a));
 
   return { years, yearPosts };
 };
 
 const { theme } = useData();
-const { years, yearPosts } = useArchives(theme.value?.posts);
+// 先按时间排序，再传入归档函数
+const sortedPosts = sortPostsByTime(theme.value?.posts || []);
+const { years, yearPosts } = useArchives(sortedPosts);
 </script>
 
 <style lang="less" scoped>
