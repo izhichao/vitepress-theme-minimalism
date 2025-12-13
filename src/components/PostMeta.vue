@@ -38,7 +38,7 @@
         <Icon class="post-info__icon" icon="mingcute:folder-line" />
         <span class="post-info__label">分类</span>
         <a
-          :href="withBase(`${outDir}/category.html?category=${$frontmatter.category.replaceAll('&', '%26')}`)"
+          :href="withBase(`${outDir}/category?category=${$frontmatter.category.replaceAll('&', '%26')}`)"
           class="post-info__badge post-info__badge--category"
         >
           {{ $frontmatter.category }}
@@ -53,7 +53,7 @@
           <a
             v-for="tag in $frontmatter.tags"
             :key="tag"
-            :href="withBase(`${outDir}/category.html?tag=${tag.replaceAll('&', '%26')}`)"
+            :href="withBase(`${outDir}/category?tag=${tag.replaceAll('&', '%26')}`)"
             class="post-info__badge post-info__badge--tag"
           >
             {{ tag }}
