@@ -14,7 +14,7 @@
     <a
       class="pagination__item pagination__item--nav"
       :class="{ 'pagination__item--disabled': pagination === 1 }"
-      :href="withBase(pagination === 2 && homepage ? '/index.html' : `/page-${pagination - 1}.html`)"
+      :href="withBase(pagination <= 2 ? (homepage ? '/index.html' : '/page-1.html') : `/page-${pagination - 1}.html`)"
     >
       <Icon icon="mingcute:left-line" />
     </a>
@@ -34,7 +34,7 @@
     <a
       class="pagination__item pagination__item--nav"
       :class="{ 'pagination__item--disabled': pagination === total }"
-      :href="withBase(`/page-${pagination + 1}.html`)"
+      :href="withBase(pagination === total ? `/page-${total}.html` : `/page-${pagination + 1}.html`)"
     >
       <Icon icon="mingcute:right-line" />
     </a>
