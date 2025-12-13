@@ -12,7 +12,7 @@
         </h2>
         <a
           v-if="post.category"
-          :href="withBase(`${outDir}/category.html?category=${post.category.replaceAll('&', '%26')}`)"
+          :href="withBase(`${outDir}/category?category=${post.category.replaceAll('&', '%26')}`)"
           class="post-item__category"
           @click.stop
         >
@@ -37,7 +37,7 @@
             <a
               v-for="tag in post.tags"
               :key="tag"
-              :href="withBase(`${outDir}/category.html?tag=${tag.replaceAll('&', '%26')}`)"
+              :href="withBase(`${outDir}/category?tag=${tag.replaceAll('&', '%26')}`)"
               class="post-item__tag"
               @click.stop
             >
