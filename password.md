@@ -3,4 +3,8 @@ title: 输入访问密码
 layout: page
 ---
 
-<Password correctPassword="vitepress-theme-minimalism" />
+<script setup>
+import { passwordConfig, defaultPassword } from '/.vitepress/theme/index.ts';
+</script>
+
+<Password :passwordConfig="passwordConfig" :defaultPassword="defaultPassword" />
