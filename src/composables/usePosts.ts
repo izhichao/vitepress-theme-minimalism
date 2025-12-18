@@ -27,6 +27,7 @@ export const usePosts = async ({
     const paths = await fg(`${srcDir}/**/*.md`);
     let categoryFlag = false;
     let tagFlag = false;
+    let hiddenPosts: IPost[] = [];
     let posts = await Promise.all(
       paths.map(async (postPath) => {
         const { data, excerpt, content } = matter.read(postPath, {
@@ -76,6 +77,9 @@ export const usePosts = async ({
         } as IPost;
       })
     );
+
+    // 获取隐藏
+    hiddenPosts = posts.filter((post) => post.display === 'none');
 
     // 排序
     posts = posts
@@ -150,10 +154,10 @@ export const usePosts = async ({
 
     await generatePages(outDir, lang, pageSize, homepage, posts.length, slot, custom);
 
-    return { posts, rewrites };
+    return { posts, hiddenPosts, rewrites };
   } catch (e) {
     console.log(e);
     await generatePages();
-    return { posts: [], rewrites };
+    return { posts: [], hiddenPosts: [], rewrites };
   }
 };
