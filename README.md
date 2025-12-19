@@ -4,7 +4,7 @@
 
 基于 VitePress 默认主题拓展了引导页、文章列表页、文章页、归档页、标签页，可以与默认主题的文档模式 (带 Sidebar) 完全兼容。
 
-[演示站1](https://zhichao.org) | [演示站2](https://vitepress.tsx.dpdns.org/) | [使用文档](https://zhichao.org/posts/minimalism.html)
+[演示站](https://vitepress.tsx.dpdns.org/) | [使用文档](https://zhichao.org/posts/minimalism)
 
 ## 功能
 
@@ -26,13 +26,13 @@
 
 >  主题提供了两种主页模式
 
-1. 文章列表作为主页（参考[演示站1](https://zhichao.org)）
+1. 文章列表作为主页
 
-![vitepress-theme-minimalism1](https://zhichao.org/images/vitepress-theme-minimalism1.webp)
+![](https://img.erpweb.eu.org/imgs/2025/12/01314a862b0a13a1.webp)
 
-2. 引导页作为主页（参考[演示站2](https://vitepress.tsx.dpdns.org/)）
+1. 引导页作为主页
 
-![vitepress-theme-minimalism2](https://zhichao.org/images/vitepress-theme-minimalism2.webp)
+![](https://img.erpweb.eu.org/imgs/2025/12/a285d09a5ba4b0f6.webp)
 
 ## 感谢
 
