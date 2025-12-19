@@ -5,7 +5,7 @@ import fg from 'fast-glob';
 import { IPost } from '../types';
 import { generatePages } from '../utils/generatePages';
 import { generateString } from '../utils/generateString';
-import { generateMd } from '../utils/generateMd';
+import { generateCategory } from '../utils/generateCategory';
 import { removeMdPro } from '../utils/removeMdPro';
 import { writeMd } from '../utils/writeMd';
 import { formatDate } from '../utils/formatDate';
@@ -150,7 +150,7 @@ export const usePosts = async ({
     });
 
     // 生成分类页面
-    (categoryFlag || tagFlag) && (await generateMd('category', outDir));
+    (categoryFlag || tagFlag) && (await generateCategory(outDir));
 
     await generatePages(outDir, lang, pageSize, homepage, posts.length, slot, custom);
 

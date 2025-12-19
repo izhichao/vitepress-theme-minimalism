@@ -2,22 +2,17 @@ import fs from 'fs/promises';
 import path from 'path';
 import { fileExists } from './fileExists';
 
-export const generateMd = async (type: string, outDir: string) => {
-  const filePath = path.resolve(outDir, `${type}.md`);
+export const generateCategory = async (outDir: string) => {
+  const filePath = path.resolve(outDir, `category.md`);
   if (await fileExists(filePath)) return;
-
-  const titles = {
-    archives: '归档',
-    category: '分类'
-  };
 
   const page = `
 ---
-title: ${titles[type]}
+title: 分类
 layout: page
 ---
 
-<Archives />
+<Category />
     `.trim();
   await fs.writeFile(filePath, page);
 };
