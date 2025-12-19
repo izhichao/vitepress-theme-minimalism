@@ -8,6 +8,7 @@ export const writeMd = async (path: string, content: string, data: { [key: strin
     'permalink',
     'outline',
     'order',
+    'pinned',
     'display',
     'desc',
     'category',
