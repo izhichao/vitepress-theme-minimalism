@@ -28,11 +28,11 @@
 
 1. 文章列表作为主页
 
-![](https://img.erpweb.eu.org/imgs/2025/12/01314a862b0a13a1.webp)
+![](https://s3.zhichao.org/images/vitepress-theme-minimalism1.webp)
 
-1. 引导页作为主页
+2. 引导页作为主页
 
-![](https://img.erpweb.eu.org/imgs/2025/12/a285d09a5ba4b0f6.webp)
+![](https://s3.zhichao.org/images/vitepress-theme-minimalism2.webp)
 
 ## 感谢
 
