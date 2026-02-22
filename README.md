@@ -56,7 +56,7 @@
 
 将文章列表作为首页，适合纯博客站点。
 
-![文章列表模式](https://img.erpweb.eu.org/imgs/2025/12/f87d87e78e76343a.png)
+![文章列表模式](https://s3.zhichao.org/images/vitepress-theme-minimalism-v1.webp)
 
 **特点：**
 - 📌 置顶文章高亮显示
@@ -68,7 +68,7 @@
 
 使用引导页作为首页，适合个人主页。
 
-![引导页模式](https://img.erpweb.eu.org/imgs/2025/12/c32f057cfc13ff05.png)
+![引导页模式](https://s3.zhichao.org/images/vitepress-theme-minimalism-index.webp)
 
 **特点：**
 
