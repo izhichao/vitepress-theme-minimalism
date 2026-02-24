@@ -42,9 +42,9 @@ export default defineConfig<ThemeConfig>({
     nav: [
       { text: '首页', link: '/' },
       { text: '文章', link: '/page-1' },
-      { text: '文档', link: '/docs/doc1' },
       { text: '分类', link: '/category' },
-      { text: '归档', link: '/archives' }
+      { text: '归档', link: '/archives' },
+      { text: '文档', link: '/docs/doc1' }
     ],
     sidebar: {
       '/docs': [
