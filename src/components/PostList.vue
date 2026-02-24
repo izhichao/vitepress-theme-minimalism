@@ -76,7 +76,6 @@ defineProps({
 .post-list {
   display: flex;
   flex-direction: column;
-  padding-top: 1.5rem;
   gap: 1rem;
 }
 
@@ -93,7 +92,9 @@ defineProps({
 
   &:hover {
     border-color: var(--vp-c-brand-soft);
-    box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px -1px rgba(0, 0, 0, 0.1);
+    box-shadow:
+      0 1px 3px 0 rgba(0, 0, 0, 0.1),
+      0 1px 2px -1px rgba(0, 0, 0, 0.1);
 
     & .post-item__title {
       color: var(--vp-c-brand);

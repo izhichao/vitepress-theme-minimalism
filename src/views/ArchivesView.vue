@@ -16,7 +16,6 @@ import { useData } from 'vitepress';
 import PostListLite from '../components/PostListLite.vue';
 import { useGroup } from '../composables/useGroup';
 
-
 const { theme } = useData();
 const { tabs, posts } = useGroup(theme.value?.posts || []);
 </script>
@@ -24,18 +23,13 @@ const { tabs, posts } = useGroup(theme.value?.posts || []);
 <style lang="less" scoped>
 @import '../styles/page.less';
 .title {
-  font-size: 1.25rem;
-  padding: 14px 0 8px;
+  font-size: 1.5rem;
+  padding: 2rem 0 1rem;
+  font-weight: 600;
   font-family: var(--font-family-number);
-}
 
-.bold {
-  font-weight: 700;
-}
-
-@media screen and (max-width: 768px) {
-  .bold {
-    font-size: 1.5rem;
+  &:first-of-type {
+    padding-top: 0;
   }
 }
 </style>
