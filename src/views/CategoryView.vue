@@ -85,14 +85,12 @@ const handleChange = (tab: string, type: 'category' | 'tag') => {
 @import '../styles/page.less';
 .title {
   font-size: 1.25rem;
-  padding: 32px 0 18px;
+  padding: 2rem 0 1rem;
   font-family: var(--font-family-number);
   font-weight: 700;
-}
 
-@media screen and (max-width: 768px) {
-  .title {
-    font-size: 1.5rem;
+  &:first-of-type {
+    padding-top: 0;
   }
 }
 </style>
