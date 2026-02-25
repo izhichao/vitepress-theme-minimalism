@@ -5,7 +5,7 @@
       v-if="total > max"
       class="pagination__item pagination__item--nav"
       :class="{ 'pagination__item--disabled': pagination === 1 }"
-      :href="withBase(homepage ? '/index' : '/page-1')"
+      :href="withBase(homepage ? '/' : '/page-1')"
     >
       <Icon icon="mingcute:arrows-left-line" />
     </a>
@@ -14,7 +14,7 @@
     <a
       class="pagination__item pagination__item--nav"
       :class="{ 'pagination__item--disabled': pagination === 1 }"
-      :href="withBase(pagination <= 2 ? (homepage ? '/index' : '/page-1') : `/page-${pagination - 1}`)"
+      :href="withBase(pagination <= 2 ? (homepage ? '/' : '/page-1') : `/page-${pagination - 1}`)"
     >
       <Icon icon="mingcute:left-line" />
     </a>
@@ -25,7 +25,7 @@
       :key="page"
       class="pagination__item pagination__item--page"
       :class="{ 'pagination__item--active': pagination === page }"
-      :href="withBase(page === 1 && homepage ? '/index' : `/page-${page}`)"
+      :href="withBase(page === 1 && homepage ? '/' : `/page-${page}`)"
     >
       {{ page }}
     </a>
