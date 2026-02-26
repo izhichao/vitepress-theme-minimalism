@@ -62,6 +62,16 @@ export const usePosts = async ({
           });
         }
 
+        // display: none 时自动添加 noindex meta（避免重复）
+        if (data.display === 'none') {
+          const noindexMeta = ['meta', { name: 'robots', content: 'noindex, nofollow' }];
+          const alreadyExists = (data.head ?? []).some((item) => Array.isArray(item) && item[1]?.name === 'robots');
+          if (!alreadyExists) {
+            data.head = [...(data.head ?? []), noindexMeta];
+            flag = true;
+          }
+        }
+
         // writeMarkdown
         flag && (await writeMd(postPath, content, data));
 
