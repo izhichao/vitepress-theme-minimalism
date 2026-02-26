@@ -111,6 +111,59 @@ const removeMdPro = (str: string) => {
     .trim();
 };
 
+/**
+ * 更新单篇文章的上一篇 / 下一篇 FrontMatter
+ * @param frontMatter 文章的 FrontMatter 数据
+ * @param posts 已排序的可见文章列表
+ * @param prev 是否启用上一篇
+ * @param next 是否启用下一篇
+ * @returns 是否发生变更
+ */
+const updateNav = (frontMatter: any, posts: IPost[], prev: boolean, next: boolean): boolean => {
+  // 更新单个导航字段（prev 或 next），返回是否发生变更
+  const resolveNav = (type: 'prev' | 'next', enabled: boolean, target?: IPost) => {
+    if (enabled && target) {
+      const outdated =
+        !frontMatter[type] || frontMatter[type].text !== target.title || frontMatter[type].link !== target.permalink;
+      if (outdated) {
+        frontMatter[type] = { text: target.title, link: target.permalink };
+        return true;
+      }
+    } else if (frontMatter[type]) {
+      delete frontMatter[type];
+      return true;
+    }
+    return false;
+  };
+
+  // 置顶或隐藏文章：清除已有的 prev / next
+  if (frontMatter.order || frontMatter.display === 'none') {
+    const hadNav = !!(frontMatter.prev || frontMatter.next);
+    delete frontMatter.prev;
+    delete frontMatter.next;
+    return hadNav;
+  }
+
+  const index = posts.findIndex((post) => post.permalink === frontMatter.permalink);
+  let prevPost: IPost | undefined;
+  let nextPost: IPost | undefined;
+
+  // 遍历文章列表，找到前一篇和后一篇文章
+  posts.some((post, i) => {
+    if (i < index) {
+      if (!post.order) prevPost = post; // 当前文章之前，不断覆盖取最近的
+    } else if (i > index) {
+      if (!post.order && !nextPost) nextPost = post; // 当前文章之后，取第一个
+    }
+    return !!(prevPost && nextPost); // 前后都找到则停止遍历
+  });
+
+  // 两个字段必须分开调用，避免 || 短路跳过 next
+  const prevChanged = resolveNav('prev', prev, prevPost);
+  const nextChanged = resolveNav('next', next, nextPost);
+  return prevChanged || nextChanged;
+};
+
 export const usePosts = async ({
   pageSize = 10,
   homepage = true,
@@ -128,37 +181,49 @@ export const usePosts = async ({
     const paths = await fg(`${srcDir}/**/*.md`);
     let categoryFlag = false;
 
-    // 原始文章列表（包含隐藏文章）
-    const results: IPost[] = (await Promise.all(
+    // 缓存每篇文章的原始 data 和 content，供后续 prev/next 处理复用，避免二次 matter.read
+    const postCache = new Map<string, { data: IPost; content: string; changed: boolean }>();
+
+    // 一、原始文章列表（包含隐藏文章）
+    const results: IPost[] = await Promise.all(
       paths.map(async (postPath) => {
-        const { data, excerpt, content } = matter.read(postPath, {
+        const {
+          data: _data,
+          excerpt: _excerpt,
+          content
+        } = matter.read(postPath, {
           excerpt: true,
           excerpt_separator: '<!-- more -->'
         });
+        const data = _data as IPost;
 
-       !categoryFlag && (data.category || data.tags) && (categoryFlag = true);
+        // 1. 检测是否存在分类/标签，生成分类页面
+        if (!categoryFlag && (data.category || data.tags)) {
+          categoryFlag = true;
+          await generateCategory(outDir);
+        }
 
-        // 格式化/补全 FrontMatter，并回写 Markdown（如果有变更）
-        const changed = formatFrontMatter(data, postPath, srcDir);
-        changed && (await writeMd(postPath, content, data));
+        // 2. 格式化/补全 FrontMatter 并缓存到 postCache（目前只记录更改，先不写入，等 prev/next 一并处理）
+        const changed = await formatFrontMatter(data, postPath, srcDir);
+        postCache.set(postPath, { data, content, changed });
 
-        // 永久链接 rewrites
+        // 3. 通过 rewrites 处理永久链接
         rewrites[postPath.replace(/[+()]/g, '\\$&')] = `${data.permalink}.md`.slice(1).replace(/[+()]/g, '\\$&');
 
-        // 文章摘要 excerpt
-        const contents = data.desc || removeMdPro(excerpt + '') || removeMdPro(content).slice(0, autoExcerpt);
+        // 4. 生成文章摘要 excerpt
+        const excerpt = data.desc || removeMdPro(_excerpt + '') || removeMdPro(content).slice(0, autoExcerpt);
 
         return {
           ...data,
-          excerpt: contents
+          excerpt
         } as IPost;
       })
-    ));
+    );
 
-    // 隐藏文章列表（可用于 sitemap 中排除隐藏文章）
+    // 二、隐藏文章列表（可用于 sitemap 中排除隐藏文章）
     const hiddenPosts = results.filter((post) => post.display === 'none');
 
-    // 实际文章列表（过滤掉隐藏文章，并按置顶 + 时间排序）
+    // 三、实际文章列表（过滤掉隐藏文章，并按置顶 + 时间排序）
     const posts = results
       .filter((post) => post.display !== 'none') // 过滤隐藏文章
       .sort((a, b) => {
@@ -170,65 +235,16 @@ export const usePosts = async ({
         return new Date(b.datetime).getTime() - new Date(a.datetime).getTime();
       });
 
-    // 上一篇 / 下一篇
-    paths.map(async (postPath) => {
-      const { data, content } = matter.read(postPath);
+    // 四、上一篇 / 下一篇
+    await Promise.all(
+      paths.map(async (postPath) => {
+        const { data, content, changed } = postCache.get(postPath)!;
+        const navChanged = updateNav(data, posts, prev, next);
+        if (changed || navChanged) await writeMd(postPath, content, data);
+      })
+    );
 
-      const isHidden = data.display === 'none';
-      const isPinned = !!data.order;
-
-      // 如果是置顶或隐藏文章，清除 prev / next 后跳过处理
-      if (isPinned || isHidden) {
-        if (data.prev || data.next) {
-          delete data.prev;
-          delete data.next;
-          await writeMd(postPath, content, data);
-        }
-        return;
-      }
-
-      const index = posts.findIndex((post) => post.permalink === data.permalink);
-
-      // 向前查找：不是置顶的文章
-      const prevPost = posts
-        .slice(0, index)
-        .reverse()
-        .find((post) => !post.order);
-      // 向后查找：不是置顶也不是隐藏的文章
-      const nextPost = posts.slice(index + 1).find((post) => !post.order);
-
-      let updated = false;
-
-      if (prev && prevPost) {
-        const changed = !data.prev || data.prev.text !== prevPost.title || data.prev.link !== prevPost.permalink;
-        if (changed) {
-          data.prev = { text: prevPost.title, link: prevPost.permalink };
-          updated = true;
-        }
-      } else if (data.prev) {
-        delete data.prev;
-        updated = true;
-      }
-
-      if (next && nextPost) {
-        const changed = !data.next || data.next.text !== nextPost.title || data.next.link !== nextPost.permalink;
-        if (changed) {
-          data.next = { text: nextPost.title, link: nextPost.permalink };
-          updated = true;
-        }
-      } else if (data.next) {
-        delete data.next;
-        updated = true;
-      }
-
-      if (updated) {
-        await writeMd(postPath, content, data);
-      }
-    });
-
-    // 生成分类页面
-    categoryFlag && (await generateCategory(outDir));
-
+    // 五、生成分页（首页与文章列表）
     await generatePages(outDir, lang, pageSize, homepage, posts.length, slot, custom);
 
     return { posts, hiddenPosts, rewrites };
