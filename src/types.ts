@@ -7,9 +7,9 @@ export interface IPost {
   order: number;
   pinned: boolean;
   display?: 'none';
-  tags?: string[];
+  desc?: string;
   category?: string;
-  excerpt: string;
+  tags?: string[];
 }
 
 export interface IPage {
