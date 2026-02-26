@@ -3,7 +3,7 @@ import path from 'path';
 import matter from 'gray-matter';
 import fg from 'fast-glob';
 import removeMd from 'remove-markdown';
-import { IPost } from '../types';
+import { IPost, IPostsConfig } from '../types';
 import { generatePages } from '../utils/generatePages';
 import { generateString } from '../utils/generateString';
 import { generateCategory } from '../utils/generateCategory';
@@ -164,18 +164,24 @@ const updateNav = (frontMatter: any, posts: IPost[], prev: boolean, next: boolea
   return prevChanged || nextChanged;
 };
 
-export const usePosts = async ({
-  pageSize = 10,
-  homepage = true,
-  srcDir = 'posts',
-  outDir = '',
-  lang = 'zh',
-  autoExcerpt = 0,
-  prev = true,
-  next = true,
-  slot = '',
-  custom = ''
-}) => {
+const defaultConfig: Required<IPostsConfig> = {
+  pageSize: 10,
+  homepage: true,
+  srcDir: 'posts',
+  outDir: '',
+  lang: 'zh',
+  autoExcerpt: 0,
+  prev: true,
+  next: true,
+  slot: '',
+  custom: '',
+  postCount: 0
+};
+
+export const usePosts = async (userConfig: IPostsConfig = {}) => {
+  // 合并配置，解构 usePosts 所需的配置项
+  const config = { ...defaultConfig, ...userConfig };
+  const { srcDir, outDir, autoExcerpt, prev, next } = config;
   const rewrites = {};
   try {
     const paths = await fg(`${srcDir}/**/*.md`);
@@ -244,13 +250,15 @@ export const usePosts = async ({
       })
     );
 
-    // 五、生成分页（首页与文章列表）
-    await generatePages(outDir, lang, pageSize, homepage, posts.length, slot, custom);
+    // 统计文章总数（不含隐藏文章）
+    config.postCount = posts.length;
 
     return { posts, hiddenPosts, rewrites };
   } catch (e) {
     console.error(e);
-    await generatePages();
     return { posts: [], hiddenPosts: [], rewrites };
+  } finally {
+    // 五、最终生成分页（首页与文章列表）
+    await generatePages(config);
   }
 };

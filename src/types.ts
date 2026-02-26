@@ -1,5 +1,19 @@
 import { DefaultTheme } from 'vitepress/theme';
 
+export interface IPostsConfig {
+  pageSize?: number;
+  homepage?: boolean;
+  srcDir?: string;
+  outDir?: string;
+  lang?: string;
+  autoExcerpt?: number;
+  prev?: boolean;
+  next?: boolean;
+  slot?: string;
+  custom?: string;
+  postCount?: number;
+}
+
 export interface IPost {
   title: string;
   datetime: string;
