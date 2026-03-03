@@ -47,6 +47,7 @@ li {
   }
 
   &__title {
+    // 标题前的小圆点
     &::before {
       display: inline-block;
       content: '';
@@ -62,18 +63,29 @@ li {
   &__date {
     flex-shrink: 0;
     font-family: var(--font-family-number);
+    font-weight: 600;
+    font-variant-numeric: tabular-nums;
   }
 }
 
 @media screen and (max-width: 768px) {
   .post {
-    padding: 4px;
+    padding: 4px 0;
+    // 移动端日期在左侧显示
+    flex-direction: row-reverse;
+    align-items: flex-start;
+    justify-content: flex-end;
 
     &__title {
-      overflow: hidden;
-      text-overflow: ellipsis;
-      white-space: nowrap;
-      width: 16.5em;
+      margin-left: 0.75rem;
+      &::before {
+        display: none;
+      }
+      // 单行显示
+      // overflow: hidden;
+      // text-overflow: ellipsis;
+      // white-space: nowrap;
+      // width: 16.5em;
     }
   }
 }
