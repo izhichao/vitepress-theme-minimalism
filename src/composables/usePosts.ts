@@ -79,7 +79,7 @@ const writeMd = async (path: string, content: string, frontMatter: { [key: strin
     'pinned',
     'hidden',
     'draft',
-    'desc',
+    'excerpt',
     'category',
     'tags',
     'prev',
@@ -219,7 +219,7 @@ export const usePosts = async (userConfig: IPostsConfig = {}) => {
         rewrites[postPath.replace(/[+()]/g, '\\$&')] = `${frontMatter.permalink}.md`.slice(1).replace(/[+()]/g, '\\$&');
 
         // 4. 生成文章摘要 excerpt
-        const excerpt = frontMatter.desc || removeMdPro(_excerpt + '') || removeMdPro(content).slice(0, autoExcerpt);
+        const excerpt = frontMatter.excerpt || removeMdPro(_excerpt + '') || removeMdPro(content).slice(0, autoExcerpt);
 
         return {
           ...frontMatter,

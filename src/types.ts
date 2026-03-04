@@ -23,7 +23,6 @@ export interface IPost {
   pinned?: string;
   hidden?: boolean;
   draft?: boolean;
-  desc?: string;
   excerpt?: string;
   category?: string;
   tags?: string[];
