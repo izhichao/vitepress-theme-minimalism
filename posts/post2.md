@@ -1,14 +1,12 @@
 ---
-title: 旅行的意义
+title: 2.旅行的意义（密码：123456）
 datetime: '2023-10-02 10:00:00'
-permalink: /posts/1e9071
+permalink: /posts/2
 outline: deep
+order: 2
 category: 文章
 tags:
   - 旅行的意义
-prev:
-  text: 阅读的乐趣
-  link: /posts/d4bad3
 ---
 
 # 旅行的意义

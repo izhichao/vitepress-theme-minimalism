@@ -1,17 +1,17 @@
 ---
-title: 短暂的宁静
+title: 8.短暂的宁静（文章 9 已隐藏，需直接访问 /posts/9 ）
 datetime: '2023-10-08 10:00:00'
-permalink: /posts/2fc5ad
+permalink: /posts/8
 outline: deep
 category: 子文章
 tags:
   - 短暂的宁静
 prev:
-  text: 音乐的魔力
-  link: /posts/0e1cd7
+  text: 10.一杯茶的时光（手动摘要）
+  link: /posts/10
 next:
-  text: 夜空的思考
-  link: /posts/b808f8
+  text: 6.运动的乐趣（文章 7 为草稿，无法访问）
+  link: /posts/6
 ---
 
 # 短暂的宁静

@@ -2,10 +2,10 @@ import { inBrowser, Router } from 'vitepress';
 import MinimalismTheme from '../../src';
 import ThemeLayout from './ThemeLayout.vue';
 
-export const defaultPassword = 'vitepress-theme-minimalism';
+export const defaultPassword = '123456';
 
 export const passwordConfig: Record<string, string> = {
-  c10a87: ''
+  2: ''
 };
 
 export default {
