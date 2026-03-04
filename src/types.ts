@@ -20,7 +20,7 @@ export interface IPost {
   permalink: string;
   order?: number;
   pinned?: string;
-  display?: 'none';
+  hidden?: boolean;
   draft?: boolean;
   desc?: string;
   category?: string;
