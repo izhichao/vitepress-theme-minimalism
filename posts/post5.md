@@ -1,17 +1,17 @@
 ---
-title: 观察日常
+title: 5.观察日常
 datetime: '2023-10-05 10:00:00'
-permalink: /posts/e07056
+permalink: /posts/5
 outline: deep
 category: 文章
 tags:
   - 观察日常
 prev:
-  text: 夜空的思考
-  link: /posts/b808f8
+  text: 6.运动的乐趣（文章 7 为草稿，无法访问）
+  link: /posts/6
 next:
-  text: 一次难忘的午餐
-  link: /posts/73a18e
+  text: 4.一次难忘的午餐
+  link: /posts/4
 ---
 
 # 观察日常

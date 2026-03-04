@@ -1,17 +1,12 @@
 ---
-title: 夜空的思考
+title: 7.夜空的思考
 datetime: '2023-10-07 10:00:00'
-permalink: /posts/b808f8
+permalink: /posts/7
 outline: deep
+draft: true
 category: 子文章
 tags:
   - 夜空的思考
-prev:
-  text: 短暂的宁静
-  link: /posts/2fc5ad
-next:
-  text: 观察日常
-  link: /posts/e07056
 ---
 
 # 夜空的思考

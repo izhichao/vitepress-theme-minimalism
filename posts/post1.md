@@ -1,11 +1,11 @@
 ---
-title: 生活中的小确幸
+title: 1.生活中的小确幸（自定义摘要）
 datetime: '2023-10-01 10:00:00'
-permalink: /posts/cd49a3
+permalink: /posts/1
 outline: deep
 order: 1
 pinned: 置顶
-desc: 自定义摘要内容
+excerpt: 摘要 摘要 摘要 摘要 摘要
 category: 文章
 tags:
   - 生活中的小确幸

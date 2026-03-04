@@ -1,17 +1,14 @@
 ---
-title: 一次难忘的午餐
+title: 4.一次难忘的午餐
 datetime: '2023-10-04 10:00:00'
-permalink: /posts/73a18e
+permalink: /posts/4
 outline: deep
 category: 文章
 tags:
   - 一次难忘的午餐
 prev:
-  text: 观察日常
-  link: /posts/e07056
-next:
-  text: 阅读的乐趣
-  link: /posts/d4bad3
+  text: 5.观察日常
+  link: /posts/5
 ---
 
 # 一次难忘的午餐

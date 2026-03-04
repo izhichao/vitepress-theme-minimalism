@@ -15,7 +15,7 @@ import { ads } from '/.vitepress/theme/ads.ts';
 </script>
 `;
 
-const { posts, rewrites } = await usePosts({
+const { posts, hiddenPosts, excludePosts, rewrites } = await usePosts({
   pageSize: 6,
   homepage: false,
   srcDir: 'posts',
@@ -32,6 +32,17 @@ export default defineConfig<ThemeConfig>({
   cleanUrls: true,
   ignoreDeadLinks: true,
   lastUpdated: true,
+  sitemap: {
+    hostname: 'https://tsx.dpdns.org',
+    transformItems: (items) => {
+      return items
+        .filter((item) => {
+          const url = item.url.replace(/\.html$/, '');
+          return !hiddenPosts.has(url);
+        })
+        .filter((item) => item.url !== 'password');
+    }
+  },
   themeConfig: {
     posts,
     page: {
@@ -80,5 +91,5 @@ export default defineConfig<ThemeConfig>({
       });
     }
   },
-  srcExclude: ['README.md', 'README_en-US.md']
+  srcExclude: [...excludePosts, 'README.md', 'README_en-US.md']
 });

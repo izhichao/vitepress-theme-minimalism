@@ -1,17 +1,12 @@
 ---
-title: 阅读的乐趣
+title: 3.阅读的乐趣
 datetime: '2023-10-03 10:00:00'
-permalink: /posts/d4bad3
+permalink: /posts/3
 outline: deep
+draft: true
 category: 文章
 tags:
   - 阅读的乐趣
-prev:
-  text: 一次难忘的午餐
-  link: /posts/73a18e
-next:
-  text: 旅行的意义
-  link: /posts/1e9071
 ---
 
 # 阅读的乐趣

@@ -1,17 +1,16 @@
 ---
-title: 音乐的魔力
+title: 9.音乐的魔力
 datetime: '2023-10-09 10:00:00'
-permalink: /posts/0e1cd7
+permalink: /posts/9
 outline: deep
+hidden: true
 category: 子文章
 tags:
   - 音乐的魔力
-prev:
-  text: 一杯茶的时光
-  link: /posts/36fb63
-next:
-  text: 短暂的宁静
-  link: /posts/2fc5ad
+head:
+  - - meta
+    - name: robots
+      content: 'noindex, nofollow'
 ---
 
 # 音乐的魔力
