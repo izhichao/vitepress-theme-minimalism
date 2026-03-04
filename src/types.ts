@@ -18,8 +18,8 @@ export interface IPost {
   title: string;
   datetime: string;
   permalink: string;
-  order: number;
-  pinned: boolean;
+  order?: number;
+  pinned?: string;
   display?: 'none';
   desc?: string;
   category?: string;
