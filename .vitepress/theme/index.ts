@@ -18,7 +18,7 @@ export default {
 
       router.onBeforeRouteChange = (to) => {
         themeBefore?.(to);
-        if (to.includes('password')) return;
+        if (to.split('?')[0] === '/password') return;
 
         // 查找匹配的文章 ID
         const postId = Object.keys(passwordConfig).find((id) => to.split('/').includes(id));
