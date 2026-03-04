@@ -1,4 +1,5 @@
 import { DefaultTheme } from 'vitepress/theme';
+import { HeadConfig } from 'vitepress';
 
 export interface IPostsConfig {
   pageSize?: number;
@@ -23,8 +24,12 @@ export interface IPost {
   hidden?: boolean;
   draft?: boolean;
   desc?: string;
+  excerpt?: string;
   category?: string;
   tags?: string[];
+  head?: HeadConfig[];
+  prev?: { text?: string; link?: string };
+  next?: { text?: string; link?: string };
 }
 
 export interface IPage {
