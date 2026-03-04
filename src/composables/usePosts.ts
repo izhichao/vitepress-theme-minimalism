@@ -50,8 +50,8 @@ const formatFrontMatter = async (data, postPath, srcDir) => {
     });
   }
 
-  // display: none 时自动添加 noindex meta
-  if (data.display === 'none') {
+  // 隐藏文章时自动添加 noindex meta
+  if (data.hidden) {
     const noindexMeta = ['meta', { name: 'robots', content: 'noindex, nofollow' }];
     const alreadyExists = (data.head ?? []).some((item) => Array.isArray(item) && item[1]?.name === 'robots');
     if (!alreadyExists) {
@@ -76,7 +76,8 @@ const writeMd = async (path: string, content: string, data: { [key: string]: any
     'outline',
     'order',
     'pinned',
-    'display',
+    'hidden',
+    'draft',
     'desc',
     'category',
     'tags',
@@ -137,7 +138,7 @@ const updateNav = (frontMatter: any, posts: IPost[], prev: boolean, next: boolea
   };
 
   // 置顶或隐藏文章：清除已有的 prev / next
-  if (frontMatter.order || frontMatter.display === 'none' || frontMatter.draft) {
+  if (frontMatter.order || frontMatter.hidden || frontMatter.draft) {
     const hadNav = !!(frontMatter.prev || frontMatter.next);
     delete frontMatter.prev;
     delete frontMatter.next;
@@ -227,12 +228,12 @@ export const usePosts = async (userConfig: IPostsConfig = {}) => {
     );
 
     // 二、隐藏列表 (用于 sitemap 中排除隐藏文章) / 草稿列表 (用于 srcExclude 中排除构建)
-    const hiddenPosts = results.filter((post) => post.display === 'none');
+    const hiddenPosts = new Set(results.filter((post) => post.hidden).map((post) => post.permalink.slice(1)));
     const excludePosts = paths.filter((postPath) => postCache.get(postPath).data.draft);
 
     // 三、实际文章列表（过滤掉隐藏文章，并按置顶 + 时间排序）
     const posts = results
-      .filter((post) => post.display !== 'none' && !post.draft) // 过滤隐藏文章和草稿
+      .filter((post) => !post.hidden && !post.draft) // 过滤隐藏文章和草稿
       .sort((a, b) => {
         // 优先按置顶排序
         if (a.order && b.order) return a.order - b.order;
@@ -257,7 +258,7 @@ export const usePosts = async (userConfig: IPostsConfig = {}) => {
     return { posts, hiddenPosts, excludePosts, rewrites };
   } catch (e) {
     console.error(e);
-    return { posts: [], hiddenPosts: [], excludePosts: [], rewrites };
+    return { posts: [], hiddenPosts: new Set<string>(), excludePosts: [], rewrites };
   } finally {
     // 五、最终生成分页（首页与文章列表）
     await generatePages(config);
