@@ -21,7 +21,7 @@ export default {
         if (to.includes('password')) return;
 
         // 查找匹配的文章 ID
-        const postId = Object.keys(passwordConfig).find((id) => to.includes(id));
+        const postId = Object.keys(passwordConfig).find((id) => to.split('/').includes(id));
         if (!postId) return; // 如果没有匹配的文章，不需要密码
 
         // 从 localStorage 中获取所有文章的密码对象
