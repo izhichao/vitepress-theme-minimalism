@@ -21,6 +21,7 @@ export interface IPost {
   order?: number;
   pinned?: string;
   display?: 'none';
+  draft?: boolean;
   desc?: string;
   category?: string;
   tags?: string[];

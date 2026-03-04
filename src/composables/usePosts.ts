@@ -137,7 +137,7 @@ const updateNav = (frontMatter: any, posts: IPost[], prev: boolean, next: boolea
   };
 
   // 置顶或隐藏文章：清除已有的 prev / next
-  if (frontMatter.order || frontMatter.display === 'none') {
+  if (frontMatter.order || frontMatter.display === 'none' || frontMatter.draft) {
     const hadNav = !!(frontMatter.prev || frontMatter.next);
     delete frontMatter.prev;
     delete frontMatter.next;
@@ -226,12 +226,13 @@ export const usePosts = async (userConfig: IPostsConfig = {}) => {
       })
     );
 
-    // 二、隐藏文章列表（可用于 sitemap 中排除隐藏文章）
+    // 二、隐藏列表 (用于 sitemap 中排除隐藏文章) / 草稿列表 (用于 srcExclude 中排除构建)
     const hiddenPosts = results.filter((post) => post.display === 'none');
+    const excludePosts = paths.filter((postPath) => postCache.get(postPath).data.draft);
 
     // 三、实际文章列表（过滤掉隐藏文章，并按置顶 + 时间排序）
     const posts = results
-      .filter((post) => post.display !== 'none') // 过滤隐藏文章
+      .filter((post) => post.display !== 'none' && !post.draft) // 过滤隐藏文章和草稿
       .sort((a, b) => {
         // 优先按置顶排序
         if (a.order && b.order) return a.order - b.order;
@@ -253,10 +254,10 @@ export const usePosts = async (userConfig: IPostsConfig = {}) => {
     // 统计文章总数（不含隐藏文章）
     config.postCount = posts.length;
 
-    return { posts, hiddenPosts, rewrites };
+    return { posts, hiddenPosts, excludePosts, rewrites };
   } catch (e) {
     console.error(e);
-    return { posts: [], hiddenPosts: [], rewrites };
+    return { posts: [], hiddenPosts: [], excludePosts: [], rewrites };
   } finally {
     // 五、最终生成分页（首页与文章列表）
     await generatePages(config);
