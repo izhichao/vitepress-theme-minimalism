@@ -7,8 +7,11 @@
     <template #aside-outline-before>
       <ShareItem />
     </template>
+    <template #doc-footer-before>
+      <Copyright />
+    </template>
     <template #doc-after>
-      <!-- <PrevNext /> -->
+      <PrevNext />
       <AdItem :custom="ads" type="doc" />
       <AdItem :adsense="adsense" type="doc" />
       <CommentItem />
@@ -24,6 +27,7 @@ import AdItem from '../../src/components/AdItem.vue';
 import ShareItem from '../../src/components/ShareItem.vue';
 import CommentItem from './components/CommentItem.vue';
 import PrevNext from '../../src/components/PrevNext.vue';
+import Copyright from '../../src/components/Copyright.vue';
 import Password from '../../src/views/PasswordView.vue';
 import type { IAdsense } from '../../src/types.ts';
 import { ads } from './ads.ts';
