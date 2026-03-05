@@ -23,13 +23,13 @@
 import { ref, watch } from 'vue';
 import { useData, inBrowser } from 'vitepress';
 import DefaultTheme from 'vitepress/theme';
+import type { IAdsense } from '../../src/types.ts';
 import AdItem from '../../src/components/AdItem.vue';
 import ShareItem from '../../src/components/ShareItem.vue';
-import CommentItem from './components/CommentItem.vue';
 import PrevNext from '../../src/components/PrevNext.vue';
 import Copyright from '../../src/components/Copyright.vue';
-import Password from '../../src/views/PasswordView.vue';
-import type { IAdsense } from '../../src/types.ts';
+import Password from '../../src/components/Password.vue';
+import CommentItem from './components/CommentItem.vue';
 import { ads } from './ads.ts';
 
 const adsense: IAdsense = {

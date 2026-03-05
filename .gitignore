@@ -1,11 +1,5 @@
 node_modules
 .vitepress/dist
 .vitepress/cache
-/*.md
-!README.md
-!README_en-US.md
-!about.md
-!tags.md
-!archives.md
-!category.md
-!password.md
+/index.md
+/page-*.md

@@ -1,17 +1,16 @@
 import { onMounted, onUnmounted } from 'vue';
 import { EnhanceAppContext, inBrowser } from 'vitepress';
+import type { ThemeConfig } from './types';
 import DefaultTheme from 'vitepress/theme';
 import Home from './views/HomeView.vue';
+import Page from './views/PageView.vue';
 import Archives from './views/ArchivesView.vue';
 import Category from './views/CategoryView.vue';
-import Page from './views/PageView.vue';
-import Password from './views/PasswordView.vue';
+import PostMeta from './components/PostMeta.vue';
 import { bindFancybox, destroyFancybox } from './utils/fancybox';
 import { BProgress } from '@bprogress/core';
 import '@bprogress/core/css';
 import './styles/index.less';
-import PostMeta from './components/PostMeta.vue';
-import type { ThemeConfig } from './types';
 
 export default {
   extends: DefaultTheme,
@@ -20,7 +19,6 @@ export default {
     app.component('Archives', Archives);
     app.component('Category', Category);
     app.component('Page', Page);
-    app.component('Password', Password);
     app.component('PostMeta', PostMeta);
     if (inBrowser) {
       BProgress.configure({ showSpinner: false });
