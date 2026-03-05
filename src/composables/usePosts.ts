@@ -117,53 +117,47 @@ const removeMdPro = (str: string) => {
  * 更新单篇文章的上一篇 / 下一篇 FrontMatter
  * @param frontMatter 文章的 FrontMatter 数据
  * @param posts 已排序的可见文章列表
- * @param prev 是否启用上一篇
- * @param next 是否启用下一篇
+ * @param nav 是否启用上一篇/下一篇
  * @returns 是否发生变更
  */
-const updateNav = (frontMatter: IPost, posts: IPost[], prev: boolean, next: boolean): boolean => {
-  // 更新单个导航字段（prev 或 next），返回是否发生变更
-  const resolveNav = (type: 'prev' | 'next', enabled: boolean, target?: IPost) => {
-    if (enabled && target) {
-      const outdated =
-        !frontMatter[type] || frontMatter[type].text !== target.title || frontMatter[type].link !== target.permalink;
-      if (outdated) {
-        frontMatter[type] = { text: target.title, link: target.permalink };
-        return true;
-      }
-    } else if (frontMatter[type]) {
-      delete frontMatter[type];
-      return true;
-    }
-    return false;
-  };
-
-  // 置顶或隐藏文章：清除已有的 prev / next
-  if (frontMatter.order || frontMatter.hidden || frontMatter.draft) {
+const updateNav = (frontMatter: IPost, posts: IPost[], nav: boolean): boolean => {
+  // nav 关闭、置顶、隐藏或草稿文章：清除已有的 prev / next
+  if (!nav || frontMatter.hidden || frontMatter.draft) {
     const hadNav = !!(frontMatter.prev || frontMatter.next);
     delete frontMatter.prev;
     delete frontMatter.next;
     return hadNav;
   }
 
+  // nav 开启时，根据相邻文章更新
   const index = posts.findIndex((post) => post.permalink === frontMatter.permalink);
-  let prevPost: IPost | undefined;
-  let nextPost: IPost | undefined;
+  const prevPost = posts[index - 1];
+  const nextPost = posts[index + 1];
+  let changed = false;
 
-  // 遍历文章列表，找到前一篇和后一篇文章
-  posts.some((post, i) => {
-    if (i < index) {
-      if (!post.order) prevPost = post; // 当前文章之前，不断覆盖取最近的
-    } else if (i > index) {
-      if (!post.order && !nextPost) nextPost = post; // 当前文章之后，取第一个
+  // 设置或更新 prev
+  if (prevPost) {
+    if (!frontMatter.prev || frontMatter.prev.text !== prevPost.title || frontMatter.prev.link !== prevPost.permalink) {
+      frontMatter.prev = { text: prevPost.title, link: prevPost.permalink };
+      changed = true;
     }
-    return !!(prevPost && nextPost); // 前后都找到则停止遍历
-  });
+  } else if (frontMatter.prev) {
+    delete frontMatter.prev;
+    changed = true;
+  }
 
-  // 两个字段必须分开调用，避免 || 短路跳过 next
-  const prevChanged = resolveNav('prev', prev, prevPost);
-  const nextChanged = resolveNav('next', next, nextPost);
-  return prevChanged || nextChanged;
+  // 设置或更新 next
+  if (nextPost) {
+    if (!frontMatter.next || frontMatter.next.text !== nextPost.title || frontMatter.next.link !== nextPost.permalink) {
+      frontMatter.next = { text: nextPost.title, link: nextPost.permalink };
+      changed = true;
+    }
+  } else if (frontMatter.next) {
+    delete frontMatter.next;
+    changed = true;
+  }
+
+  return changed;
 };
 
 const defaultConfig: Required<IPostsConfig> = {
@@ -173,8 +167,7 @@ const defaultConfig: Required<IPostsConfig> = {
   outDir: '',
   lang: 'zh',
   autoExcerpt: 0,
-  prev: true,
-  next: true,
+  nav: false,
   slot: '',
   custom: '',
   postCount: 0
@@ -183,7 +176,7 @@ const defaultConfig: Required<IPostsConfig> = {
 export const usePosts = async (userConfig: IPostsConfig = {}) => {
   // 合并配置，解构 usePosts 所需的配置项
   const config = { ...defaultConfig, ...userConfig };
-  const { srcDir, outDir, autoExcerpt, prev, next } = config;
+  const { srcDir, outDir, autoExcerpt, nav } = config;
   const rewrites = {};
   try {
     const paths = await fg(`${srcDir}/**/*.md`);
@@ -248,7 +241,7 @@ export const usePosts = async (userConfig: IPostsConfig = {}) => {
     await Promise.all(
       paths.map(async (postPath) => {
         const { frontMatter, content, changed } = postCache.get(postPath)!;
-        const navChanged = updateNav(frontMatter, posts, prev, next);
+        const navChanged = updateNav(frontMatter, posts, nav);
         if (changed || navChanged) await writeMd(postPath, content, frontMatter);
       })
     );

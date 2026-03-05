@@ -8,8 +8,7 @@ export interface IPostsConfig {
   outDir?: string;
   lang?: string;
   autoExcerpt?: number;
-  prev?: boolean;
-  next?: boolean;
+  nav?: boolean;
   slot?: string;
   custom?: string;
   postCount?: number;
