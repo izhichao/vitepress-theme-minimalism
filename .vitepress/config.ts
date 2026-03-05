@@ -50,6 +50,7 @@ export default defineConfig<ThemeConfig>({
     page: {
       max: 5
     },
+    transition: true,
     logo: '/profile.png',
     outline: { level: 2 },
     nav: [
