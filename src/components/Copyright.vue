@@ -4,7 +4,7 @@
       <Icon class="copyright-info__icon" icon="mingcute:user-3-line" />
       <span class="copyright-info__label">本文作者</span>
       <span class="copyright-info__value">
-        <a href="/" class="copyright-info__link">{{ author }}</a>
+        <a :href="host" class="copyright-info__link">{{ author }}</a>
       </span>
     </div>
     <div class="copyright-info__item">
@@ -27,9 +27,7 @@
         <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank" rel="noopener noreferrer" class="copyright-info__link">
           CC BY-NC-SA 4.0
         </a>
-        许可协议。转载请注明来自
-        <a href="/" class="copyright-info__link">{{ author }}</a>
-        ！
+        许可协议。转载请注明出处！
       </span>
     </div>
   </div>
@@ -47,9 +45,11 @@ const author = computed(() => site.value.title);
 const articleTitle = computed(() => page.value.title);
 
 const url = ref('');
+const host = ref('/');
 onMounted(() => {
   // 获取完整的 URL
   url.value = window.location.href;
+  host.value = window.location.origin + '/';
 });
 </script>
 
