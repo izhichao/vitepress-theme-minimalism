@@ -7,8 +7,9 @@
 
 :root {
   // Geist 字体设置
-  --vp-font-family-base: 'Geist', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial,
-    'Noto Sans', sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji';
+  --vp-font-family-base:
+    'Geist', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, 'Noto Sans', sans-serif, 'Apple Color Emoji',
+    'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji';
   // --vp-font-family-mono: 'Geist Mono', ui-monospace, SFMono-Regular, 'SF Mono', Menlo, Monaco, Consolas,
   //   'Liberation Mono', 'Courier New', monospace;
   --font-family-number: var(--vp-font-family-base);
@@ -171,5 +172,30 @@ pre::-webkit-scrollbar {
         }
       }
     }
+  }
+}
+
+// 路由切换飞入动画
+.page-enter {
+  animation:
+    page-rise 0.4s ease-out,
+    page-fade 0.4s ease-out;
+}
+
+@keyframes page-rise {
+  from {
+    transform: translateY(40px);
+  }
+  to {
+    transform: translateY(0);
+  }
+}
+
+@keyframes page-fade {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
   }
 }

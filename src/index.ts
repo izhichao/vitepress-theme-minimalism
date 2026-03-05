@@ -11,10 +11,11 @@ import { BProgress } from '@bprogress/core';
 import '@bprogress/core/css';
 import './styles/index.less';
 import PostMeta from './components/PostMeta.vue';
+import type { ThemeConfig } from './types';
 
 export default {
   extends: DefaultTheme,
-  enhanceApp({ app, router }: EnhanceAppContext) {
+  enhanceApp({ app, router, siteData }: EnhanceAppContext) {
     app.component('Home', Home);
     app.component('Archives', Archives);
     app.component('Category', Category);
@@ -30,6 +31,16 @@ export default {
       router.onAfterRouteChange = () => {
         BProgress.done();
         bindFancybox(); // 绑定图片查看器
+
+        // 路由切换飞入动画（受 themeConfig.transition 控制）
+        if ((siteData.value.themeConfig as ThemeConfig).transition) {
+          const content = document.querySelector('.VPContent');
+          if (content) {
+            content.classList.remove('page-enter');
+            void (content as HTMLElement).offsetWidth;
+            content.classList.add('page-enter');
+          }
+        }
       };
     }
   },

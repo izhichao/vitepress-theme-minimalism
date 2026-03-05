@@ -55,4 +55,5 @@ export interface IPostObject {
 export interface ThemeConfig extends DefaultTheme.Config {
   posts?: IPost[];
   page?: IPage;
+  transition?: boolean;
 }
