@@ -11,7 +11,8 @@ import { useRoute } from 'vitepress';
 import '@waline/client/style';
 
 const serverURL = 'https://waline.vercel.app';
-const path = computed(() => useRoute().path);
+const route = useRoute();
+const path = computed(() => route.path);
 const dark = 'html[class~="dark"]';
 </script>
 
