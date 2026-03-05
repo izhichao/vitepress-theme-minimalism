@@ -22,21 +22,28 @@ export default {
     app.component('PostMeta', PostMeta);
     if (inBrowser) {
       BProgress.configure({ showSpinner: false });
-      router.onBeforeRouteChange = () => {
-        BProgress.start();
-        destroyFancybox(); // 销毁图片查看器
+      let lastPath = '';
+      router.onBeforeRouteChange = (to) => {
+        if (to && to.split(/[\?#]/)[0] !== lastPath) {
+          BProgress.start();
+          destroyFancybox(); // 销毁图片查看器
+        }
       };
-      router.onAfterRouteChange = () => {
-        BProgress.done();
-        bindFancybox(); // 绑定图片查看器
+      router.onAfterRouteChange = (to) => {
+        const toPath = to ? to.split(/[\?#]/)[0] : '';
+        if (toPath !== lastPath) {
+          lastPath = toPath;
+          BProgress.done();
+          bindFancybox(); // 绑定图片查看器
 
-        // 路由切换飞入动画（受 themeConfig.transition 控制）
-        if ((siteData.value.themeConfig as ThemeConfig).transition) {
-          const content = document.querySelector('.VPContent');
-          if (content) {
-            content.classList.remove('page-enter');
-            void (content as HTMLElement).offsetWidth;
-            content.classList.add('page-enter');
+          // 路由切换飞入动画（受 themeConfig.transition 控制）
+          if ((siteData.value.themeConfig as ThemeConfig).transition) {
+            const content = document.querySelector('.VPContent');
+            if (content) {
+              content.classList.remove('page-enter');
+              void (content as HTMLElement).offsetWidth;
+              content.classList.add('page-enter');
+            }
           }
         }
       };
