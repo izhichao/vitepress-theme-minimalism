@@ -4,13 +4,7 @@
       <h1 class="password__title">🔒 访问受限</h1>
       <p class="password__desc">此内容需要密码才能访问</p>
 
-      <input
-        v-model="password"
-        type="password"
-        placeholder="请输入访问密码"
-        @keyup.enter="handleSubmit"
-        class="password__input"
-      />
+      <input v-model="input" type="password" placeholder="请输入访问密码" @keyup.enter="handleSubmit" class="password__input" />
       <button @click="handleSubmit" class="password__button">解锁内容</button>
 
       <p v-if="error" class="password__error">{{ error }}</p>
@@ -19,62 +13,36 @@
 </template>
 
 <script lang="ts" setup>
-import { ref, onMounted } from 'vue';
-import { useRouter } from 'vitepress';
+import { ref } from 'vue';
+import { useData, inBrowser } from 'vitepress';
 
-// 定义 props
-const props = defineProps<{
-  passwordConfig?: Record<string, string>;
-  defaultPassword?: string;
-}>();
-
-const router = useRouter();
-const password = ref('');
+const { frontmatter } = useData();
+const emit = defineEmits<{ verified: [] }>();
+const input = ref('');
 const error = ref('');
-let redirectUrl = '/';
-let postId = '';
-let correctPassword = '';
 
-onMounted(() => {
-  const params = new URLSearchParams(window.location.search);
-  redirectUrl = params.get('redirect') || '/';
+// 浏览器端 SHA-256 哈希
+const hashInBrowser = async (text: string): Promise<string> => {
+  const encoder = new TextEncoder();
+  const data = encoder.encode(text);
+  const buffer = await crypto.subtle.digest('SHA-256', data);
+  return Array.from(new Uint8Array(buffer))
+    .map((b) => b.toString(16).padStart(2, '0'))
+    .join('');
+};
 
-  const passwordConfig = props.passwordConfig || {};
-  const defaultPassword = props.defaultPassword || '';
-
-  // 从重定向 URL 中提取文章 ID
-  postId = Object.keys(passwordConfig).find((id) => redirectUrl.includes(id)) || '';
-
-  if (postId) {
-    // 获取配置的密码，如果为空则使用默认密码
-    const configuredPassword = passwordConfig[postId];
-    correctPassword = configuredPassword || defaultPassword;
-
-    if (!correctPassword) {
-      error.value = '密码配置错误';
+async function handleSubmit() {
+  const hash = String(frontmatter.value?.password ?? '');
+  const inputHash = await hashInBrowser(input.value);
+  if (inputHash === hash) {
+    // 保存哈希到 localStorage，下次访问免输入
+    if (inBrowser) {
+      const permalink = frontmatter.value?.permalink || '';
+      const obj = JSON.parse(localStorage.getItem('post_passwords') || '{}');
+      obj[permalink] = inputHash;
+      localStorage.setItem('post_passwords', JSON.stringify(obj));
     }
-  } else {
-    error.value = '无法找到此内容的密码配置';
-  }
-});
-
-function handleSubmit() {
-  if (!postId || !correctPassword) {
-    error.value = error.value || '无法验证密码配置';
-    return;
-  }
-
-  if (password.value === correctPassword) {
-    // 获取现有的密码对象
-    const passwordsObj = JSON.parse(localStorage.getItem('post_passwords') || '{}');
-
-    // 更新该文章的密码
-    passwordsObj[postId] = password.value;
-
-    // 保存回 localStorage
-    localStorage.setItem('post_passwords', JSON.stringify(passwordsObj));
-
-    router.go(redirectUrl);
+    emit('verified');
   } else {
     error.value = '密码错误，请重新输入';
   }
@@ -83,8 +51,12 @@ function handleSubmit() {
 
 <style lang="less" scoped>
 .password {
-  min-height: calc(100vh - 4rem - 7rem);
-  height: 100%;
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 100;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -96,13 +68,17 @@ function handleSubmit() {
     padding: 3rem 2.5rem;
     border-radius: 0.75rem;
     border: 1px solid #e5e5e5;
-    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.02), 0 4px 8px rgba(0, 0, 0, 0.04);
+    box-shadow:
+      0 1px 2px rgba(0, 0, 0, 0.02),
+      0 4px 8px rgba(0, 0, 0, 0.04);
     width: 100%;
     max-width: 24rem;
     transition: box-shadow 0.2s ease;
 
     &:hover {
-      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.03), 0 8px 16px rgba(0, 0, 0, 0.06);
+      box-shadow:
+        0 2px 4px rgba(0, 0, 0, 0.03),
+        0 8px 16px rgba(0, 0, 0, 0.06);
     }
   }
 
@@ -167,12 +143,16 @@ function handleSubmit() {
     &:hover {
       background: #171717;
       transform: translateY(-1px);
-      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1), 0 4px 8px rgba(0, 0, 0, 0.08);
+      box-shadow:
+        0 2px 4px rgba(0, 0, 0, 0.1),
+        0 4px 8px rgba(0, 0, 0, 0.08);
     }
 
     &:active {
       transform: translateY(0);
-      box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1), 0 2px 4px rgba(0, 0, 0, 0.08);
+      box-shadow:
+        0 1px 2px rgba(0, 0, 0, 0.1),
+        0 2px 4px rgba(0, 0, 0, 0.08);
     }
   }
 

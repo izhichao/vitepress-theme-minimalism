@@ -1,5 +1,6 @@
 import { defineConfig } from 'vitepress';
 import { usePosts } from '../src/composables/usePosts';
+import { hashPassword } from '../src/utils/hashPassword';
 import type { ThemeConfig } from '../src/types';
 
 const slot = `
@@ -36,12 +37,12 @@ export default defineConfig<ThemeConfig>({
   sitemap: {
     hostname: 'https://tsx.dpdns.org',
     transformItems: (items) => {
-      return items
-        .filter((item) => {
-          const url = item.url.replace(/\.html$/, '');
-          return !hiddenPosts.has(url);
-        })
-        .filter((item) => item.url !== 'password');
+      return items.filter((item) => !hiddenPosts.has(item.url.replace(/\.html$/, '')));
+    }
+  },
+  transformPageData(pageData) {
+    if (pageData.frontmatter?.password) {
+      pageData.frontmatter.password = hashPassword(String(pageData.frontmatter.password));
     }
   },
   themeConfig: {
@@ -74,8 +75,7 @@ export default defineConfig<ThemeConfig>({
     },
     socialLinks: [{ icon: 'github', link: 'https://github.com/izhichao/vitepress-theme-minimalism' }],
     footer: {
-      message:
-        'Theme by <a href="https://github.com/izhichao/vitepress-theme-minimalism" target="_blank">Minimalism</a>',
+      message: 'Theme by <a href="https://github.com/izhichao/vitepress-theme-minimalism" target="_blank">Minimalism</a>',
       copyright: `Copyright © 2017-${new Date().getFullYear()} <a href="https://github.com/izhichao" target="_blank">只抄</a>`
     },
     search: { provider: 'local' }
