@@ -1,5 +1,5 @@
 <template>
-  <div class="post-info" v-if="$frontmatter.datetime">
+  <div class="post-info" v-if="datetime">
     <!-- 第一行：发布于、更新于（左），浏览（右） -->
     <div class="post-info__row post-info__row--primary">
       <div class="post-info__group post-info__group--left">
@@ -7,51 +7,45 @@
         <div class="post-info__item">
           <Icon class="post-info__icon" icon="mingcute:calendar-line" />
           <span class="post-info__label">发布于</span>
-          <span class="post-info__value">{{ formatDate($frontmatter.datetime) }}</span>
+          <span class="post-info__value">{{ formatDate(datetime) }}</span>
         </div>
 
         <!-- 更新于 -->
-        <div class="post-info__item" v-if="page.lastUpdated">
+        <div class="post-info__item" v-if="lastUpdated">
           <Icon class="post-info__icon" icon="mingcute:time-line" />
           <span class="post-info__label">更新于</span>
-          <span class="post-info__value">{{ formatDate(page.lastUpdated) }}</span>
+          <span class="post-info__value">{{ formatDate(lastUpdated) }}</span>
         </div>
       </div>
 
       <!-- 浏览量 -->
-      <div class="post-info__group post-info__group--right" v-if="$frontmatter.views">
+      <div class="post-info__group post-info__group--right" v-if="views">
         <div class="post-info__item">
           <Icon class="post-info__icon" icon="mingcute:eye-line" />
           <span class="post-info__label">浏览</span>
-          <span class="post-info__value">{{ $frontmatter.views }}</span>
+          <span class="post-info__value">{{ views }}</span>
         </div>
       </div>
     </div>
 
     <!-- 第二行：分类、标签 -->
-    <div
-      class="post-info__row post-info__row--secondary"
-      v-if="$frontmatter.category || ($frontmatter.tags && $frontmatter.tags.length > 0)"
-    >
+    <div class="post-info__row post-info__row--secondary" v-if="category || (tags && tags.length > 0)">
       <!-- 分类 -->
-      <div class="post-info__category" v-if="$frontmatter.category">
+      <div class="post-info__category" v-if="category">
         <Icon class="post-info__icon" icon="mingcute:folder-line" />
         <span class="post-info__label">分类</span>
-        <a
-          :href="withBase(`${outDir}/category?category=${$frontmatter.category.replaceAll('&', '%26')}`)"
-          class="post-info__badge post-info__badge--category"
-        >
-          {{ $frontmatter.category }}
+        <a :href="withBase(`${outDir}/category?category=${category.replaceAll('&', '%26')}`)" class="post-info__badge post-info__badge--category">
+          {{ category }}
         </a>
       </div>
 
       <!-- 标签 -->
-      <div class="post-info__tags" v-if="$frontmatter.tags && $frontmatter.tags.length > 0">
+      <div class="post-info__tags" v-if="tags && tags.length > 0">
         <Icon class="post-info__icon" icon="mingcute:tag-line" />
         <span class="post-info__label">标签</span>
         <div class="post-info__tags-list">
           <a
-            v-for="tag in $frontmatter.tags"
+            v-for="tag in tags"
             :key="tag"
             :href="withBase(`${outDir}/category?tag=${tag.replaceAll('&', '%26')}`)"
             class="post-info__badge post-info__badge--tag"
@@ -70,16 +64,19 @@ import { useOutDir } from '../composables/useOutDir';
 import { Icon } from '@iconify/vue';
 
 const { outDir } = useOutDir();
-const { page } = useData();
+const { page, frontmatter } = useData();
 
-function formatDate(datetime: string): string {
+const { lastUpdated } = page.value;
+const { datetime, views, category, tags } = frontmatter.value;
+
+const formatDate = (datetime: string | number) => {
   if (!datetime) return '';
   const date = new Date(datetime);
   const year = date.getFullYear();
   const month = String(date.getMonth() + 1).padStart(2, '0');
   const day = String(date.getDate()).padStart(2, '0');
   return `${year}年${month}月${day}日`;
-}
+};
 </script>
 
 <style lang="less" scoped>
