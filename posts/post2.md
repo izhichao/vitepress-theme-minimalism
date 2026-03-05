@@ -8,12 +8,6 @@ password: '123456'
 category: 文章
 tags:
   - 旅行的意义
-prev:
-  text: 1.生活中的小确幸（自定义摘要）
-  link: /posts/1
-next:
-  text: 10.一杯茶的时光（手动摘要）
-  link: /posts/10
 ---
 
 # 2.旅行的意义

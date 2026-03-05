@@ -6,12 +6,6 @@ outline: deep
 category: 文章
 tags:
   - 观察日常
-prev:
-  text: 6.运动的乐趣（文章 7 为草稿，无法访问）
-  link: /posts/6
-next:
-  text: 4.一次难忘的午餐
-  link: /posts/4
 ---
 
 # 5.观察日常

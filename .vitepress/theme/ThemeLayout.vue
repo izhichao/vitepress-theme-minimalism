@@ -1,6 +1,6 @@
 <template>
   <!-- 未解锁：只渲染密码组件，文章内容不进 DOM -->
-  <Password v-if="!verified" ref="passwordRef" @verified="verified = true" />
+  <Password v-if="!verified" @verified="verified = true" />
 
   <!-- 已解锁：正常渲染 -->
   <Layout v-else>
