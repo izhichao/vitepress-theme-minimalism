@@ -4,6 +4,7 @@
       <ShareItem />
     </template>
     <template #doc-after>
+      <!-- <PrevNext /> -->
       <AdItem :custom="ads" type="doc" />
       <AdItem :adsense="adsense" type="doc" />
       <CommentItem />
@@ -16,6 +17,7 @@ import DefaultTheme from 'vitepress/theme';
 import AdItem from '../../src/components/AdItem.vue';
 import ShareItem from '../../src/components/ShareItem.vue';
 import CommentItem from './components/CommentItem.vue';
+import PrevNext from '../../src/components/PrevNext.vue';
 import type { IAdsense } from '../../src/types.ts';
 import { ads } from './ads.ts';
 
