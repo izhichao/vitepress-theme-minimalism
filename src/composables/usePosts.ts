@@ -166,7 +166,7 @@ const defaultConfig: Required<IPostsConfig> = {
   srcDir: 'posts',
   outDir: '',
   lang: 'zh',
-  autoExcerpt: 0,
+  excerpt: 0,
   nav: false,
   slot: '',
   custom: '',
@@ -176,7 +176,7 @@ const defaultConfig: Required<IPostsConfig> = {
 export const usePosts = async (userConfig: IPostsConfig = {}) => {
   // 合并配置，解构 usePosts 所需的配置项
   const config = { ...defaultConfig, ...userConfig };
-  const { srcDir, outDir, autoExcerpt, nav } = config;
+  const { srcDir, outDir, nav } = config;
   const rewrites = {};
   try {
     const paths = await fg(`${srcDir}/**/*.md`);
@@ -212,7 +212,7 @@ export const usePosts = async (userConfig: IPostsConfig = {}) => {
         rewrites[postPath.replace(/[+()]/g, '\\$&')] = `${frontMatter.permalink}.md`.slice(1).replace(/[+()]/g, '\\$&');
 
         // 4. 生成文章摘要 excerpt
-        const excerpt = frontMatter.excerpt || removeMdPro(_excerpt + '') || removeMdPro(content).slice(0, autoExcerpt);
+        const excerpt = frontMatter.excerpt || removeMdPro(_excerpt + '') || removeMdPro(content).slice(0, config.excerpt);
 
         return {
           ...frontMatter,

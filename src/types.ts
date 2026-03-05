@@ -7,7 +7,7 @@ export interface IPostsConfig {
   srcDir?: string;
   outDir?: string;
   lang?: string;
-  autoExcerpt?: number;
+  excerpt?: number;
   nav?: boolean;
   slot?: string;
   custom?: string;

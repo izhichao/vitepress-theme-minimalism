@@ -19,7 +19,7 @@ const { posts, hiddenPosts, excludePosts, rewrites } = await usePosts({
   pageSize: 6,
   homepage: false,
   srcDir: 'posts',
-  autoExcerpt: 150,
+  excerpt: 150,
   nav: true,
   slot,
   custom
