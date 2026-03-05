@@ -6,9 +6,6 @@ outline: deep
 category: 文章
 tags:
   - 阅读的乐趣
-prev:
-  text: 4.一次难忘的午餐
-  link: /posts/4
 ---
 
 # 3.阅读的乐趣

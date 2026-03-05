@@ -6,12 +6,6 @@ outline: deep
 category: 子文章
 tags:
   - 运动的乐趣
-prev:
-  text: 8.短暂的宁静（文章 9 已隐藏，需直接访问 /posts/9 ）
-  link: /posts/8
-next:
-  text: 5.观察日常
-  link: /posts/5
 ---
 
 # 6.运动的乐趣

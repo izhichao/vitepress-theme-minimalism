@@ -195,7 +195,7 @@ export const usePosts = async (userConfig: IPostsConfig = {}) => {
           content
         } = matter.read(postPath, {
           excerpt: true,
-          excerpt_separator: '<!-- more -->'
+          excerpt_separator: '<!--more-->'
         });
         const frontMatter = data as IPost;
 

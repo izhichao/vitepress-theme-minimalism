@@ -21,7 +21,6 @@ const { posts, hiddenPosts, excludePosts, rewrites } = await usePosts({
   homepage: false,
   srcDir: 'posts',
   excerpt: 150,
-  nav: true,
   slot,
   custom
 });

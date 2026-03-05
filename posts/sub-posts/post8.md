@@ -6,12 +6,6 @@ outline: deep
 category: 子文章
 tags:
   - 短暂的宁静
-prev:
-  text: 10.一杯茶的时光（手动摘要）
-  link: /posts/10
-next:
-  text: 6.运动的乐趣（文章 7 为草稿，无法访问）
-  link: /posts/6
 ---
 
 # 8.短暂的宁静

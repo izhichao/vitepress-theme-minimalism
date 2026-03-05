@@ -6,12 +6,6 @@ outline: deep
 category: 文章
 tags:
   - 一次难忘的午餐
-prev:
-  text: 5.观察日常
-  link: /posts/5
-next:
-  text: 3.阅读的乐趣
-  link: /posts/3
 ---
 
 # 4.一次难忘的午餐

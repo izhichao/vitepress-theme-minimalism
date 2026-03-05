@@ -9,9 +9,6 @@ excerpt: 摘要 摘要 摘要 摘要 摘要
 category: 文章
 tags:
   - 生活中的小确幸
-next:
-  text: 2.旅行的意义（密码：123456）
-  link: /posts/2
 ---
 
 # 1.生活中的小确幸
