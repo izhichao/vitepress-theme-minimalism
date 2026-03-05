@@ -1,5 +1,9 @@
 <template>
-  <Layout>
+  <!-- 未解锁：只渲染密码组件，文章内容不进 DOM -->
+  <Password v-if="!verified" ref="passwordRef" @verified="verified = true" />
+
+  <!-- 已解锁：正常渲染 -->
+  <Layout v-else>
     <template #aside-outline-before>
       <ShareItem />
     </template>
@@ -13,11 +17,14 @@
 </template>
 
 <script lang="ts" setup>
+import { ref, watch } from 'vue';
+import { useData, inBrowser } from 'vitepress';
 import DefaultTheme from 'vitepress/theme';
 import AdItem from '../../src/components/AdItem.vue';
 import ShareItem from '../../src/components/ShareItem.vue';
 import CommentItem from './components/CommentItem.vue';
 import PrevNext from '../../src/components/PrevNext.vue';
+import Password from '../../src/views/PasswordView.vue';
 import type { IAdsense } from '../../src/types.ts';
 import { ads } from './ads.ts';
 
@@ -26,4 +33,28 @@ const adsense: IAdsense = {
   slot: 'XXXX'
 };
 const { Layout } = DefaultTheme;
+const { frontmatter } = useData();
+
+const verified = ref(true);
+
+// 每次路由切换检查是否需要密码
+watch(
+  () => frontmatter.value?.permalink,
+  () => {
+    const pwd = String(frontmatter.value?.password ?? '');
+    if (!pwd) {
+      verified.value = true;
+      return;
+    }
+    // 有密码时检查 localStorage 是否已验证
+    if (!inBrowser) {
+      verified.value = false;
+      return;
+    }
+    const permalink = frontmatter.value?.permalink || '';
+    const stored = JSON.parse(localStorage.getItem('post_passwords') || '{}');
+    verified.value = stored[permalink] === pwd;
+  },
+  { immediate: true }
+);
 </script>

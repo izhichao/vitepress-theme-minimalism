@@ -77,6 +77,7 @@ const writeMd = async (path: string, content: string, frontMatter: { [key: strin
     'outline',
     'order',
     'pinned',
+    'password',
     'hidden',
     'draft',
     'excerpt',

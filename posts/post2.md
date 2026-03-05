@@ -4,6 +4,7 @@ datetime: '2023-10-02 10:00:00'
 permalink: /posts/2
 outline: deep
 order: 2
+password: '123456'
 category: 文章
 tags:
   - 旅行的意义
