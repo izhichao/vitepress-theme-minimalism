@@ -1,4 +1,5 @@
 ---
+id: a60679
 title: 10.一杯茶的时光（手动摘要）
 datetime: '2023-10-10 10:00:00'
 permalink: /posts/10

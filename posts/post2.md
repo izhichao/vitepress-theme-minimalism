@@ -1,7 +1,7 @@
 ---
+id: a61a93
 title: 2.旅行的意义（密码：123456）
 datetime: '2023-10-02 10:00:00'
-permalink: /posts/2
 outline: deep
 order: 2
 password: '123456'
