@@ -76,16 +76,16 @@ const formatFrontMatter = async (frontMatter: IPost, postPath: string, srcDir: s
  */
 const writeMd = async (path: string, content: string, frontMatter: { [key: string]: any }) => {
   const matters = [
+    'draft',
+    'hidden',
+    'order',
+    'pinned',
+    'password',
     'id',
     'title',
     'datetime',
     'permalink',
     'outline',
-    'order',
-    'pinned',
-    'password',
-    'hidden',
-    'draft',
     'excerpt',
     'category',
     'tags',

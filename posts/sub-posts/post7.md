@@ -1,10 +1,10 @@
 ---
+draft: true
 id: a5e5a0
 title: 7.夜空的思考
 datetime: '2023-10-07 10:00:00'
 permalink: /posts/7
 outline: deep
-draft: true
 category: 子文章
 tags:
   - 夜空的思考
