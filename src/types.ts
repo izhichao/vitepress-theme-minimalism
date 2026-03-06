@@ -29,6 +29,7 @@ export interface IPost {
   head?: HeadConfig[];
   prev?: { text?: string; link?: string };
   next?: { text?: string; link?: string };
+  path: string;
 }
 
 export interface IPage {
