@@ -1,7 +1,7 @@
 <template>
   <ul>
     <li v-for="post in posts" :key="post.title">
-      <a :href="withBase(post.permalink)" class="post">
+      <a :href="withBase(post.permalink || post.path)" class="post">
         <div class="post__title">
           {{ post.title }}
         </div>

@@ -10,6 +10,9 @@ import { generateCategory } from '../utils/generateCategory';
 import { formatDate } from '../utils/formatDate';
 import { HeadConfig } from 'vitepress';
 
+// 是否生产环境
+const isProd = process.env.NODE_ENV === 'production';
+
 /**
  * 格式化/补全 FrontMatter
  * @param frontMatter FrontMatter 数据
@@ -30,7 +33,8 @@ const formatFrontMatter = async (frontMatter: IPost, postPath: string, srcDir: s
     changed = true;
   }
 
-  if (!frontMatter.permalink) {
+  // 缺少永久链接且不是草稿时，自动生成永久链接
+  if (!frontMatter.draft && !frontMatter.permalink) {
     frontMatter.permalink = `/${srcDir}/${generateString(6)}`;
     changed = true;
   }
@@ -210,14 +214,17 @@ export const usePosts = async (userConfig: IPostsConfig = {}) => {
         postCache.set(postPath, { frontMatter, content, changed });
 
         // 3. 通过 rewrites 处理永久链接
-        rewrites[postPath.replace(/[+()]/g, '\\$&')] = `${frontMatter.permalink}.md`.slice(1).replace(/[+()]/g, '\\$&');
+        if (frontMatter.permalink) {
+          rewrites[postPath.replace(/[+()]/g, '\\$&')] = `${frontMatter.permalink}.md`.replace(/^\//, '').replace(/[+()]/g, '\\$&');
+        }
 
         // 4. 生成文章摘要 excerpt
         const excerpt = frontMatter.excerpt || removeMdPro(_excerpt + '') || removeMdPro(content).slice(0, config.excerpt);
 
         return {
           ...frontMatter,
-          excerpt
+          excerpt,
+          path: postPath.replace(/\.md$/, '')
         } as IPost;
       })
     );
@@ -226,17 +233,17 @@ export const usePosts = async (userConfig: IPostsConfig = {}) => {
     const hiddenPosts = new Set(results.filter((post) => post.hidden).map((post) => post.permalink.slice(1)));
     const excludePosts = paths.filter((postPath) => postCache.get(postPath).frontMatter.draft);
 
-    // 三、实际文章列表（过滤掉隐藏文章，并按置顶 + 时间排序）
-    const posts = results
-      .filter((post) => !post.hidden && !post.draft) // 过滤隐藏文章和草稿
-      .sort((a, b) => {
-        // 优先按置顶排序
-        if (a.order && b.order) return a.order - b.order;
-        if (a.order) return -1;
-        if (b.order) return 1;
-        // 再按时间降序
-        return new Date(b.datetime).getTime() - new Date(a.datetime).getTime();
-      });
+    // 三、实际文章列表（按置顶 + 时间排序）
+    // 开发环境：不过滤直接排序
+    // 生产环境：过滤隐藏文章和草稿
+    const posts = (isProd ? results.filter((post) => !post.hidden && !post.draft) : results).sort((a, b) => {
+      // 优先按置顶排序
+      if (a.order && b.order) return a.order - b.order;
+      if (a.order) return -1;
+      if (b.order) return 1;
+      // 再按时间降序
+      return new Date(b.datetime).getTime() - new Date(a.datetime).getTime();
+    });
 
     // 四、上一篇 / 下一篇
     await Promise.all(
