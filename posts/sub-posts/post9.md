@@ -1,4 +1,5 @@
 ---
+id: aba6c0
 title: 9.音乐的魔力
 datetime: '2023-10-09 10:00:00'
 permalink: /posts/9

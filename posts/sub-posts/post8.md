@@ -1,4 +1,5 @@
 ---
+id: fc8a2a
 title: 8.短暂的宁静（文章 9 已隐藏，需直接访问 /posts/9 ）
 datetime: '2023-10-08 10:00:00'
 permalink: /posts/8

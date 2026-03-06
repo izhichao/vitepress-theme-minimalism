@@ -1,7 +1,7 @@
 ---
+id: 60a79d
 title: 5.观察日常
 datetime: '2023-10-05 10:00:00'
-permalink: /posts/5
 outline: deep
 category: 文章
 tags:

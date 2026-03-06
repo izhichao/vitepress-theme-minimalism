@@ -1,7 +1,8 @@
 ---
+id: 3a5d0c
 title: 6.运动的乐趣（文章 7 为草稿，无法访问）
 datetime: '2023-10-06 10:00:00'
-permalink: /posts/6
+permalink: posts/6
 outline: deep
 category: 子文章
 tags:

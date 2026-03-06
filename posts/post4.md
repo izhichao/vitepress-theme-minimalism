@@ -1,7 +1,7 @@
 ---
+id: e9f520
 title: 4.一次难忘的午餐
 datetime: '2023-10-04 10:00:00'
-permalink: /posts/4
 outline: deep
 category: 文章
 tags:

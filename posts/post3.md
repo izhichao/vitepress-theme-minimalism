@@ -1,7 +1,7 @@
 ---
+id: ff90c3
 title: 3.阅读的乐趣
 datetime: '2023-10-03 10:00:00'
-permalink: /posts/3
 outline: deep
 category: 文章
 tags:
