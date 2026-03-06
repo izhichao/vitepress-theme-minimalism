@@ -46,13 +46,14 @@ const author = computed(() => site.value.title);
 const articleTitle = computed(() => page.value.title);
 
 const url = ref('');
-const host = ref('/');
+const host = ref('');
 
 // 提取公共的更新 URL 函数
 const updateUrl = () => {
   if (typeof window !== 'undefined') {
-    url.value = window.location.href;
-    host.value = window.location.origin + '/';
+    const urlObj = new URL(window.location.href);
+    url.value = urlObj.origin + urlObj.pathname;
+    host.value = urlObj.origin;
   }
 };
 
