@@ -230,12 +230,13 @@ export const usePosts = async (userConfig: IPostsConfig = {}) => {
           }
         }
 
+        // 判断是否需要重写路由
         if (permalink !== postPath.replace(/\.md$/, '')) {
           // rewrites 中统一去除开头的 /
           rewrites[postPath.replace(/[+()]/g, '\\$&')] = `${permalink}.md`.replace(/^\//, '').replace(/[+()]/g, '\\$&');
         }
 
-        // permalink 统一加上开头的 /
+        // permalink 统一加上开头的 / (必须放后面，否则会影响 rewrites 的 if 判断)
         permalink = permalink.replace(/^\/?/, '/');
 
         return {
@@ -247,7 +248,7 @@ export const usePosts = async (userConfig: IPostsConfig = {}) => {
     );
 
     // 二、隐藏列表 (用于 sitemap 中排除隐藏文章) / 草稿列表 (用于 srcExclude 中排除构建)
-    const hiddenPosts = new Set(results.filter((post) => post.hidden).map((post) => post.permalink.slice(1)));
+    const hiddenPosts = new Set(results.filter((post) => post.hidden).map((post) => post.permalink.replace(/^\//, '')));
     const excludePosts = paths.filter((postPath) => postCache.get(postPath).frontMatter.draft);
 
     // 三、实际文章列表（按置顶 + 时间排序）

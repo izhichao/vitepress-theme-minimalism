@@ -1,6 +1,6 @@
 <template>
   <div class="post-list">
-    <a v-for="post in posts" :key="post.title" :href="withBase(post.permalink || post.path)" class="post-item">
+    <a v-for="post in posts" :key="post.title" :href="withBase(post.permalink)" class="post-item">
       <!-- 标题和分类同一行 -->
       <div class="post-item__header">
         <h2 class="post-item__title">
