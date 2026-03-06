@@ -176,12 +176,8 @@ pre::-webkit-scrollbar {
 }
 
 // 路由切换飞入动画
-#VPContent {
-  will-change: transform, opacity;
-
-  &.fade-in {
-    animation: elegant-slide-up 0.4s cubic-bezier(0.22, 1, 0.36, 1) forwards;
-  }
+.fade-in {
+  animation: elegant-slide-up 0.8s cubic-bezier(0.25, 0.1, 0.25, 1) forwards;
 }
 
 @keyframes elegant-slide-up {
