@@ -22,24 +22,25 @@ const isProd = process.env.NODE_ENV === 'production';
  */
 const formatFrontMatter = async (frontMatter: IPost, postPath: string, srcDir: string) => {
   let changed = false;
-  if (!frontMatter.title) {
+  let { id, title, datetime, tags, hidden } = frontMatter;
+
+  if (!id) {
+    frontMatter.id = generateString(6);
+    changed = true;
+  }
+
+  if (!title) {
     frontMatter.title = path.basename(postPath, path.extname(postPath));
     changed = true;
   }
 
-  if (!frontMatter.datetime) {
+  if (!datetime) {
     const stats = await fs.stat(postPath);
     frontMatter.datetime = formatDate(stats.birthtime);
     changed = true;
   }
 
-  // 缺少永久链接且不是草稿时，自动生成永久链接
-  if (!frontMatter.draft && !frontMatter.permalink) {
-    frontMatter.permalink = `/${srcDir}/${generateString(6)}`;
-    changed = true;
-  }
-
-  if (frontMatter.tags != null) {
+  if (tags != null) {
     // 如果不是数组，先包装成数组
     if (!Array.isArray(frontMatter.tags)) {
       frontMatter.tags = [frontMatter.tags];
@@ -56,7 +57,7 @@ const formatFrontMatter = async (frontMatter: IPost, postPath: string, srcDir: s
   }
 
   // 隐藏文章时自动添加 noindex meta
-  if (frontMatter.hidden) {
+  if (hidden) {
     const noindexMeta: HeadConfig = ['meta', { name: 'robots', content: 'noindex, nofollow' }];
     const alreadyExists = (frontMatter.head ?? []).some((item) => Array.isArray(item) && item[1]?.name === 'robots');
     if (!alreadyExists) {
@@ -75,6 +76,7 @@ const formatFrontMatter = async (frontMatter: IPost, postPath: string, srcDir: s
  */
 const writeMd = async (path: string, content: string, frontMatter: { [key: string]: any }) => {
   const matters = [
+    'id',
     'title',
     'datetime',
     'permalink',
@@ -172,6 +174,7 @@ const defaultConfig: Required<IPostsConfig> = {
   outDir: '',
   lang: 'zh',
   excerpt: 0,
+  permalink: 'posts',
   nav: false,
   slot: '',
   custom: '',
@@ -213,18 +216,32 @@ export const usePosts = async (userConfig: IPostsConfig = {}) => {
         const changed = await formatFrontMatter(frontMatter, postPath, srcDir);
         postCache.set(postPath, { frontMatter, content, changed });
 
-        // 3. 通过 rewrites 处理永久链接
-        if (frontMatter.permalink) {
-          rewrites[postPath.replace(/[+()]/g, '\\$&')] = `${frontMatter.permalink}.md`.replace(/^\//, '').replace(/[+()]/g, '\\$&');
+        // 3. 处理文章摘要 excerpt (自定义摘要 -> 手动摘要 -> 按字数自动摘要)
+        const excerpt = frontMatter.excerpt || removeMdPro(_excerpt + '') || removeMdPro(content).slice(0, config.excerpt);
+
+        // 4. 处理永久链接 permalink (自定义链接 -> 按 ID 生成链接 -> 按路径生成链接)
+        let permalink: string = postPath.replace(/\.md$/, '');
+
+        if (!frontMatter.draft) {
+          if (frontMatter.permalink) {
+            permalink = frontMatter.permalink;
+          } else if (config.permalink) {
+            permalink = `${config.permalink}/${frontMatter.id}`;
+          }
         }
 
-        // 4. 生成文章摘要 excerpt
-        const excerpt = frontMatter.excerpt || removeMdPro(_excerpt + '') || removeMdPro(content).slice(0, config.excerpt);
+        if (permalink !== postPath.replace(/\.md$/, '')) {
+          // rewrites 中统一去除开头的 /
+          rewrites[postPath.replace(/[+()]/g, '\\$&')] = `${permalink}.md`.replace(/^\//, '').replace(/[+()]/g, '\\$&');
+        }
+
+        // permalink 统一加上开头的 /
+        permalink = permalink.replace(/^\/?/, '/');
 
         return {
           ...frontMatter,
-          excerpt,
-          path: postPath.replace(/\.md$/, '')
+          permalink,
+          excerpt
         } as IPost;
       })
     );
