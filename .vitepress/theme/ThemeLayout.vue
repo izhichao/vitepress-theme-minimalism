@@ -53,15 +53,15 @@ function checkPassword() {
     verified.value = false;
     return;
   }
-  const permalink = frontmatter.value?.permalink || '';
+  const id = frontmatter.value?.id || '';
   const stored = JSON.parse(localStorage.getItem('post_passwords') || '{}');
   // 存储密码不正确时，开启密码验证
-  verified.value = stored[permalink] === pwd;
+  verified.value = stored[id] === pwd;
 }
 
 // 每次路由切换检查是否需要密码
 watch(
-  () => frontmatter.value?.permalink,
+  () => frontmatter.value?.id,
   () => {
     checkPassword();
   }
