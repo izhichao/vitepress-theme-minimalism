@@ -8,6 +8,7 @@ export interface IPostsConfig {
   outDir?: string;
   lang?: string;
   excerpt?: number;
+  permalink?: string;
   nav?: boolean;
   slot?: string;
   custom?: string;
@@ -15,6 +16,7 @@ export interface IPostsConfig {
 }
 
 export interface IPost {
+  id: string;
   title: string;
   datetime: string;
   permalink: string;
