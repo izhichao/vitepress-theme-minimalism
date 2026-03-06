@@ -57,12 +57,9 @@ const { theme, frontmatter } = useData();
 const allPosts: IPost[] = theme.value.posts || [];
 
 const prevNext = computed(() => {
-  const permalink = frontmatter.value?.permalink as string | undefined;
-  if (!permalink) return { prev: null, next: null };
-
   const posts = props.showPinned ? allPosts : allPosts.filter((post) => !post.order);
 
-  const index = posts.findIndex((post) => post.permalink === permalink);
+  const index = posts.findIndex((post) => post.id === frontmatter.value.id);
   if (index === -1) return { prev: null, next: null };
 
   const prevPost = posts[index - 1] || null;
