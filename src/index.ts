@@ -27,6 +27,11 @@ export default {
         if (to && to.split(/[\?#]/)[0] !== lastPath) {
           BProgress.start();
           destroyFancybox(); // 销毁图片查看器
+
+          if ((siteData.value.themeConfig as ThemeConfig).transition) {
+            const VPContent = document.querySelector('#VPContent');
+            VPContent?.classList.remove('fade-in');
+          }
         }
       };
       router.onAfterRouteChange = (to) => {
@@ -38,12 +43,8 @@ export default {
 
           // 路由切换飞入动画（受 themeConfig.transition 控制）
           if ((siteData.value.themeConfig as ThemeConfig).transition) {
-            const content = document.querySelector('.VPContent');
-            if (content) {
-              content.classList.remove('page-enter');
-              void (content as HTMLElement).offsetWidth;
-              content.classList.add('page-enter');
-            }
+            const VPContent = document.querySelector('#VPContent');
+            VPContent?.classList.add('fade-in');
           }
         }
       };

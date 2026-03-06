@@ -176,26 +176,21 @@ pre::-webkit-scrollbar {
 }
 
 // 路由切换飞入动画
-.page-enter {
-  animation:
-    page-rise 0.25s ease-out,
-    page-fade 0.25s ease-out;
-}
+#VPContent {
+  will-change: transform, opacity;
 
-@keyframes page-rise {
-  from {
-    transform: translateY(30px);
-  }
-  to {
-    transform: translateY(0);
+  &.fade-in {
+    animation: elegant-slide-up 0.4s cubic-bezier(0.22, 1, 0.36, 1) forwards;
   }
 }
 
-@keyframes page-fade {
+@keyframes elegant-slide-up {
   from {
+    transform: translateY(20px);
     opacity: 0;
   }
   to {
+    transform: translateY(0);
     opacity: 1;
   }
 }
