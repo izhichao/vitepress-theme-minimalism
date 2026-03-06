@@ -34,11 +34,12 @@
 </template>
 
 <script setup lang="ts">
-import { useData } from 'vitepress';
-import { computed, ref, onMounted } from 'vue';
+import { useData, useRoute } from 'vitepress';
+import { computed, ref, onMounted, watch, nextTick } from 'vue';
 import { Icon } from '@iconify/vue';
 
 const { site, page } = useData();
+const route = useRoute();
 
 // 从 config.ts 中获取站点标题作为作者
 const author = computed(() => site.value.title);
@@ -46,11 +47,23 @@ const articleTitle = computed(() => page.value.title);
 
 const url = ref('');
 const host = ref('/');
-onMounted(() => {
-  // 获取完整的 URL
-  url.value = window.location.href;
-  host.value = window.location.origin + '/';
-});
+
+// 提取公共的更新 URL 函数
+const updateUrl = () => {
+  if (typeof window !== 'undefined') {
+    url.value = window.location.href;
+    host.value = window.location.origin + '/';
+  }
+};
+
+// 1. 初次客户端挂载时执行
+onMounted(updateUrl);
+
+// 2. 路由切换时执行
+watch(
+  () => route.path,
+  () => nextTick(updateUrl)
+);
 </script>
 
 <style lang="less" scoped>
