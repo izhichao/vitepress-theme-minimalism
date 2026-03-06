@@ -37,9 +37,9 @@ async function handleSubmit() {
   if (inputHash === hash) {
     // 保存哈希到 localStorage，下次访问免输入
     if (inBrowser) {
-      const permalink = frontmatter.value?.permalink || '';
+      const id = frontmatter.value?.id || '';
       const obj = JSON.parse(localStorage.getItem('post_passwords') || '{}');
-      obj[permalink] = inputHash;
+      obj[id] = inputHash;
       localStorage.setItem('post_passwords', JSON.stringify(obj));
     }
     emit('verified');
