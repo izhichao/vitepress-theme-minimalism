@@ -53,7 +53,7 @@ const updateUrl = () => {
   if (typeof window !== 'undefined') {
     const urlObj = new URL(window.location.href);
     url.value = urlObj.origin + urlObj.pathname;
-    host.value = urlObj.origin;
+    host.value = urlObj.origin + site.value.base;
   }
 };
 

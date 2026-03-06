@@ -2,7 +2,7 @@
   <nav class="prev-next" v-if="prevNext.prev || prevNext.next">
     <!-- 上一篇 -->
     <div class="prev-next__slot prev-next__slot--prev">
-      <a v-if="prevNext.prev" :href="prevNext.prev.link" class="prev-next__card prev-next__card--prev">
+      <a v-if="prevNext.prev" :href="withBase(prevNext.prev.link)" class="prev-next__card prev-next__card--prev">
         <span class="prev-next__label">
           <svg class="prev-next__arrow" viewBox="0 0 16 16" fill="none">
             <path
@@ -19,7 +19,7 @@
 
     <!-- 下一篇 -->
     <div class="prev-next__slot prev-next__slot--next">
-      <a v-if="prevNext.next" :href="prevNext.next.link" class="prev-next__card prev-next__card--next">
+      <a v-if="prevNext.next" :href="withBase(prevNext.next.link)" class="prev-next__card prev-next__card--next">
         <span class="prev-next__label">
           {{ props.nextText }}
           <svg class="prev-next__arrow" viewBox="0 0 16 16" fill="none">
@@ -37,7 +37,7 @@
 
 <script lang="ts" setup>
 import { computed } from 'vue';
-import { useData } from 'vitepress';
+import { useData, withBase } from 'vitepress';
 import { IPost } from '../types';
 
 const props = withDefaults(
