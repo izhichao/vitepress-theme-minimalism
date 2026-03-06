@@ -20,7 +20,7 @@
 </template>
 
 <script lang="ts" setup>
-import { ref, watch } from 'vue';
+import { onMounted, ref, watch } from 'vue';
 import { useData, inBrowser } from 'vitepress';
 import DefaultTheme from 'vitepress/theme';
 import type { IAdsense } from '../../src/types.ts';
@@ -41,24 +41,33 @@ const { frontmatter } = useData();
 
 const verified = ref(true);
 
+function checkPassword() {
+  const pwd = String(frontmatter.value?.password ?? '');
+  // 无密码时，直接 return
+  if (!pwd) {
+    verified.value = true;
+    return;
+  }
+  // 有密码时检查 localStorage 是否已验证
+  if (!inBrowser) {
+    verified.value = false;
+    return;
+  }
+  const permalink = frontmatter.value?.permalink || '';
+  const stored = JSON.parse(localStorage.getItem('post_passwords') || '{}');
+  // 存储密码不正确时，开启密码验证
+  verified.value = stored[permalink] === pwd;
+}
+
 // 每次路由切换检查是否需要密码
 watch(
   () => frontmatter.value?.permalink,
   () => {
-    const pwd = String(frontmatter.value?.password ?? '');
-    if (!pwd) {
-      verified.value = true;
-      return;
-    }
-    // 有密码时检查 localStorage 是否已验证
-    if (!inBrowser) {
-      verified.value = false;
-      return;
-    }
-    const permalink = frontmatter.value?.permalink || '';
-    const stored = JSON.parse(localStorage.getItem('post_passwords') || '{}');
-    verified.value = stored[permalink] === pwd;
-  },
-  { immediate: true }
+    checkPassword();
+  }
 );
+
+onMounted(() => {
+  checkPassword();
+});
 </script>
