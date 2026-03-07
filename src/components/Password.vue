@@ -17,7 +17,6 @@ import { ref } from 'vue';
 import { useData, inBrowser } from 'vitepress';
 
 const { frontmatter } = useData();
-const emit = defineEmits<{ verified: [] }>();
 const input = ref('');
 const error = ref('');
 
@@ -34,6 +33,7 @@ const hashInBrowser = async (text: string): Promise<string> => {
 async function handleSubmit() {
   const hash = String(frontmatter.value?.password ?? '');
   const inputHash = await hashInBrowser(input.value);
+
   if (inputHash === hash) {
     // 保存哈希到 localStorage，下次访问免输入
     if (inBrowser) {
@@ -41,8 +41,8 @@ async function handleSubmit() {
       const obj = JSON.parse(localStorage.getItem('post_passwords') || '{}');
       obj[id] = inputHash;
       localStorage.setItem('post_passwords', JSON.stringify(obj));
+      window.location.reload();
     }
-    emit('verified');
   } else {
     error.value = '密码错误，请重新输入';
   }
