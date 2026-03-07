@@ -1,12 +1,6 @@
 <template>
   <div class="amazing" v-if="custom">
-    <a
-      class="amazing__link"
-      :style="{ 'pointer-events': item.link ? 'auto' : 'none' }"
-      :href="item.link"
-      target="_blank"
-      v-for="item in computedAds"
-    >
+    <a class="amazing__link" :style="{ 'pointer-events': item.link ? 'auto' : 'none' }" :href="item.link" target="_blank" v-for="item in computedAds">
       <img class="amazing__img" :src="item.img" :title="item.title" :alt="item.title" />
     </a>
   </div>
@@ -53,7 +47,7 @@ const computedAds = computed(() => {
 onMounted(() => {
   try {
     // @ts-ignore
-    props.adsense?.slot && window.addAds();
+    props.adsense?.slot && window.addAds && window.addAds();
   } catch (e) {
     console.log(e);
   }

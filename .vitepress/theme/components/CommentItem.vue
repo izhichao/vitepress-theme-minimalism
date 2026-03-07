@@ -1,7 +1,7 @@
 <template>
-  <ClinetOnly>
+  <ClientOnly>
     <Waline :serverURL="serverURL" :path="path" :dark="dark" />
-  </ClinetOnly>
+  </ClientOnly>
 </template>
 
 <script setup>
