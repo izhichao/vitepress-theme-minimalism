@@ -192,6 +192,7 @@ export const usePosts = async (userConfig: IPostsConfig = {}) => {
 
     // 缓存每篇文章的原始 frontMatter 和 content，供后续 prev/next 处理复用，避免二次 matter.read
     const postCache = new Map<string, { frontMatter: IPost; content: string; changed: boolean }>();
+    const descriptionMap = new Map<string, string>();
 
     // 一、原始文章列表（包含隐藏文章）
     const results: IPost[] = await Promise.all(
@@ -206,8 +207,10 @@ export const usePosts = async (userConfig: IPostsConfig = {}) => {
         });
         const frontMatter = data as IPost;
 
+        const { category, tags, description, draft, id, permalink: _permalink } = frontMatter;
+
         // 1. 检测是否存在分类/标签，生成分类页面
-        if (!categoryFlag && (frontMatter.category || frontMatter.tags)) {
+        if (!categoryFlag && (category || tags)) {
           categoryFlag = true;
           await generateCategory(outDir);
         }
@@ -217,16 +220,17 @@ export const usePosts = async (userConfig: IPostsConfig = {}) => {
         postCache.set(postPath, { frontMatter, content, changed });
 
         // 3. 处理文章摘要 excerpt (自定义摘要 -> 手动摘要 -> 按字数自动摘要)
-        const excerpt = frontMatter.excerpt || removeMdPro(_excerpt + '') || removeMdPro(content).slice(0, config.excerpt);
+        const excerpt = description || removeMdPro(_excerpt + '') || removeMdPro(content).slice(0, config.excerpt);
+        descriptionMap.set(id, excerpt);
 
         // 4. 处理永久链接 permalink (自定义链接 -> 按 ID 生成链接 -> 按路径生成链接)
         let permalink: string = postPath.replace(/\.md$/, '');
 
-        if (!frontMatter.draft) {
-          if (frontMatter.permalink) {
-            permalink = frontMatter.permalink;
+        if (!draft) {
+          if (_permalink) {
+            permalink = _permalink;
           } else if (config.permalink) {
-            permalink = `${config.permalink}/${frontMatter.id}`;
+            permalink = `${config.permalink}/${id}`;
           }
         }
 
@@ -275,10 +279,10 @@ export const usePosts = async (userConfig: IPostsConfig = {}) => {
     // 统计文章总数（不含隐藏文章）
     config.postCount = posts.length;
 
-    return { posts, hiddenPosts, excludePosts, rewrites };
+    return { posts, hiddenPosts, excludePosts, rewrites, descriptionMap };
   } catch (e) {
     console.error(e);
-    return { posts: [], hiddenPosts: new Set<string>(), excludePosts: [], rewrites };
+    return { posts: [], hiddenPosts: new Set<string>(), excludePosts: [], rewrites, descriptionMap: new Map<string, string>() };
   } finally {
     // 五、最终生成分页（首页与文章列表）
     await generatePages(config);

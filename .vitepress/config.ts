@@ -16,7 +16,7 @@ import { ads } from '/.vitepress/theme/ads.ts';
 </script>
 `;
 
-const { posts, hiddenPosts, excludePosts, rewrites } = await usePosts({
+const { posts, hiddenPosts, excludePosts, descriptionMap, rewrites } = await usePosts({
   pageSize: 6,
   homepage: false,
   srcDir: 'posts',
@@ -40,8 +40,14 @@ export default defineConfig<ThemeConfig>({
     }
   },
   transformPageData(pageData) {
-    if (pageData.frontmatter?.password) {
-      pageData.frontmatter.password = hashPassword(String(pageData.frontmatter.password));
+    const { frontmatter, description } = pageData;
+    const { id, password } = frontmatter;
+
+    if (password) {
+      frontmatter.password = hashPassword(String(password));
+    }
+    if (!description) {
+      pageData.description = descriptionMap.get(id) as string;
     }
   },
   themeConfig: {
