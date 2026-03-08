@@ -25,7 +25,7 @@ export interface IPost {
   password?: string;
   hidden?: boolean;
   draft?: boolean;
-  excerpt?: string;
+  description?: string;
   category?: string;
   tags?: string[];
   head?: HeadConfig[];

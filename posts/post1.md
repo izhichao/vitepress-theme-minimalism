@@ -5,7 +5,7 @@ id: 59961a
 title: 1.生活中的小确幸（自定义摘要）
 datetime: '2023-10-01 10:00:00'
 outline: deep
-excerpt: 摘要 摘要 摘要 摘要 摘要
+description: 摘要 摘要 摘要 摘要 摘要
 category: 文章
 tags:
   - 生活中的小确幸
