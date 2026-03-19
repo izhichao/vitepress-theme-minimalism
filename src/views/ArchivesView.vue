@@ -1,12 +1,20 @@
 <template>
   <div class="ZCContainer">
-    <div class="ZCContent">
-      <slot name="doc-before"></slot>
-      <template v-for="year in tabs.archive" :key="year">
-        <div class="title">{{ year }}</div>
-        <PostListLite :posts="posts.archive[year]" />
-      </template>
-      <slot name="doc-after"></slot>
+    <div class="ZCLayout">
+      <div class="ZCContent">
+        <slot name="doc-before"></slot>
+        <template v-for="year in tabs.archive" :key="year">
+          <div class="title">{{ year }}</div>
+          <PostListLite :posts="posts.archive[year]" />
+        </template>
+        <slot name="doc-after"></slot>
+      </div>
+      <aside class="ZCAside ZCAside--left">
+        <slot name="aside-left"></slot>
+      </aside>
+      <aside class="ZCAside ZCAside--right">
+        <slot name="aside-right"></slot>
+      </aside>
     </div>
   </div>
 </template>

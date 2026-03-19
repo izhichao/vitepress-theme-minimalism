@@ -1,12 +1,20 @@
 <template>
   <div class="ZCContainer">
-    <div class="ZCContent">
-      <slot name="doc-before"></slot>
-      <template v-if="posts">
-        <PostList :posts="posts" />
-        <Pagination :pagination="pagination" :total="total" :homepage="homepage" />
-      </template>
-      <slot name="doc-after"></slot>
+    <div class="ZCLayout">
+      <div class="ZCContent">
+        <slot name="doc-before"></slot>
+        <template v-if="posts">
+          <PostList :posts="posts" />
+          <Pagination :pagination="pagination" :total="total" :homepage="homepage" />
+        </template>
+        <slot name="doc-after"></slot>
+      </div>
+      <aside class="ZCAside ZCAside--left">
+        <slot name="aside-left"></slot>
+      </aside>
+      <aside class="ZCAside ZCAside--right">
+        <slot name="aside-right"></slot>
+      </aside>
     </div>
   </div>
 </template>
@@ -25,10 +33,7 @@ const props = defineProps({
 });
 
 const { theme } = useData();
-const posts: IPost[] = (theme.value.posts ? [...theme.value.posts] : []).slice(
-  props.size * (props.pagination - 1),
-  props.size * props.pagination
-);
+const posts: IPost[] = (theme.value.posts ? [...theme.value.posts] : []).slice(props.size * (props.pagination - 1), props.size * props.pagination);
 </script>
 
 <style lang="less" scoped>
