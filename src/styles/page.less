@@ -7,12 +7,40 @@
   padding-top: 2rem;
 }
 
+// ---- 侧边栏布局 ----
+.ZCLayout {
+  position: relative;
+  max-width: 60rem;
+  margin: 0 auto;
+}
+
+.ZCAside {
+  position: absolute;
+  top: 0;
+
+  &--left {
+    right: 100%;
+    margin-right: 1rem;
+  }
+
+  &--right {
+    left: 100%;
+    margin-left: 1rem;
+  }
+}
+
+// 页面宽度不够时隐藏侧边栏
+@media (max-width: 1472px) {
+  .ZCAside {
+    display: none;
+  }
+}
+
 @media (min-width: 768px) and (max-width: 1030px) {
   .ZCContainer {
     padding: 2rem 2rem 0;
   }
 }
-
 
 @media (max-width: 768px) {
   .ZCContainer {

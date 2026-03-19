@@ -1,31 +1,39 @@
 <template>
   <div class="ZCContainer">
-    <div class="ZCContent">
-      <slot name="doc-before"></slot>
+    <div class="ZCLayout">
+      <div class="ZCContent">
+        <slot name="doc-before"></slot>
 
-      <div class="title">分类</div>
-      <TabList
-        @change="(tab) => handleChange(tab, 'category')"
-        type="category"
-        :tabs="tabs.category"
-        :selected="currentType === 'category' ? select : null"
-        :posts="posts.category"
-      />
+        <div class="title">分类</div>
+        <TabList
+          @change="(tab) => handleChange(tab, 'category')"
+          type="category"
+          :tabs="tabs.category"
+          :selected="currentType === 'category' ? select : null"
+          :posts="posts.category"
+        />
 
-      <div class="title">标签</div>
-      <TabList
-        @change="(tab) => handleChange(tab, 'tag')"
-        type="tag"
-        :tabs="tabs.tag"
-        :selected="currentType === 'tag' ? select : null"
-        :posts="posts.tag"
-      />
+        <div class="title">标签</div>
+        <TabList
+          @change="(tab) => handleChange(tab, 'tag')"
+          type="tag"
+          :tabs="tabs.tag"
+          :selected="currentType === 'tag' ? select : null"
+          :posts="posts.tag"
+        />
 
-      <div v-show="select" class="title">{{ currentType === 'category' ? '分类：' : '标签：' }}{{ select }}</div>
+        <div v-show="select" class="title">{{ currentType === 'category' ? '分类：' : '标签：' }}{{ select }}</div>
 
-      <PostList :posts="posts[currentType][select]" :showPinned="false" />
+        <PostList :posts="posts[currentType][select]" :showPinned="false" />
 
-      <slot name="doc-after"></slot>
+        <slot name="doc-after"></slot>
+      </div>
+      <aside class="ZCAside ZCAside--left">
+        <slot name="aside-left"></slot>
+      </aside>
+      <aside class="ZCAside ZCAside--right">
+        <slot name="aside-right"></slot>
+      </aside>
     </div>
   </div>
 </template>
