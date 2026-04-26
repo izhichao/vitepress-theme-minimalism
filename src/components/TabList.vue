@@ -1,20 +1,38 @@
 <template>
   <div class="tab">
-    <span
-      @click="emit('change', tab)"
-      v-for="tab in tabs"
-      :key="tab"
-      class="tab__item"
-      :class="{ 'tab__item--active': selected === tab, 'tab__item--tag': type === 'tag' }"
-    >
-      {{ tab }}
-      <span v-if="posts && type === 'category'">({{ posts[tab].length }})</span>
-    </span>
+    <!-- 链接模式：渲染为 <a> 标签跳转到对应动态路由页 -->
+    <template v-if="linkMode">
+      <a
+        v-for="tab in tabs"
+        :key="tab"
+        :href="withBase(`${linkPrefix}${encodeURIComponent(tab)}`)"
+        class="tab__item"
+        :class="{ 'tab__item--active': selected === tab, 'tab__item--tag': type === 'tag' }"
+      >
+        {{ tab }}
+        <span v-if="posts && type === 'category'">({{ posts[tab].length }})</span>
+      </a>
+    </template>
+
+    <!-- 事件模式：原有行为，点击触发 change 事件 -->
+    <template v-else>
+      <span
+        @click="emit('change', tab)"
+        v-for="tab in tabs"
+        :key="tab"
+        class="tab__item"
+        :class="{ 'tab__item--active': selected === tab, 'tab__item--tag': type === 'tag' }"
+      >
+        {{ tab }}
+        <span v-if="posts && type === 'category'">({{ posts[tab].length }})</span>
+      </span>
+    </template>
   </div>
 </template>
 
 <script lang="ts" setup>
 import { PropType } from 'vue';
+import { withBase } from 'vitepress';
 import { IPostObject } from '../types';
 
 defineProps({
@@ -24,7 +42,9 @@ defineProps({
   },
   tabs: { type: Array as PropType<string[]>, required: true },
   posts: Object as PropType<IPostObject>,
-  selected: { type: String as PropType<string | null>, default: null }
+  selected: { type: String as PropType<string | null>, default: null },
+  linkMode: { type: Boolean, default: false },
+  linkPrefix: { type: String, default: '/' }
 });
 
 const emit = defineEmits(['change']);
@@ -48,6 +68,7 @@ const emit = defineEmits(['change']);
     border-radius: 0.5rem;
     transition: all 0.3s ease;
     cursor: pointer;
+    text-decoration: none;
 
     &--tag {
       padding: 0.5rem 0.75rem;

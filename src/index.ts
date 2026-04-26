@@ -5,6 +5,7 @@ import DefaultTheme from 'vitepress/theme';
 import Home from './views/HomeView.vue';
 import Page from './views/PageView.vue';
 import Archives from './views/ArchivesView.vue';
+import CategoryClassic from './views/CategoryClassicView.vue';
 import Category from './views/CategoryView.vue';
 import PostMeta from './components/PostMeta.vue';
 import { bindFancybox, destroyFancybox } from './utils/fancybox';
@@ -17,6 +18,7 @@ export default {
   enhanceApp({ app, router, siteData }: EnhanceAppContext) {
     app.component('Home', Home);
     app.component('Archives', Archives);
+    app.component('CategoryClassic', CategoryClassic);
     app.component('Category', Category);
     app.component('Page', Page);
     app.component('PostMeta', PostMeta);

@@ -209,11 +209,11 @@ export const usePosts = async (userConfig: IPostsConfig = {}) => {
 
         const { category, tags, description, draft, id, permalink: _permalink } = frontMatter;
 
-        // 1. 检测是否存在分类/标签，生成分类页面
-        if (!categoryFlag && (category || tags)) {
-          categoryFlag = true;
-          await generateCategory(outDir);
-        }
+        // 1. 检测是否存在分类/标签，生成分类页面（暂不启用）
+        // if (!categoryFlag && (category || tags)) {
+        //   categoryFlag = true;
+        //   await generateCategory(outDir);
+        // }
 
         // 2. 格式化/补全 FrontMatter 并缓存到 postCache（目前只记录更改，先不写入，等 prev/next 一并处理）
         const changed = await formatFrontMatter(frontMatter, postPath, srcDir);
