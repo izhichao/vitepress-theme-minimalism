@@ -3,11 +3,11 @@ title: 分类
 layout: page
 ---
 
-<Category>
+<CategoryClassic>
   <template #doc-after>
     <AdItem :custom="ads" type="doc" />
   </template>
-</Category>
+</CategoryClassic>
 
 <script lang="ts" setup>
 import AdItem from '/src/components/AdItem.vue';
