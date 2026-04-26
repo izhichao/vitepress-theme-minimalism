@@ -4,27 +4,23 @@
       <div class="ZCContent">
         <slot name="doc-before"></slot>
 
-        <div class="title">分类</div>
+        <h1 class="page-title">
+          <span>{{ (isCategory ? '分类' : '标签') + (currentName ? '：' + currentName : '') }}</span>
+          <span class="page-title__count" v-if="currentName">{{ filteredPosts.length }} 篇</span>
+        </h1>
+
         <TabList
-          @change="(tab) => handleChange(tab, 'category')"
-          type="category"
-          :tabs="tabs.category"
-          :selected="currentType === 'category' ? select : null"
-          :posts="posts.category"
+          :type="type"
+          :tabs="isCategory ? tabs.category : tabs.tag"
+          :posts="isCategory ? posts.category : undefined"
+          :linkMode="true"
+          :linkPrefix="isCategory ? '/category/' : '/tags/'"
+          :selected="currentName || null"
         />
 
-        <div class="title">标签</div>
-        <TabList
-          @change="(tab) => handleChange(tab, 'tag')"
-          type="tag"
-          :tabs="tabs.tag"
-          :selected="currentType === 'tag' ? select : null"
-          :posts="posts.tag"
-        />
-
-        <div v-show="select" class="title">{{ currentType === 'category' ? '分类：' : '标签：' }}{{ select }}</div>
-
-        <PostList :posts="posts[currentType][select]" :showPinned="false" />
+        <div v-if="currentName" class="post-list-wrapper">
+          <PostList :posts="filteredPosts" :showPinned="false" />
+        </div>
 
         <slot name="doc-after"></slot>
       </div>
@@ -39,66 +35,57 @@
 </template>
 
 <script lang="ts" setup>
-import { ref, onMounted } from 'vue';
-import { useData, useRouter } from 'vitepress';
+import { PropType } from 'vue';
+import { computed } from 'vue';
+import { useData } from 'vitepress';
 import TabList from '../components/TabList.vue';
 import PostList from '../components/PostList.vue';
 import { useGroup } from '../composables/useGroup';
 
-const { theme } = useData();
-const { tabs, posts } = useGroup(theme.value?.posts || []);
-const router = useRouter();
-
-// 初始化状态
-const select = ref('');
-const currentType = ref<'category' | 'tag'>('category');
-let baseUrl = '/';
-
-// 根据 URL 参数更新状态
-const updateQuery = () => {
-  if (typeof window === 'undefined') return;
-
-  const search = location.href.split('?')[1];
-  const params = new URLSearchParams(search);
-
-  // 确定类型和选中值
-  const categoryParam = params.get('category');
-  const tagParam = params.get('tag');
-  select.value = categoryParam || tagParam || '';
-  currentType.value = categoryParam ? 'category' : 'tag';
-};
-
-const themeAfter = router.onAfterRouteChange;
-router.onAfterRouteChange = (to) => {
-  themeAfter?.(to);
-  updateQuery();
-};
-
-onMounted(() => {
-  baseUrl = location.href.split('?')[0];
-  updateQuery();
+const props = defineProps({
+  type: {
+    type: String as PropType<'category' | 'tag' | 'archive'>,
+    default: 'category' // 'category' | 'tag'
+  }
 });
 
-const handleChange = (tab: string, type: 'category' | 'tag') => {
-  select.value = tab;
-  currentType.value = type;
-  if (typeof window !== 'undefined') {
-    const newUrl = `${baseUrl}?${type}=${tab.replaceAll('&', '%26')}`;
-    window.history.replaceState(null, '', newUrl);
-  }
-};
+const isCategory = computed(() => props.type === 'category');
+
+const { theme, page } = useData();
+const { tabs, posts } = useGroup(theme.value?.posts ?? []);
+
+// 从动态路由参数获取对应名称；由于通过 paths.ts 生成 index，当值为 'index' 时，视为空。
+const currentName = computed(() => {
+  const params = page.value.params as Record<string, string>;
+  const val = isCategory.value ? params?.category : params?.tag;
+  return !val || val === 'index' ? '' : val;
+});
+
+const filteredPosts = computed(() => posts[props.type]?.[currentName.value] ?? []);
 </script>
 
 <style lang="less" scoped>
 @import '../styles/page.less';
-.title {
-  font-size: 1.25rem;
-  padding: 2rem 0 1rem;
+
+.page-title {
+  display: flex;
+  align-items: baseline;
+  gap: 0.5rem;
   font-family: var(--font-family-number);
   font-weight: 700;
+  padding: 0 0 1rem;
+  margin: 0;
+  font-size: 1.25rem;
+  color: var(--vp-c-text-1);
+  line-height: 1.5;
 
-  &:first-of-type {
-    padding-top: 0;
+  &__count {
+    font-size: 0.875rem;
+    color: var(--vp-c-text-3);
   }
+}
+
+.post-list-wrapper {
+  margin-top: 1.5rem;
 }
 </style>

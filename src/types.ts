@@ -26,6 +26,7 @@ export interface IPost {
   hidden?: boolean;
   draft?: boolean;
   description?: string;
+  excerpt?: string;
   category?: string;
   tags?: string[];
   head?: HeadConfig[];
@@ -58,4 +59,5 @@ export interface ThemeConfig extends DefaultTheme.Config {
   posts?: IPost[];
   page?: IPage;
   transition?: boolean;
+  classicCategory?: boolean;
 }
