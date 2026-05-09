@@ -27,8 +27,8 @@ export const useGroup = (posts: IPost[]) => {
     addToData(groupPosts.archive, year, post);
   });
 
-  tabs.category = Object.keys(groupPosts.category).sort((a, b) => a.localeCompare(b));
-  tabs.tag = Object.keys(groupPosts.tag).sort((a, b) => a.localeCompare(b));
+  tabs.category = Object.keys(groupPosts.category).sort((a, b) => a.localeCompare(b, 'zh-CN'));
+  tabs.tag = Object.keys(groupPosts.tag).sort((a, b) => a.localeCompare(b, 'zh-CN'));
   tabs.archive = Object.keys(groupPosts.archive).sort((a, b) => parseInt(b) - parseInt(a));
 
   return { tabs, posts: groupPosts };
