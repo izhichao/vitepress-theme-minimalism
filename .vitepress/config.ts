@@ -62,6 +62,7 @@ export default defineConfig<ThemeConfig>({
     nav: [
       { text: '首页', link: '/' },
       { text: '文章', link: '/page-1' },
+      { text: '分类(旧版)', link: '/category' },
       { text: '分类', link: '/category/' },
       { text: '标签', link: '/tags/' },
       { text: '归档', link: '/archives' },
