@@ -10,14 +10,18 @@
 
 .vp-doc blockquote {
   padding: 0.8rem 1rem;
-  border-left: 4px solid #3498db;
-  background-color: var(--custom-block-note-bg);
-  // border-radius: 0 8px 8px 0;
+  border-left: 4px solid var(--vp-c-divider);;
+  background-color: var(--vp-c-bg-alt);
 }
 
-/* 标题字体大小 */
-.custom-block-title {
-  font-size: 16px;
+.custom-block {
+  border-radius: 1rem;
+
+  /* 标题字体大小 */
+  &-title {
+    font-size: 16px;
+    margin-bottom: 8px !important;
+  }
 }
 
 /* 提醒容器:背景色、左侧 */
@@ -39,8 +43,7 @@
     display: inline-block;
     vertical-align: middle;
     position: relative;
-    margin-right: 4px;
-    left: -5px;
+    margin-right: 9px;
     top: -1px;
   }
 }
@@ -57,8 +60,7 @@
     display: inline-block;
     vertical-align: middle;
     position: relative;
-    margin-right: 4px;
-    left: -5px;
+    margin-right: 9px;
     top: -2px;
   }
 }
@@ -75,8 +77,7 @@
     display: inline-block;
     vertical-align: middle;
     position: relative;
-    margin-right: 4px;
-    left: -5px;
+    margin-right: 9px;
     top: -1px;
   }
 }
@@ -94,8 +95,7 @@
     display: inline-block;
     vertical-align: middle;
     position: relative;
-    margin-right: 4px;
-    left: -5px;
+    margin-right: 9px;
     top: -2px;
   }
 }
@@ -112,8 +112,7 @@
     display: inline-block;
     vertical-align: middle;
     position: relative;
-    margin-right: 4px;
-    left: -5px;
+    margin-right: 9px;
     top: -1.5px;
   }
 }
