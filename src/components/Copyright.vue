@@ -70,6 +70,7 @@ watch(
 <style lang="less" scoped>
 .copyright-info {
   padding: 16px 20px;
+  border: 1px solid var(--vp-c-divider);
   background-color: var(--vp-c-bg-soft);
   border-radius: 1rem;
   margin: 20px 0;
@@ -101,7 +102,8 @@ watch(
     color: var(--vp-c-text-3);
     font-weight: 400;
     flex-shrink: 0;
-    width: 60px; /* 对齐标签，如果要自适应则设为 auto */
+    width: 60px;
+    /* 对齐标签，如果要自适应则设为 auto */
   }
 
   // 值文本

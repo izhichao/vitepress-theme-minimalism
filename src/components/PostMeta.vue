@@ -77,6 +77,7 @@ const formatDate = (datetime: string | number) => {
 <style lang="less" scoped>
 .post-info {
   padding: 16px 20px;
+  border: 1px solid var(--vp-c-divider);
   background-color: var(--vp-c-bg-soft);
   border-radius: 1rem;
   margin: 20px 0;
