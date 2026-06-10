@@ -17,6 +17,13 @@
 .ZCAside {
   position: absolute;
   top: 0;
+  bottom: 0; // 撑满父容器高度以供 sticky 元素滑动
+
+  // 让插槽内的子元素变成粘性定位
+  & > * {
+    position: sticky;
+    top: 6rem; // 距离视口顶部的距离，可根据头部导航栏高度自行调整
+  }
 
   &--left {
     right: 100%;
