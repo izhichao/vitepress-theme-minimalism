@@ -1,6 +1,6 @@
 <template>
   <div class="post-list">
-    <a v-for="post in posts" :key="post.title" :href="withBase(post.permalink)" class="post-item">
+    <div v-for="post in posts" :key="post.title" class="post-item" @click="navigate(post.permalink)">
       <!-- 标题和分类同一行 -->
       <div class="post-item__header">
         <h2 class="post-item__title">
@@ -8,7 +8,7 @@
             <Icon class="post-item__pinned-icon" icon="mingcute:fire-fill" />
             {{ post.pinned || page?.pinned || 'HOT' }}
           </span>
-          {{ post.title }}
+          <a :href="withBase(post.permalink)" @click.stop style="color: inherit; text-decoration: none;">{{ post.title }}</a>
         </h2>
         <a v-if="post.category" :href="withBase(categoryLink(post.category))" class="post-item__category" @click.stop>
           {{ post.category }}
@@ -41,17 +41,18 @@
           <span>{{ Math.floor(Math.random() * 1000) + 100 }} 次浏览</span>
         </div> -->
       </div>
-    </a>
+    </div>
   </div>
 </template>
 
 <script lang="ts" setup>
-import { useData, withBase } from 'vitepress';
+import { useData, withBase, useRouter } from 'vitepress';
 import { IPost } from '../types';
 import { Icon } from '@iconify/vue';
 import { useLink } from '../composables/useLink';
 
 const { theme } = useData();
+const router = useRouter();
 const page = theme.value.page;
 const { categoryLink, tagLink } = useLink();
 
@@ -59,6 +60,10 @@ defineProps({
   posts: Array<IPost>,
   showPinned: { type: Boolean, default: true }
 });
+
+const navigate = (url: string) => {
+  router.go(withBase(url));
+};
 </script>
 
 <style lang="less" scoped>
@@ -78,6 +83,7 @@ defineProps({
   padding: 1.25rem;
   transition: all 0.15s ease;
   -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+  cursor: pointer;
 
   &:hover {
     border-color: var(--vp-c-brand-soft);
@@ -117,7 +123,7 @@ defineProps({
     align-items: center;
     gap: 0.25rem;
     padding: 0.125rem 0.5rem;
-    margin-right: 0.25rem;
+    margin-right: 0.5rem;
     background-color: var(--vp-c-brand-soft);
     color: var(--vp-c-brand);
     font-size: 0.6875rem;
