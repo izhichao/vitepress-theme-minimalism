@@ -3,11 +3,11 @@ import path from 'path';
 import matter from 'gray-matter';
 import fg from 'fast-glob';
 import removeMd from 'remove-markdown';
-import { IPost, IPostsConfig } from '../types';
-import { generatePages } from '../utils/generatePages';
-import { generateString } from '../utils/generateString';
-import { generateCategory } from '../utils/generateCategory';
-import { formatDate } from '../utils/formatDate';
+import { IPost, IPostsConfig } from '../types.ts';
+import { generatePages } from '../utils/generatePages.ts';
+import { generateString } from '../utils/generateString.ts';
+import { generateCategory } from '../utils/generateCategory.ts';
+import { formatDate } from '../utils/formatDate.ts';
 import { HeadConfig } from 'vitepress';
 
 // 是否生产环境

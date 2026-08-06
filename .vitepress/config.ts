@@ -1,7 +1,7 @@
 import { defineConfig } from 'vitepress';
-import { usePosts } from '../src/composables/usePosts';
-import { hashPassword } from '../src/utils/hashPassword';
-import type { ThemeConfig } from '../src/types';
+import { usePosts } from '../src/composables/usePosts.ts';
+import { hashPassword } from '../src/utils/hashPassword.ts';
+import type { ThemeConfig } from '../src/types.ts';
 
 const slot = `
 <template #doc-after>

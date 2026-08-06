@@ -1,7 +1,7 @@
 import fs from 'fs/promises';
 import path from 'path';
-import { fileExists } from './fileExists';
-import { IPostsConfig } from '../types';
+import { fileExists } from './fileExists.ts';
+import { IPostsConfig } from '../types.ts';
 
 export const generatePages = async (config: Required<IPostsConfig>) => {
   const { outDir, lang, pageSize, homepage, postCount, slot, custom } = config;
@@ -17,7 +17,7 @@ export const generatePages = async (config: Required<IPostsConfig>) => {
 layout: page
 ---
 
-<Page :pagination="${i}" :total="${pageCount}" :size="${pageSize}" :homepage="${homepage}">${slot}</Page>
+<PageView :pagination="${i}" :total="${pageCount}" :size="${pageSize}" :homepage="${homepage}">${slot}</PageView>
 ${custom}
 `.trim();
     const pagePath = i === 1 && homepage ? indexPath : path.resolve(outDir, `page-${i}.md`);
@@ -29,7 +29,7 @@ ${custom}
 ---
 layout: page
 ---
-<Home imgUrl="/profile.png" title="只抄" desc="Less is more." :links="[{ url: 'https://github.com/izhichao/vitepress-theme-minimalism', text: 'Github ->' }]" />
+<HomeView imgUrl="/profile.png" title="只抄" desc="Less is more." :links="[{ url: 'https://github.com/izhichao/vitepress-theme-minimalism', text: 'Github ->' }]" />
     `.trim();
     await fs.writeFile(indexPath, page);
   }

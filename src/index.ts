@@ -2,8 +2,8 @@ import { onMounted, onUnmounted } from 'vue';
 import { EnhanceAppContext, inBrowser } from 'vitepress';
 import type { ThemeConfig } from './types';
 import DefaultTheme from 'vitepress/theme';
-import Home from './views/HomeView.vue';
-import Page from './views/PageView.vue';
+import HomeView from './views/HomeView.vue';
+import PageView from './views/PageView.vue';
 import Archives from './views/ArchivesView.vue';
 import CategoryClassic from './views/CategoryClassicView.vue';
 import Category from './views/CategoryView.vue';
@@ -16,11 +16,11 @@ import './styles/index.less';
 export default {
   extends: DefaultTheme,
   enhanceApp({ app, router, siteData }: EnhanceAppContext) {
-    app.component('Home', Home);
+    app.component('HomeView', HomeView);
     app.component('Archives', Archives);
     app.component('CategoryClassic', CategoryClassic);
     app.component('Category', Category);
-    app.component('Page', Page);
+    app.component('PageView', PageView);
     app.component('PostMeta', PostMeta);
     if (inBrowser) {
       BProgress.configure({ showSpinner: false });
