@@ -123,7 +123,7 @@ const shareLink = useShareLink();
 
     &__text {
       font-weight: 500;
-      font-size: 1em;
+      font-size: .875em;
     }
   }
 }
