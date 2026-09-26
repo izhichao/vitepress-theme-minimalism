@@ -220,7 +220,9 @@ export const usePosts = async (userConfig: IPostsConfig = {}) => {
         postCache.set(postPath, { frontMatter, content, changed });
 
         // 3. 处理文章摘要 excerpt (自定义摘要 -> 手动摘要 -> 按字数自动摘要)
-        const excerpt = description || removeMdPro(_excerpt + '') || removeMdPro(content).slice(0, config.excerpt);
+        const excerpt =
+          description ||
+          (frontMatter.password ? '🔒 此内容已加密' : removeMdPro(_excerpt + '') || removeMdPro(content).slice(0, config.excerpt));
         descriptionMap.set(id, excerpt);
 
         // 4. 处理永久链接 permalink (自定义链接 -> 按 ID 生成链接 -> 按路径生成链接)
@@ -243,11 +245,15 @@ export const usePosts = async (userConfig: IPostsConfig = {}) => {
         // permalink 统一加上开头的 / (必须放后面，否则会影响 rewrites 的 if 判断)
         permalink = permalink.replace(/^\/?/, '/');
 
-        return {
+        const publicPost: IPost = {
           ...frontMatter,
           permalink,
           excerpt
-        } as IPost;
+        };
+
+        if (frontMatter.password) delete publicPost.password;
+
+        return publicPost;
       })
     );
 

@@ -1,52 +1,112 @@
 <template>
-  <div class="password">
-    <div class="password__box">
-      <h1 class="password__title">🔒 访问受限</h1>
-      <p class="password__desc">此内容需要密码才能访问</p>
+  <Teleport to="body">
+    <div v-if="!verified" class="password">
+      <div class="password__box">
+        <h1 class="password__title">🔒 访问受限</h1>
+        <p class="password__desc">此内容需要密码才能访问</p>
 
-      <input v-model="input" type="password" placeholder="请输入访问密码" @keyup.enter="handleSubmit" class="password__input" />
-      <button @click="handleSubmit" class="password__button">解锁内容</button>
+        <input v-model="input" type="password" placeholder="请输入访问密码" class="password__input" :disabled="loading" @keyup.enter="handleSubmit" />
+        <button @click="handleSubmit" class="password__button" :disabled="loading">{{ loading ? '正在解锁' : '解锁内容' }}</button>
 
-      <p v-if="error" class="password__error">{{ error }}</p>
+        <p v-if="error" class="password__error">{{ error }}</p>
+      </div>
     </div>
-  </div>
+  </Teleport>
+  <template v-if="verified">
+    <slot></slot>
+    <div class="vp-doc-encrypted-content" v-html="html"></div>
+  </template>
 </template>
 
 <script lang="ts" setup>
-import { ref } from 'vue';
-import { useData, inBrowser } from 'vitepress';
+import { nextTick, onUnmounted, ref, toRaw, watch } from 'vue';
+import { inBrowser, useData } from 'vitepress';
+import { useLayout } from 'vitepress/theme';
+import { getHeaders } from 'vitepress/dist/client/theme-default/composables/outline.js';
+import { decryptStoredContent, unlockContent, type EncryptedContentPayload } from '../utils/encryption.ts';
+import { bindFancybox } from '../utils/fancybox.ts';
 
-const { frontmatter } = useData();
+const props = defineProps<{
+  payload: EncryptedContentPayload;
+}>();
+
+const { frontmatter, page, theme } = useData();
+const layout = useLayout();
 const input = ref('');
+const html = ref('');
 const error = ref('');
+const loading = ref(false);
+const verified = ref(false);
+let restoreSequence = 0;
 
-// 浏览器端 SHA-256 哈希
-const hashInBrowser = async (text: string): Promise<string> => {
-  const encoder = new TextEncoder();
-  const data = encoder.encode(text);
-  const buffer = await crypto.subtle.digest('SHA-256', data);
-  return Array.from(new Uint8Array(buffer))
-    .map((b) => b.toString(16).padStart(2, '0'))
-    .join('');
+const getId = (): string => String(frontmatter.value?.id || page.value?.relativePath || 'post');
+
+const updateOutline = () => {
+  if (!inBrowser) return;
+
+  const headers = getHeaders(frontmatter.value?.outline ?? theme.value.outline);
+  const layoutHeaders = toRaw(layout.headers) as { value: typeof headers };
+  layoutHeaders.value = headers;
+};
+
+const renderDecrypted = async (content: string, sequence: number): Promise<boolean> => {
+  html.value = content;
+  verified.value = true;
+  await nextTick();
+  if (sequence !== restoreSequence) return false;
+
+  updateOutline();
+  bindFancybox();
+  return true;
+};
+
+const restore = async () => {
+  const sequence = ++restoreSequence;
+  const content = await decryptStoredContent(getId(), props.payload);
+  if (sequence === restoreSequence && content) {
+    await renderDecrypted(content, sequence);
+  }
 };
 
 async function handleSubmit() {
-  const hash = String(frontmatter.value?.password ?? '');
-  const inputHash = await hashInBrowser(input.value);
+  if (!input.value) {
+    error.value = '请输入访问密码';
+    return;
+  }
 
-  if (inputHash === hash) {
-    // 保存哈希到 localStorage，下次访问免输入
-    if (inBrowser) {
-      const id = frontmatter.value?.id || '';
-      const obj = JSON.parse(localStorage.getItem('post_passwords') || '{}');
-      obj[id] = inputHash;
-      localStorage.setItem('post_passwords', JSON.stringify(obj));
-      window.location.reload();
+  const sequence = ++restoreSequence;
+  loading.value = true;
+  error.value = '';
+  try {
+    const content = await unlockContent(getId(), input.value, props.payload);
+    if (sequence === restoreSequence) {
+      if (await renderDecrypted(content, sequence)) {
+        input.value = '';
+      }
     }
-  } else {
-    error.value = '密码错误，请重新输入';
+  } catch {
+    if (sequence === restoreSequence) error.value = '密码错误，请重新输入';
+  } finally {
+    if (sequence === restoreSequence) loading.value = false;
   }
 }
+
+watch(
+  () => props.payload?.data,
+  () => {
+    html.value = '';
+    error.value = '';
+    verified.value = false;
+    loading.value = false;
+    updateOutline();
+    void restore();
+  },
+  { immediate: true }
+);
+
+onUnmounted(() => {
+  ++restoreSequence;
+});
 </script>
 
 <style lang="less" scoped>

@@ -8,6 +8,7 @@ import Archives from './views/ArchivesView.vue';
 import CategoryClassic from './views/CategoryClassicView.vue';
 import Category from './views/CategoryView.vue';
 import PostMeta from './components/PostMeta.vue';
+import Password from './components/Password.vue';
 import { bindFancybox, destroyFancybox } from './utils/fancybox';
 import { BProgress } from '@bprogress/core';
 import '@bprogress/core/css';
@@ -22,6 +23,7 @@ export default {
     app.component('Category', Category);
     app.component('PageView', PageView);
     app.component('PostMeta', PostMeta);
+    app.component('Password', Password);
     if (inBrowser) {
       BProgress.configure({ showSpinner: false });
       let lastPath = '';

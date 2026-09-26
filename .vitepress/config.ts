@@ -1,6 +1,6 @@
 import { defineConfig } from 'vitepress';
 import { usePosts } from '../src/composables/usePosts.ts';
-import { hashPassword } from '../src/utils/hashPassword.ts';
+import { installEncryptedMarkdown } from '../src/utils/encryptedMarkdown.ts';
 import type { ThemeConfig } from '../src/types.ts';
 
 const slot = `
@@ -41,11 +41,9 @@ export default defineConfig<ThemeConfig>({
   },
   transformPageData(pageData) {
     const { frontmatter, description } = pageData;
-    const { id, password } = frontmatter;
+    const { id } = frontmatter;
 
-    if (password) {
-      frontmatter.password = hashPassword(String(password));
-    }
+    delete frontmatter.password;
     if (!description) {
       pageData.description = descriptionMap.get(id) as string;
     }
@@ -99,6 +97,7 @@ export default defineConfig<ThemeConfig>({
           return htmlResult;
         };
       });
+      installEncryptedMarkdown(md);
     }
   },
   srcExclude: [...excludePosts, 'README.md', 'README_en-US.md']

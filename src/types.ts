@@ -1,5 +1,6 @@
 import { DefaultTheme } from 'vitepress/theme';
 import { HeadConfig } from 'vitepress';
+import type { EncryptedContentPayload } from './utils/encryption.ts';
 
 export interface IPostsConfig {
   pageSize?: number;
@@ -23,6 +24,7 @@ export interface IPost {
   order?: number;
   pinned?: string;
   password?: string;
+  encryption?: EncryptedContentPayload;
   hidden?: boolean;
   draft?: boolean;
   description?: string;
