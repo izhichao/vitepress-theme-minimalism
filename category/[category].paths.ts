@@ -9,7 +9,7 @@ export default {
 
     for (const postPath of paths) {
       const { data } = matter.read(postPath);
-      const skip = isProd && (data.draft || data.hidden);
+      const skip = isProd && (data.draft || data.deleted || data.hidden);
 
       if (data.category && !skip) {
         categories.add(String(data.category));

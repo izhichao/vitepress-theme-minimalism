@@ -27,6 +27,7 @@ export interface IPost {
   encryption?: EncryptedContentPayload;
   hidden?: boolean;
   draft?: boolean;
+  deleted?: boolean;
   description?: string;
   excerpt?: string;
   category?: string;

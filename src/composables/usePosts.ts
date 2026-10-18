@@ -77,6 +77,7 @@ const formatFrontMatter = async (frontMatter: IPost, postPath: string, srcDir: s
 const writeMd = async (path: string, content: string, frontMatter: { [key: string]: any }) => {
   const matters = [
     'draft',
+    'deleted',
     'hidden',
     'order',
     'pinned',
@@ -128,8 +129,8 @@ const removeMdPro = (str: string) => {
  * @returns 是否发生变更
  */
 const updateNav = (frontMatter: IPost, posts: IPost[], nav: boolean): boolean => {
-  // nav 关闭、置顶、隐藏或草稿文章：清除已有的 prev / next
-  if (!nav || frontMatter.hidden || frontMatter.draft) {
+  // nav 关闭、置顶、隐藏、草稿或已删除文章：清除已有的 prev / next
+  if (!nav || frontMatter.hidden || frontMatter.draft || frontMatter.deleted) {
     const hadNav = !!(frontMatter.prev || frontMatter.next);
     delete frontMatter.prev;
     delete frontMatter.next;
@@ -207,7 +208,8 @@ export const usePosts = async (userConfig: IPostsConfig = {}) => {
         });
         const frontMatter = data as IPost;
 
-        const { category, tags, description, draft, id, permalink: _permalink } = frontMatter;
+        const { category, tags, description, draft, deleted, id, permalink: _permalink } = frontMatter;
+        const isDraft = !!(draft || deleted);
 
         // 1. 检测是否存在分类/标签，生成分类页面（暂不启用）
         // if (!categoryFlag && (category || tags)) {
@@ -228,7 +230,7 @@ export const usePosts = async (userConfig: IPostsConfig = {}) => {
         // 4. 处理永久链接 permalink (自定义链接 -> 按 ID 生成链接 -> 按路径生成链接)
         let permalink: string = postPath.replace(/\.md$/, '');
 
-        if (!draft) {
+        if (!isDraft) {
           if (_permalink) {
             permalink = _permalink;
           } else if (config.permalink) {
@@ -259,12 +261,15 @@ export const usePosts = async (userConfig: IPostsConfig = {}) => {
 
     // 二、隐藏列表 (用于 sitemap 中排除隐藏文章) / 草稿列表 (用于 srcExclude 中排除构建)
     const hiddenPosts = new Set(results.filter((post) => post.hidden).map((post) => post.permalink.replace(/^\//, '')));
-    const excludePosts = paths.filter((postPath) => postCache.get(postPath).frontMatter.draft);
+    const excludePosts = paths.filter((postPath) => {
+      const fm = postCache.get(postPath)?.frontMatter;
+      return fm?.draft || fm?.deleted;
+    });
 
     // 三、实际文章列表（按置顶 + 时间排序）
     // 开发环境：不过滤直接排序
     // 生产环境：过滤隐藏文章和草稿
-    const posts = (isProd ? results.filter((post) => !post.hidden && !post.draft) : results).sort((a, b) => {
+    const posts = (isProd ? results.filter((post) => !post.hidden && !post.draft && !post.deleted) : results).sort((a, b) => {
       // 优先按置顶排序
       if (a.order && b.order) return a.order - b.order;
       if (a.order) return -1;
