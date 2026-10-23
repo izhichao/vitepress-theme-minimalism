@@ -1,34 +1,64 @@
 <template>
-  <div class="copyright-info">
-    <div class="copyright-info__item">
-      <Icon class="copyright-info__icon" icon="mingcute:user-3-line" />
-      <span class="copyright-info__label">本文作者</span>
-      <span class="copyright-info__value">
-        <a :href="host" class="copyright-info__link">{{ author }}</a>
-      </span>
-    </div>
-    <div class="copyright-info__item">
-      <Icon class="copyright-info__icon" icon="mingcute:document-line" />
-      <span class="copyright-info__label">本文标题</span>
-      <span class="copyright-info__value">{{ articleTitle }}</span>
-    </div>
-    <div class="copyright-info__item">
-      <Icon class="copyright-info__icon" icon="mingcute:link-line" />
-      <span class="copyright-info__label">本文链接</span>
-      <span class="copyright-info__value">
-        <a :href="url" target="_blank" rel="noopener noreferrer" class="copyright-info__link">{{ url }}</a>
-      </span>
-    </div>
-    <div class="copyright-info__item">
-      <Icon class="copyright-info__icon" icon="mingcute:copyright-line" />
-      <span class="copyright-info__label">版权声明</span>
-      <span class="copyright-info__value">
-        本博客所有文章除特别声明外，均采用
-        <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank" rel="noopener noreferrer" class="copyright-info__link">
-          CC BY-NC-SA 4.0
-        </a>
-        许可协议。转载请注明出处！
-      </span>
+  <div class="copyright-info-wrapper">
+    <div class="copyright-info">
+      <div class="copyright-info__content">
+        <div class="copyright-info__item">
+          <Icon class="copyright-info__icon" icon="mingcute:user-3-line" />
+          <span class="copyright-info__label">本文作者</span>
+          <span class="copyright-info__value">
+            <a :href="host" class="copyright-info__link">{{ author }}</a>
+          </span>
+        </div>
+        <div class="copyright-info__item">
+          <Icon class="copyright-info__icon" icon="mingcute:document-line" />
+          <span class="copyright-info__label">本文标题</span>
+          <span class="copyright-info__value">{{ articleTitle }}</span>
+        </div>
+        <div class="copyright-info__item">
+          <Icon class="copyright-info__icon" icon="mingcute:link-line" />
+          <span class="copyright-info__label">本文链接</span>
+          <span class="copyright-info__value">
+            <a :href="url" target="_blank" rel="noopener noreferrer" class="copyright-info__link">{{ url }}</a>
+          </span>
+        </div>
+        <div class="copyright-info__item">
+          <Icon class="copyright-info__icon" icon="mingcute:copyright-line" />
+          <span class="copyright-info__label">版权声明</span>
+          <span class="copyright-info__value">
+            本博客所有文章除特别声明外，均采用
+            <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank" rel="noopener noreferrer" class="copyright-info__link">
+              CC BY-NC-SA 4.0
+            </a>
+            许可协议。转载请注明出处！
+          </span>
+        </div>
+      </div>
+
+      <div v-if="$slots.default || img" class="copyright-info__extra">
+        <slot>
+          <a
+            v-if="img && link"
+            :href="link"
+            target="_blank"
+            rel="noopener noreferrer"
+            class="copyright-info__extra-link"
+          >
+            <img
+              class="copyright-info__extra-img"
+              :src="img"
+              :alt="title || ''"
+              :title="title"
+            />
+          </a>
+          <img
+            v-else-if="img"
+            class="copyright-info__extra-img"
+            :src="img"
+            :alt="title || ''"
+            :title="title"
+          />
+        </slot>
+      </div>
     </div>
   </div>
 </template>
@@ -37,6 +67,12 @@
 import { useData, useRoute } from 'vitepress';
 import { computed, ref, onMounted, watch, nextTick } from 'vue';
 import { Icon } from '@iconify/vue';
+
+defineProps<{
+  img?: string;
+  link?: string;
+  title?: string;
+}>();
 
 const { site, page } = useData();
 const route = useRoute();
@@ -68,15 +104,65 @@ watch(
 </script>
 
 <style lang="less" scoped>
+.copyright-info-wrapper {
+  container-type: inline-size;
+  margin: 20px 0;
+}
+
 .copyright-info {
-  padding: 16px 20px;
+  padding: 0 20px;
   border: 1px solid var(--vp-c-divider);
   background-color: var(--vp-c-bg-soft);
   border-radius: 1rem;
-  margin: 20px 0;
   display: flex;
-  flex-direction: column;
-  gap: 12px;
+  align-items: center;
+  justify-content: space-between;
+  gap: 20px;
+
+  // 信息内容区：上下 16px padding
+  &__content {
+    flex: 1;
+    min-width: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    padding: 16px 0;
+  }
+
+  // 右侧展示区：无上下 padding，限制 max-height: 138px
+  &__extra {
+    flex-shrink: 0;
+    max-height: 138px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    // 穿透给插槽根元素：保证任意组件/容器不超出 138px 高度
+    :deep(> *) {
+      max-height: 138px;
+      max-width: 100%;
+    }
+
+    // 穿透给内部图片（包括插槽内的图片），重置 VitePress 默认文章图片的 margin 和 shadow
+    :deep(img) {
+      max-height: 138px;
+      width: auto;
+      max-width: 100%;
+      object-fit: contain;
+      display: block;
+      border-radius: 0.5rem;
+      margin: 0 !important;
+      box-shadow: none !important;
+    }
+  }
+
+  &__extra-link {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    max-height: inherit;
+    text-decoration: none;
+  }
 
   // 信息项
   &__item {
@@ -126,9 +212,22 @@ watch(
   }
 }
 
-// 响应式设计
+// 页面收窄（容器查询）：直接隐藏右侧
+@container (max-width: 580px) {
+  .copyright-info {
+    &__extra {
+      display: none;
+    }
+  }
+}
+
+// 移动端/窄视口：隐藏右侧，字体设为 13px（和原来一样）
 @media (max-width: 768px) {
   .copyright-info {
+    &__extra {
+      display: none;
+    }
+
     &__item {
       font-size: 13px;
     }
