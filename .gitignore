@@ -1,5 +1,20 @@
 node_modules
 .vitepress/dist
 .vitepress/cache
-/index.md
-/page-*.md
+.vite-temp
+
+# 自动生成的分页路由文件（跨所有文章目录通配）
+**/page-*.md
+page-*.md
+
+# 默认忽略自动生成的列表首页
+**/index.md
+index.md
+
+# 白名单豁免：解禁当前仓库手写自定义的根目录首页
+!/index.md
+
+# 本地文件与日志
+*.log
+.DS_Store
+Thumbs.db
