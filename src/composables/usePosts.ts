@@ -65,9 +65,15 @@ export const usePosts = async (userConfig: IPostsConfig = {}) => {
       ? allPosts.filter((post) => !post.hidden && !post.draft && !post.deleted)
       : allPosts;
 
-    // 3. 各文件夹组内独立排序，获取文章数量并生成分页
+    // 3. 各文件夹组内独立排序，获取文章数量并生成分页（首页额外汇聚所有 order 置顶文章及 index: true 文章）
+    const firstFolder = folders[0]?.input;
     for (const folder of folders) {
-      const groupPosts = sortPosts(visiblePosts.filter((post) => post.folder === folder.input));
+      const isRoot = folder.input === firstFolder;
+      const groupPosts = sortPosts(
+        visiblePosts.filter(
+          (post) => post.folder === folder.input || (isRoot && (Boolean(post.order) || Boolean(post.index)))
+        )
+      );
       await generateFolderPages(folder, groupPosts.length, {
         lang: userConfig.lang,
         slot: userConfig.slot,

@@ -44,6 +44,8 @@ export interface IPost {
   folder?: string;
   order?: number;
   pinned?: string;
+  /** 是否在首页列表中展示（适用于其他板块文章按时间流汇入首页） */
+  index?: boolean;
   password?: string;
   encryption?: EncryptedContentPayload;
   hidden?: boolean;

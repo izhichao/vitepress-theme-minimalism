@@ -41,14 +41,23 @@ const basePath = computed(() => {
   return rel.includes('/') ? '/' + rel.slice(0, rel.lastIndexOf('/')) : '';
 });
 
-// 根据 folder 属性过滤所属目录的文章列表；若未指定 folder 则取首个目录的文章
+// 根据 folder 属性过滤所属目录的文章列表：
+// 1. 首页列表（basePath 为空）：包含首页自身目录文章 + 全站所有标记了 order 的置顶文章 + 标记了 index: true 的跨目录文章
+// 2. 子板块列表（basePath 不为空）：仅包含当前板块自身文章
 const folderPosts = computed(() => {
   const allPosts: IPost[] = theme.value.posts || [];
-  if (props.folder) {
-    return allPosts.filter((post) => post.folder === props.folder);
+  const isRoot = basePath.value === '';
+
+  if (isRoot) {
+    const targetFolder = props.folder || allPosts[0]?.folder;
+    return allPosts.filter(
+      (post) =>
+        (targetFolder ? post.folder === targetFolder : true) ||
+        Boolean(post.order) ||
+        Boolean(post.index)
+    );
   }
-  const firstFolder = allPosts[0]?.folder;
-  return firstFolder ? allPosts.filter((post) => post.folder === firstFolder) : allPosts;
+  return allPosts.filter((post) => post.folder === props.folder);
 });
 
 // 动态计算总页数，自适应文章增减
