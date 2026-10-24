@@ -1,25 +1,26 @@
 import { onMounted, onUnmounted } from 'vue';
 import { EnhanceAppContext, inBrowser } from 'vitepress';
-import type { ThemeConfig } from './types';
+import type { ThemeConfig } from './types.ts';
 import DefaultTheme from 'vitepress/theme';
 import HomeView from './views/HomeView.vue';
 import PageView from './views/PageView.vue';
 import Archives from './views/ArchivesView.vue';
-import CategoryClassic from './views/CategoryClassicView.vue';
 import Category from './views/CategoryView.vue';
 import PostMeta from './components/PostMeta.vue';
 import Password from './components/Password.vue';
-import { bindFancybox, destroyFancybox } from './utils/fancybox';
+import { bindFancybox, destroyFancybox } from './utils/fancybox.ts';
 import { BProgress } from '@bprogress/core';
 import '@bprogress/core/css';
 import './styles/index.less';
+
+export * from './types.ts';
+export * from './composables/useGroup.ts';
 
 export default {
   extends: DefaultTheme,
   enhanceApp({ app, router, siteData }: EnhanceAppContext) {
     app.component('HomeView', HomeView);
     app.component('Archives', Archives);
-    app.component('CategoryClassic', CategoryClassic);
     app.component('Category', Category);
     app.component('PageView', PageView);
     app.component('PostMeta', PostMeta);
