@@ -1,5 +1,6 @@
-﻿---
+---
 id: 67ca45
+index: true
 title: 雨后的青苔
 datetime: '2026-10-02 10:00:00'
 category: 散文

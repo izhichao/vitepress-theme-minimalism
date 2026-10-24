@@ -1,5 +1,7 @@
-﻿---
+---
 id: 066678
+order: 2
+pinned: 置顶
 title: 春日微风
 datetime: '2026-10-01 10:00:00'
 category: 散文
