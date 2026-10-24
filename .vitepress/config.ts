@@ -18,8 +18,10 @@ import { ads } from '/.vitepress/theme/ads.ts';
 
 const { posts, hiddenPosts, excludePosts, descriptionMap, rewrites } = await usePosts({
   pageSize: 6,
-  homepage: false,
-  srcDir: 'posts',
+  folder: [
+    { input: 'posts', index: false },
+    'essays'
+  ],
   excerpt: 150,
   slot,
   custom
@@ -53,14 +55,13 @@ export default defineConfig<ThemeConfig>({
     page: {
       max: 5
     },
-    classicCategory: false,
     transition: true,
     logo: '/profile.png',
     outline: { level: 2 },
     nav: [
       { text: '首页', link: '/' },
       { text: '文章', link: '/page-1' },
-      { text: '分类(旧版)', link: '/category' },
+      { text: '散文', link: '/essays' },
       { text: '分类', link: '/category/' },
       { text: '标签', link: '/tags/' },
       { text: '归档', link: '/archives' },
@@ -100,5 +101,5 @@ export default defineConfig<ThemeConfig>({
       installEncryptedMarkdown(md);
     }
   },
-  srcExclude: [...excludePosts, 'README.md', 'README_en-US.md']
+  srcExclude: [...excludePosts, 'README.md', 'README_en-US.md', 'CHANGE.md']
 });
