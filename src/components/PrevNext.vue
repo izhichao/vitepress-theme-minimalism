@@ -38,7 +38,7 @@
 <script lang="ts" setup>
 import { computed } from 'vue';
 import { useData, withBase } from 'vitepress';
-import { IPost } from '../types';
+import type { IPost } from '../types';
 
 const props = withDefaults(
   defineProps<{
@@ -57,7 +57,23 @@ const { theme, frontmatter } = useData();
 const allPosts: IPost[] = theme.value.posts || [];
 
 const prevNext = computed(() => {
-  const posts = props.showPinned ? allPosts : allPosts.filter((post) => !post.order);
+  // 1. 若 FrontMatter 中已有独立计算的 prev/next，优先使用
+  if (frontmatter.value.prev !== undefined || frontmatter.value.next !== undefined) {
+    return {
+      prev: frontmatter.value.prev || null,
+      next: frontmatter.value.next || null
+    };
+  }
+
+  // 2. 运行时动态查找：只在所属 folder 内部查找相邻文章，防止跨目录串台
+  const currentPost = allPosts.find((post) => post.id === frontmatter.value.id);
+  const currentFolder = currentPost?.folder;
+
+  const folderPosts = currentFolder
+    ? allPosts.filter((post) => post.folder === currentFolder)
+    : allPosts;
+
+  const posts = props.showPinned ? folderPosts : folderPosts.filter((post) => !post.order);
 
   const index = posts.findIndex((post) => post.id === frontmatter.value.id);
   if (index === -1) return { prev: null, next: null };

@@ -5,7 +5,7 @@
       v-if="total > max"
       class="pagination__item pagination__item--nav"
       :class="{ 'pagination__item--disabled': pagination === 1 }"
-      :href="withBase(homepage ? '/' : '/page-1')"
+      :href="withBase(getPageLink(1))"
     >
       <Icon icon="mingcute:arrows-left-line" />
     </a>
@@ -14,7 +14,7 @@
     <a
       class="pagination__item pagination__item--nav"
       :class="{ 'pagination__item--disabled': pagination === 1 }"
-      :href="withBase(pagination <= 2 ? (homepage ? '/' : '/page-1') : `/page-${pagination - 1}`)"
+      :href="withBase(getPageLink(Math.max(1, pagination - 1)))"
     >
       <Icon icon="mingcute:left-line" />
     </a>
@@ -25,7 +25,7 @@
       :key="page"
       class="pagination__item pagination__item--page"
       :class="{ 'pagination__item--active': pagination === page }"
-      :href="withBase(page === 1 && homepage ? '/' : `/page-${page}`)"
+      :href="withBase(getPageLink(page))"
     >
       {{ page }}
     </a>
@@ -34,7 +34,7 @@
     <a
       class="pagination__item pagination__item--nav"
       :class="{ 'pagination__item--disabled': pagination === total }"
-      :href="withBase(pagination === total ? `/page-${total}` : `/page-${pagination + 1}`)"
+      :href="withBase(getPageLink(Math.min(total, pagination + 1)))"
     >
       <Icon icon="mingcute:right-line" />
     </a>
@@ -44,7 +44,7 @@
       v-if="total > max"
       class="pagination__item pagination__item--nav"
       :class="{ 'pagination__item--disabled': pagination === total }"
-      :href="withBase(`/page-${total}`)"
+      :href="withBase(getPageLink(total))"
     >
       <Icon icon="mingcute:arrows-right-line" />
     </a>
@@ -59,7 +59,8 @@ import { Icon } from '@iconify/vue';
 const props = defineProps({
   pagination: { type: Number, required: true },
   total: { type: Number, required: true },
-  homepage: { type: Boolean, default: true }
+  index: { type: Boolean, default: true },
+  basePath: { type: String, default: '' }
 });
 
 const { theme } = useData();
@@ -68,6 +69,18 @@ const page = theme.value.page;
 const max = page?.max || 5;
 
 const pages = ref(findNeighbors(props.pagination, props.total, max));
+
+/**
+ * 依据当前目录 basePath 和目标页码动态计算分页 URL
+ * @param targetPage 目标页码
+ */
+function getPageLink(targetPage: number): string {
+  const base = props.basePath ? props.basePath.replace(/\/+$/, '') : '';
+  if (targetPage === 1 && props.index) {
+    return base || '/';
+  }
+  return `${base}/page-${targetPage}`;
+}
 
 function findNeighbors(target: number, total: number, max: number) {
   const result: number[] = [];
