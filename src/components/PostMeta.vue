@@ -34,7 +34,7 @@
       <div class="post-info__category" v-if="category">
         <Icon class="post-info__icon" icon="mingcute:folder-line" />
         <span class="post-info__label">分类</span>
-        <a :href="withBase(categoryLink(category))" class="post-info__badge post-info__badge--category">
+        <a :href="withBase(`/category/${encodeURIComponent(category)}`)" class="post-info__badge post-info__badge--category">
           {{ category }}
         </a>
       </div>
@@ -44,7 +44,7 @@
         <Icon class="post-info__icon" icon="mingcute:tag-line" />
         <span class="post-info__label">标签</span>
         <div class="post-info__tags-list">
-          <a v-for="tag in tags" :key="tag" :href="withBase(tagLink(tag))" class="post-info__badge post-info__badge--tag">
+          <a v-for="tag in tags" :key="tag" :href="withBase(`/tags/${encodeURIComponent(tag)}`)" class="post-info__badge post-info__badge--tag">
             {{ tag }}
           </a>
         </div>
@@ -55,11 +55,11 @@
 
 <script lang="ts" setup>
 import { useData, withBase } from 'vitepress';
-import { useLink } from '../composables/useLink';
+
 import { Icon } from '@iconify/vue';
 
 const { page, frontmatter } = useData();
-const { categoryLink, tagLink } = useLink();
+
 
 const { lastUpdated } = page.value;
 const { datetime, views, category, tags } = frontmatter.value;

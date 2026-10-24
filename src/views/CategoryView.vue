@@ -13,7 +13,6 @@
           :type="type"
           :tabs="isCategory ? tabs.category : tabs.tag"
           :posts="isCategory ? posts.category : undefined"
-          :linkMode="true"
           :linkPrefix="isCategory ? '/category/' : '/tags/'"
           :selected="currentName || null"
         />
@@ -35,8 +34,7 @@
 </template>
 
 <script lang="ts" setup>
-import { PropType } from 'vue';
-import { computed } from 'vue';
+import { PropType, computed } from 'vue';
 import { useData } from 'vitepress';
 import TabList from '../components/TabList.vue';
 import PostList from '../components/PostList.vue';
@@ -44,8 +42,8 @@ import { useGroup } from '../composables/useGroup';
 
 const props = defineProps({
   type: {
-    type: String as PropType<'category' | 'tag' | 'archive'>,
-    default: 'category' // 'category' | 'tag'
+    type: String as PropType<'category' | 'tag'>,
+    default: 'category'
   }
 });
 
