@@ -132,16 +132,11 @@ export const themeTransformPageData: ThemeTransformPageData = (
         return;
       }
     } else {
-      // 根目录分页：如 page-2.md 或 page-1.md
+      // 根目录分页：如 page-1.md, page-2.md -> "第1页", "第2页"
       const pageMatch = pageData.relativePath.match(/^page-(\d+)\.md$/);
       if (pageMatch) {
         const pageNum = pageMatch[1];
-        const folderDisplayName = name && name !== input ? name : isZh ? '文章' : 'Posts';
-        if (pageNum === '1') {
-          pageData.title = folderDisplayName;
-        } else {
-          pageData.title = isZh ? `${folderDisplayName} - 第${pageNum}页` : `${folderDisplayName} - Page ${pageNum}`;
-        }
+        pageData.title = isZh ? `第${pageNum}页` : `Page ${pageNum}`;
         return;
       }
     }
