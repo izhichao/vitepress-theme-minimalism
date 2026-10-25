@@ -3,6 +3,7 @@ import { HeadConfig, PageData, TransformPageContext } from 'vitepress';
 import type { EncryptedContentPayload } from './utils/encryption.ts';
 
 export type ThemeTransformPageData = (pageData: PageData, ctx?: TransformPageContext) => void | PageData;
+export type ThemeMdPlugin = (md: any) => void;
 
 export interface IFolderConfig {
   /** 文章源文件夹路径，如 'posts' 或 'essays' */

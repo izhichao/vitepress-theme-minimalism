@@ -1,7 +1,7 @@
 import { defineConfig } from 'vitepress';
 import { usePosts } from '../src/composables/usePosts.ts';
 import { themeTransformPageData } from '../src/utils/transformPageData.ts';
-import { installEncryptedMarkdown } from '../src/utils/encryptedMarkdown.ts';
+import { themeMdPlugin } from '../src/utils/themeMdPlugin.ts';
 import type { ThemeConfig } from '../src/types.ts';
 
 const { posts, hiddenPosts, excludePosts, rewrites } = await usePosts({
@@ -34,7 +34,7 @@ export default defineConfig<ThemeConfig>({
   themeConfig: {
     posts,
     slots: {
-      docAfter: 'DocAfterAd',
+      docAfter: 'DocAfterAd'
     },
     page: {
       max: 5
@@ -75,15 +75,8 @@ export default defineConfig<ThemeConfig>({
   markdown: {
     lineNumbers: true,
     config: (md) => {
-      md.use((md) => {
-        md.renderer.rules.heading_close = (tokens, idx, options, env, slf) => {
-          let htmlResult = slf.renderToken(tokens, idx, options);
-          if (tokens[idx].tag === 'h1') htmlResult += `<PostMeta />`;
-          return htmlResult;
-        };
-      });
-      installEncryptedMarkdown(md);
+      md.use(themeMdPlugin);
     }
   },
-  srcExclude: [...excludePosts, 'README.md', 'README_en-US.md', 'CHANGE.md']
+  srcExclude: [...excludePosts, 'README.md', 'README_en-US.md']
 });

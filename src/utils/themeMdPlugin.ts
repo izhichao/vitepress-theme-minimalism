@@ -1,5 +1,6 @@
 import { createCipheriv, pbkdf2Sync, randomBytes, createHash } from 'node:crypto';
 import type { EncryptedContentPayload } from './encryption.ts';
+import type { ThemeMdPlugin } from '../types.ts';
 
 const ENCRYPTION_ITERATIONS = 310_000;
 
@@ -23,10 +24,27 @@ const encryptContentHtml = (html: string, password: string, id: string): Encrypt
 };
 
 /**
- * 将 password 文章的渲染 HTML 在构建阶段加密，正文只以密文进入静态产物。
+ * 1. postMetaPlugin: 在每个一级标题 (<h1>) 闭合后自动挂载 <PostMeta /> 文章元信息组件
+ */
+export const postMetaPlugin: ThemeMdPlugin = (md: any): void => {
+  const defaultHeadingClose =
+    md.renderer.rules.heading_close ||
+    ((tokens: any[], idx: number, options: any, _env: any, slf: any) => slf.renderToken(tokens, idx, options));
+
+  md.renderer.rules.heading_close = (tokens: any[], idx: number, options: any, env: any, slf: any) => {
+    let htmlResult = defaultHeadingClose(tokens, idx, options, env, slf);
+    if (tokens[idx].tag === 'h1') {
+      htmlResult += `<PostMeta />`;
+    }
+    return htmlResult;
+  };
+};
+
+/**
+ * 2. passwordMdPlugin: 将 password 文章的渲染 HTML 在构建阶段加密，正文只以密文进入静态产物。
  * 保留公开标题与 PostMeta，其余内容由 Password 在浏览器中解密。
  */
-export const installEncryptedMarkdown = (md: any): void => {
+export const passwordMdPlugin: ThemeMdPlugin = (md: any): void => {
   md.core.ruler.push('vitepress_encrypt_protected_content', (state: any) => {
     const frontmatter = state.env?.frontmatter as Record<string, unknown> | undefined;
     const password = frontmatter?.password;
@@ -62,3 +80,13 @@ export const installEncryptedMarkdown = (md: any): void => {
     state.tokens = [placeholder];
   });
 };
+
+/**
+ * 3. themeMdPlugin: 主题统一 Markdown 插件（聚合 postMetaPlugin 与 passwordMdPlugin）
+ */
+export const themeMdPlugin: ThemeMdPlugin = (md: any): void => {
+  md.use(postMetaPlugin);
+  md.use(passwordMdPlugin);
+};
+
+export default themeMdPlugin;
