@@ -1,10 +1,14 @@
 import { DefaultTheme } from 'vitepress/theme';
-import { HeadConfig } from 'vitepress';
+import { HeadConfig, PageData, TransformPageContext } from 'vitepress';
 import type { EncryptedContentPayload } from './utils/encryption.ts';
+
+export type ThemeTransformPageData = (pageData: PageData, ctx?: TransformPageContext) => void | PageData;
 
 export interface IFolderConfig {
   /** 文章源文件夹路径，如 'posts' 或 'essays' */
   input: string;
+  /** 该目录的展示名称（用于多目录分页 Title 与面包屑等），未配置时默认回退为 input */
+  name?: string;
   /** 生成的分页列表输出路径，第一项默认 ''（根目录），后续项默认 input */
   output?: string;
   /** 文章固定链接前缀，默认 input */
@@ -24,16 +28,22 @@ export interface IPostsConfig {
   pageSize?: number;
   /** 全局默认首项列表是否以 index.md 作为首页，默认 true */
   index?: boolean;
-  /** 默认语言，默认 'zh' */
-  lang?: string;
   /** 摘要截取长度，默认 0 */
   excerpt?: number;
   /** 全局默认固定链接前缀，默认 'posts' */
   permalink?: string;
-  /** 页面插槽内容 */
-  slot?: string;
-  /** 页面自定义脚本内容 */
-  custom?: string;
+}
+
+export type PageTarget = 'page' | 'category' | 'tags' | 'archives';
+
+/** 每个插槽支持：纯字符串组件名（全页面生效）或对象（按页面指定 / default 兜底） */
+export type SlotBinding = string | ({ default?: string } & Partial<Record<PageTarget, string>>);
+
+export interface ISlotsConfig {
+  docBefore?: SlotBinding;
+  docAfter?: SlotBinding;
+  asideLeft?: SlotBinding;
+  asideRight?: SlotBinding;
 }
 
 export interface IPost {
@@ -83,5 +93,6 @@ export interface IPostObject {
 export interface ThemeConfig extends DefaultTheme.Config {
   posts?: IPost[];
   page?: IPage;
+  slots?: ISlotsConfig;
   transition?: boolean;
 }

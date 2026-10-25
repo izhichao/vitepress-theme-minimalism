@@ -2,18 +2,26 @@
   <div class="ZCContainer">
     <div class="ZCLayout">
       <div class="ZCContent">
-        <slot name="doc-before"></slot>
+        <slot name="doc-before">
+          <component :is="slotDocBefore" v-if="slotDocBefore" />
+        </slot>
         <template v-if="posts">
           <PostList :posts="posts" />
           <Pagination :pagination="pagination" :total="total" :index="index" :basePath="basePath" />
         </template>
-        <slot name="doc-after"></slot>
+        <slot name="doc-after">
+          <component :is="slotDocAfter" v-if="slotDocAfter" />
+        </slot>
       </div>
       <aside class="ZCAside ZCAside--left">
-        <slot name="aside-left"></slot>
+        <slot name="aside-left">
+          <component :is="slotAsideLeft" v-if="slotAsideLeft" />
+        </slot>
       </aside>
       <aside class="ZCAside ZCAside--right">
-        <slot name="aside-right"></slot>
+        <slot name="aside-right">
+          <component :is="slotAsideRight" v-if="slotAsideRight" />
+        </slot>
       </aside>
     </div>
   </div>
@@ -24,6 +32,7 @@ import { computed } from 'vue';
 import { useData } from 'vitepress';
 import PostList from '../components/PostList.vue';
 import Pagination from '../components/Pagination.vue';
+import { resolveSlot } from '../utils/resolveSlot.ts';
 import type { IPost } from '../types';
 
 const props = defineProps({
@@ -34,6 +43,11 @@ const props = defineProps({
 });
 
 const { theme, page } = useData();
+
+const slotDocBefore = computed(() => resolveSlot(theme.value.slots?.docBefore, 'page'));
+const slotDocAfter = computed(() => resolveSlot(theme.value.slots?.docAfter, 'page'));
+const slotAsideLeft = computed(() => resolveSlot(theme.value.slots?.asideLeft, 'page'));
+const slotAsideRight = computed(() => resolveSlot(theme.value.slots?.asideRight, 'page'));
 
 // 依据当前页面文件相对路径自动推导路由前缀（例如 'essays/index.md' -> '/essays'，根目录 -> ''）
 const basePath = computed(() => {
