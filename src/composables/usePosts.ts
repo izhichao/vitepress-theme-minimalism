@@ -36,7 +36,7 @@ const sortPosts = (posts: IPost[]): IPost[] => {
  * @param userConfig.index 全局默认首个目录是否生成 index.md 作为首页，默认 true
  * @param userConfig.excerpt 自动截取摘要的字数长度，默认 0
  * @param userConfig.permalink 全局默认固定链接前缀，默认 'posts'
- * @returns 包含全站文章、隐藏文章集合、排除构建文章、路由重写表与摘要映射的对象
+ * @returns 包含全站文章、隐藏文章集合、排除构建文章与路由重写表的对象
  *
  * @example
  * ```ts
@@ -81,15 +81,14 @@ export const usePosts = async (userConfig: IPostsConfig = {}) => {
     // 4. 全局排序汇总文章列表，供分类、标签、归档等共享使用
     const posts = sortPosts(visiblePosts);
 
-    return { posts, hiddenPosts, excludePosts, rewrites, descriptionMap };
+    return { posts, hiddenPosts, excludePosts, rewrites };
   } catch (e) {
     console.error('[vitepress-theme-minimalism] usePosts 处理异常:', e);
     return {
       posts: [],
       hiddenPosts: new Set<string>(),
       excludePosts: [],
-      rewrites: {},
-      descriptionMap: new Map<string, string>()
+      rewrites: {}
     };
   }
 };
