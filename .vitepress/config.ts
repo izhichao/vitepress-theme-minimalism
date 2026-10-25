@@ -1,6 +1,6 @@
 import { defineConfig } from 'vitepress';
 import { usePosts } from '../src/composables/usePosts.ts';
-import { themeTransformPageData } from '../src/utils/transformPageData.ts';
+import { themeTransformPageData } from '../src/utils/themeTransformPageData.ts';
 import { themeMdPlugin } from '../src/utils/themeMdPlugin.ts';
 import type { ThemeConfig } from '../src/types.ts';
 

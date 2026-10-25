@@ -142,3 +142,6 @@ export const themeTransformPageData: ThemeTransformPageData = (
     }
   }
 };
+
+export default themeTransformPageData;
+

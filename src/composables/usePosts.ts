@@ -3,7 +3,7 @@ import { normalizeFolders } from '../utils/normalizeFolder.ts';
 import { scanAndParsePosts } from '../utils/postScanner.ts';
 import { generateFolderPages } from '../utils/generatePages.ts';
 import { setConfiguredFolders } from '../utils/taxonomyPaths.ts';
-import { setThemePageContext } from '../utils/transformPageData.ts';
+import { setThemePageContext } from '../utils/themeTransformPageData.ts';
 
 const isProd = process.env.NODE_ENV === 'production';
 
