@@ -3,6 +3,7 @@ import { normalizeFolders } from '../utils/normalizeFolder.ts';
 import { scanAndParsePosts } from '../utils/postScanner.ts';
 import { generateFolderPages } from '../utils/generatePages.ts';
 import { setConfiguredFolders } from '../utils/taxonomyPaths.ts';
+import { setThemePageContext } from '../utils/transformPageData.ts';
 
 const isProd = process.env.NODE_ENV === 'production';
 
@@ -33,11 +34,8 @@ const sortPosts = (posts: IPost[]): IPost[] => {
  * @param userConfig.folder 文章源目录，支持简写如 ['posts', 'essays'] 或详细对象配置
  * @param userConfig.pageSize 全局默认每页文章数量，默认 10
  * @param userConfig.index 全局默认首个目录是否生成 index.md 作为首页，默认 true
- * @param userConfig.lang 默认语言，默认 'zh'
  * @param userConfig.excerpt 自动截取摘要的字数长度，默认 0
  * @param userConfig.permalink 全局默认固定链接前缀，默认 'posts'
- * @param userConfig.slot 注入到 PageView 顶部的插槽组件代码
- * @param userConfig.custom 注入到 PageView 底部的脚本代码
  * @returns 包含全站文章、隐藏文章集合、排除构建文章、路由重写表与摘要映射的对象
  *
  * @example
@@ -60,6 +58,9 @@ export const usePosts = async (userConfig: IPostsConfig = {}) => {
     const { allPosts, descriptionMap, rewrites, hiddenPosts, excludePosts } =
       await scanAndParsePosts(folders, userConfig);
 
+    // 同步目录配置与摘要映射供页面元数据转换（transformPageData）使用
+    setThemePageContext(folders, descriptionMap);
+
     // 2. 区分可见文章（生产环境过滤隐藏与草稿）
     const visiblePosts = isProd
       ? allPosts.filter((post) => !post.hidden && !post.draft && !post.deleted)
@@ -74,11 +75,7 @@ export const usePosts = async (userConfig: IPostsConfig = {}) => {
           (post) => post.folder === folder.input || (isRoot && (Boolean(post.order) || Boolean(post.index)))
         )
       );
-      await generateFolderPages(folder, groupPosts.length, {
-        lang: userConfig.lang,
-        slot: userConfig.slot,
-        custom: userConfig.custom
-      });
+      await generateFolderPages(folder, groupPosts.length);
     }
 
     // 4. 全局排序汇总文章列表，供分类、标签、归档等共享使用

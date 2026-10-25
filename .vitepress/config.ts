@@ -1,35 +1,22 @@
 import { defineConfig } from 'vitepress';
 import { usePosts } from '../src/composables/usePosts.ts';
+import { themeTransformPageData } from '../src/utils/transformPageData.ts';
 import { installEncryptedMarkdown } from '../src/utils/encryptedMarkdown.ts';
 import type { ThemeConfig } from '../src/types.ts';
 
-const slot = `
-<template #doc-after>
-  <AdItem :custom="ads" type="doc" />
-</template>
-`;
-
-const custom = `
-<script lang="ts" setup>
-import AdItem from '/src/components/AdItem.vue';
-import { ads } from '/.vitepress/theme/ads.ts';
-</script>
-`;
-
-const { posts, hiddenPosts, excludePosts, descriptionMap, rewrites } = await usePosts({
+const { posts, hiddenPosts, excludePosts, rewrites } = await usePosts({
   pageSize: 6,
   folder: [
     { input: 'posts', index: false },
-    'essays'
+    { input: 'essays', name: '散文' }
   ],
-  excerpt: 150,
-  slot,
-  custom
+  excerpt: 150
 });
 
 export default defineConfig<ThemeConfig>({
+  lang: 'zh-CN',
   title: '只抄',
-  titleTemplate: 'VitePress Theme Minimalism',
+  titleTemplate: ':title - VitePress Theme Minimalism',
   description: 'VitePress Theme Minimalism',
   rewrites,
   cleanUrls: true,
@@ -41,17 +28,14 @@ export default defineConfig<ThemeConfig>({
       return items.filter((item) => !hiddenPosts.has(item.url.replace(/\.html$/, '')));
     }
   },
-  transformPageData(pageData) {
-    const { frontmatter, description } = pageData;
-    const { id } = frontmatter;
-
-    delete frontmatter.password;
-    if (!description) {
-      pageData.description = descriptionMap.get(id) as string;
-    }
+  transformPageData(pageData, ctx) {
+    themeTransformPageData(pageData, ctx);
   },
   themeConfig: {
     posts,
+    slots: {
+      docAfter: 'DocAfterAd',
+    },
     page: {
       max: 5
     },
