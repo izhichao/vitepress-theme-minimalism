@@ -20,6 +20,7 @@ export const normalizeFolders = (
     const isFirst = idx === 0;
     const isString = typeof item === 'string';
     const input = isString ? item : item.input;
+    const name = !isString && item.name ? item.name : input;
 
     const output = isString
       ? isFirst
@@ -47,6 +48,7 @@ export const normalizeFolders = (
 
     return {
       input,
+      name,
       output,
       permalink,
       index,

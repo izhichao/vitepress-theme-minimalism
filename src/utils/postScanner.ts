@@ -15,6 +15,7 @@ const matters = [
   'hidden',
   'order',
   'pinned',
+  'index',
   'password',
   'id',
   'title',
