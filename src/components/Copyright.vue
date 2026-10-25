@@ -4,32 +4,39 @@
       <div class="copyright-info__content">
         <div class="copyright-info__item">
           <Icon class="copyright-info__icon" icon="mingcute:user-3-line" />
-          <span class="copyright-info__label">本文作者</span>
+          <span class="copyright-info__label">{{ isZh ? '本文作者' : 'Author' }}</span>
           <span class="copyright-info__value">
             <a :href="host" class="copyright-info__link">{{ author }}</a>
           </span>
         </div>
         <div class="copyright-info__item">
           <Icon class="copyright-info__icon" icon="mingcute:document-line" />
-          <span class="copyright-info__label">本文标题</span>
+          <span class="copyright-info__label">{{ isZh ? '本文标题' : 'Title' }}</span>
           <span class="copyright-info__value">{{ articleTitle }}</span>
         </div>
         <div class="copyright-info__item">
           <Icon class="copyright-info__icon" icon="mingcute:link-line" />
-          <span class="copyright-info__label">本文链接</span>
+          <span class="copyright-info__label">{{ isZh ? '本文链接' : 'Link' }}</span>
           <span class="copyright-info__value">
             <a :href="url" target="_blank" rel="noopener noreferrer" class="copyright-info__link">{{ url }}</a>
           </span>
         </div>
         <div class="copyright-info__item">
           <Icon class="copyright-info__icon" icon="mingcute:copyright-line" />
-          <span class="copyright-info__label">版权声明</span>
-          <span class="copyright-info__value">
+          <span class="copyright-info__label">{{ isZh ? '版权声明' : 'License' }}</span>
+          <span class="copyright-info__value" v-if="isZh">
             本博客所有文章除特别声明外，均采用
             <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank" rel="noopener noreferrer" class="copyright-info__link">
               CC BY-NC-SA 4.0
             </a>
             许可协议。转载请注明出处！
+          </span>
+          <span class="copyright-info__value" v-else>
+            All articles in this blog are licensed under
+            <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank" rel="noopener noreferrer" class="copyright-info__link">
+              CC BY-NC-SA 4.0
+            </a>
+            unless otherwise stated. Please quote the source!
           </span>
         </div>
       </div>
@@ -74,7 +81,8 @@ defineProps<{
   title?: string;
 }>();
 
-const { site, page } = useData();
+const { site, page, lang } = useData();
+const isZh = computed(() => (lang.value || 'zh').startsWith('zh'));
 const route = useRoute();
 
 // 从 config.ts 中获取站点标题作为作者

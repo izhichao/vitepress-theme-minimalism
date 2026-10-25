@@ -2,11 +2,13 @@
   <Teleport to="body">
     <div v-if="!verified" class="password">
       <div class="password__box">
-        <h1 class="password__title">🔒 访问受限</h1>
-        <p class="password__desc">此内容需要密码才能访问</p>
+        <h1 class="password__title">{{ isZh ? '🔒 访问受限' : '🔒 Restricted Access' }}</h1>
+        <p class="password__desc">{{ isZh ? '此内容需要密码才能访问' : 'This content is password protected' }}</p>
 
-        <input v-model="input" type="password" placeholder="请输入访问密码" class="password__input" :disabled="loading" @keyup.enter="handleSubmit" />
-        <button @click="handleSubmit" class="password__button" :disabled="loading">{{ loading ? '正在解锁' : '解锁内容' }}</button>
+        <input v-model="input" type="password" :placeholder="isZh ? '请输入访问密码' : 'Enter access password'" class="password__input" :disabled="loading" @keyup.enter="handleSubmit" />
+        <button @click="handleSubmit" class="password__button" :disabled="loading">
+          {{ loading ? (isZh ? '正在解锁' : 'Unlocking...') : (isZh ? '解锁内容' : 'Unlock Content') }}
+        </button>
 
         <p v-if="error" class="password__error">{{ error }}</p>
       </div>
@@ -19,7 +21,7 @@
 </template>
 
 <script lang="ts" setup>
-import { nextTick, onUnmounted, ref, toRaw, watch } from 'vue';
+import { computed, nextTick, onUnmounted, ref, toRaw, watch } from 'vue';
 import { inBrowser, useData } from 'vitepress';
 import { useLayout } from 'vitepress/theme';
 import { getHeaders } from 'vitepress/dist/client/theme-default/composables/outline.js';
@@ -30,7 +32,8 @@ const props = defineProps<{
   payload: EncryptedContentPayload;
 }>();
 
-const { frontmatter, page, theme } = useData();
+const { frontmatter, page, theme, lang } = useData();
+const isZh = computed(() => (lang.value || 'zh').startsWith('zh'));
 const layout = useLayout();
 const input = ref('');
 const html = ref('');
@@ -85,7 +88,7 @@ async function handleSubmit() {
       }
     }
   } catch {
-    if (sequence === restoreSequence) error.value = '密码错误，请重新输入';
+    if (sequence === restoreSequence) error.value = isZh.value ? '密码错误，请重新输入' : 'Incorrect password, please try again';
   } finally {
     if (sequence === restoreSequence) loading.value = false;
   }

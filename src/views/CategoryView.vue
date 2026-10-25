@@ -2,11 +2,13 @@
   <div class="ZCContainer">
     <div class="ZCLayout">
       <div class="ZCContent">
-        <slot name="doc-before"></slot>
+        <slot name="doc-before">
+          <component :is="slotDocBefore" v-if="slotDocBefore" />
+        </slot>
 
         <h1 class="page-title">
-          <span>{{ (isCategory ? '分类' : '标签') + (currentName ? '：' + currentName : '') }}</span>
-          <span class="page-title__count" v-if="currentName">{{ filteredPosts.length }} 篇</span>
+          <span>{{ titleText }}</span>
+          <span class="page-title__count" v-if="currentName">{{ countText }}</span>
         </h1>
 
         <TabList
@@ -21,13 +23,19 @@
           <PostList :posts="filteredPosts" :showPinned="false" />
         </div>
 
-        <slot name="doc-after"></slot>
+        <slot name="doc-after">
+          <component :is="slotDocAfter" v-if="slotDocAfter" />
+        </slot>
       </div>
       <aside class="ZCAside ZCAside--left">
-        <slot name="aside-left"></slot>
+        <slot name="aside-left">
+          <component :is="slotAsideLeft" v-if="slotAsideLeft" />
+        </slot>
       </aside>
       <aside class="ZCAside ZCAside--right">
-        <slot name="aside-right"></slot>
+        <slot name="aside-right">
+          <component :is="slotAsideRight" v-if="slotAsideRight" />
+        </slot>
       </aside>
     </div>
   </div>
@@ -39,6 +47,7 @@ import { useData } from 'vitepress';
 import TabList from '../components/TabList.vue';
 import PostList from '../components/PostList.vue';
 import { useGroup } from '../composables/useGroup';
+import { resolveSlot } from '../utils/resolveSlot.ts';
 
 const props = defineProps({
   type: {
@@ -49,8 +58,32 @@ const props = defineProps({
 
 const isCategory = computed(() => props.type === 'category');
 
-const { theme, page } = useData();
+const { theme, page, lang } = useData();
+const isZh = computed(() => (lang.value || 'zh').startsWith('zh'));
 const { tabs, posts } = useGroup(theme.value?.posts ?? []);
+
+const titleText = computed(() => {
+  if (isZh.value) {
+    const prefix = isCategory.value ? '分类' : '标签';
+    return currentName.value ? `${prefix}：${currentName.value}` : prefix;
+  }
+  if (isCategory.value) {
+    return currentName.value ? `Category: ${currentName.value}` : 'Category';
+  }
+  return currentName.value ? `Tag: ${currentName.value}` : 'Tag';
+});
+
+const countText = computed(() => {
+  const count = filteredPosts.value.length;
+  if (isZh.value) return `${count} 篇`;
+  return `${count} ${count === 1 ? 'post' : 'posts'}`;
+});
+
+const currentTarget = computed(() => (isCategory.value ? 'category' : 'tags'));
+const slotDocBefore = computed(() => resolveSlot(theme.value.slots?.docBefore, currentTarget.value));
+const slotDocAfter = computed(() => resolveSlot(theme.value.slots?.docAfter, currentTarget.value));
+const slotAsideLeft = computed(() => resolveSlot(theme.value.slots?.asideLeft, currentTarget.value));
+const slotAsideRight = computed(() => resolveSlot(theme.value.slots?.asideRight, currentTarget.value));
 
 // 从动态路由参数获取对应名称；由于通过 paths.ts 生成 index，当值为 'index' 时，视为空。
 const currentName = computed(() => {

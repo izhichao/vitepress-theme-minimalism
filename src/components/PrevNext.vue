@@ -11,7 +11,7 @@
               transform="rotate(180 8 8)"
             />
           </svg>
-          {{ props.prevText }}
+          {{ resolvedPrevText }}
         </span>
         <span class="prev-next__title">{{ prevNext.prev.text }}</span>
       </a>
@@ -21,7 +21,7 @@
     <div class="prev-next__slot prev-next__slot--next">
       <a v-if="prevNext.next" :href="withBase(prevNext.next.link)" class="prev-next__card prev-next__card--next">
         <span class="prev-next__label">
-          {{ props.nextText }}
+          {{ resolvedNextText }}
           <svg class="prev-next__arrow" viewBox="0 0 16 16" fill="none">
             <path
               d="M7.293 1.293a1 1 0 011.414 0l6 6a1 1 0 010 1.414l-6 6a1 1 0 01-1.414-1.414L11.586 9H2a1 1 0 010-2h9.586L7.293 2.707a1 1 0 010-1.414z"
@@ -47,13 +47,15 @@ const props = withDefaults(
     showPinned?: boolean;
   }>(),
   {
-    prevText: '上一篇',
-    nextText: '下一篇',
     showPinned: true
   }
 );
 
-const { theme, frontmatter } = useData();
+const { theme, frontmatter, lang } = useData();
+const isZh = computed(() => (lang.value || 'zh').startsWith('zh'));
+
+const resolvedPrevText = computed(() => props.prevText || (isZh.value ? '上一篇' : 'Previous'));
+const resolvedNextText = computed(() => props.nextText || (isZh.value ? '下一篇' : 'Next'));
 const allPosts: IPost[] = theme.value.posts || [];
 
 const prevNext = computed(() => {

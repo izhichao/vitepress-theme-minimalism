@@ -7,11 +7,11 @@
           icon="solar:share-bold"
           :ssr="true"
           :inline="true"
-          ariaLabel="分享此页面的图标"
+          :ariaLabel="isZh ? '分享此页面的图标' : 'Share page icon'"
           width="16"
           height="16"
         />
-        点击分享此页面
+        {{ isZh ? '点击分享此页面' : 'Share this page' }}
       </span>
       <span v-else class="share__button__text">
         <Icon
@@ -19,11 +19,11 @@
           icon="mdi:thumbs-up"
           :ssr="true"
           :inline="true"
-          ariaLabel="复制成功图标"
+          :ariaLabel="isZh ? '复制成功图标' : 'Copied icon'"
           width="16"
           height="16"
         />
-        链接已复制!
+        {{ isZh ? '链接已复制!' : 'Link copied!' }}
       </span>
     </button>
   </div>
@@ -31,8 +31,11 @@
 
 <script setup lang="ts">
 import { ComputedRef, computed, ref } from 'vue';
-import { useRouter } from 'vitepress';
+import { useData, useRouter } from 'vitepress';
 import { Icon } from '@iconify/vue';
+
+const { lang } = useData();
+const isZh = computed(() => (lang.value || 'zh').startsWith('zh'));
 
 const useCopyLink = () => {
   const copied = ref(false);
@@ -40,7 +43,7 @@ const useCopyLink = () => {
   const copyLink = async (text: string) => {
     try {
       if (!navigator.clipboard) {
-        alert('当前浏览器不支持自动复制，请手动复制。');
+        alert(isZh.value ? '当前浏览器不支持自动复制，请手动复制。' : 'Clipboard API not supported, please copy manually.');
         return;
       }
       await navigator.clipboard.writeText(text);
@@ -48,7 +51,7 @@ const useCopyLink = () => {
       setTimeout(() => (copied.value = false), 2000);
     } catch (error) {
       console.error('复制失败:', error);
-      alert('复制失败，请手动复制。');
+      alert(isZh.value ? '复制失败，请手动复制。' : 'Copy failed, please copy manually.');
     }
   };
 
