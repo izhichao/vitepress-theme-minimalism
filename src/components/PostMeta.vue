@@ -86,23 +86,17 @@ const formatDate = (datetime: string | number) => {
   &__row {
     display: flex;
     align-items: center;
-    flex-wrap: wrap;
-    gap: 16px;
 
+    // 第一行
     &--primary {
       justify-content: space-between;
-
-      @media (max-width: 640px) {
-        flex-direction: column;
-        align-items: flex-start;
-        gap: 12px;
-      }
     }
 
+    // 第二行
     &--secondary {
-      padding-top: 12px;
-      border-top: 1px dashed var(--vp-c-divider);
+      gap: 20px;
       margin-top: 12px;
+      flex-wrap: wrap;
     }
   }
 
@@ -110,21 +104,14 @@ const formatDate = (datetime: string | number) => {
   &__group {
     display: flex;
     align-items: center;
-    flex-wrap: wrap;
-    gap: 16px;
 
     &--left {
-      flex: 1;
-      min-width: 0;
+      gap: 20px;
+      flex-wrap: wrap;
     }
 
-    // 浏览量靠右
     &--right {
-      margin-left: auto;
-
-      @media (max-width: 640px) {
-        margin-left: 0;
-      }
+      // 浏览量靠右
     }
   }
 
@@ -133,14 +120,14 @@ const formatDate = (datetime: string | number) => {
     display: flex;
     align-items: center;
     gap: 6px;
-    font-size: 13px;
+    font-size: 14px;
     color: var(--vp-c-text-2);
-    white-space: nowrap;
   }
 
   // 图标
   &__icon {
-    font-size: 15px;
+    width: 16px;
+    height: 16px;
     color: var(--vp-c-text-3);
     flex-shrink: 0;
   }
@@ -148,12 +135,14 @@ const formatDate = (datetime: string | number) => {
   // 标签文本
   &__label {
     color: var(--vp-c-text-3);
-    font-size: 12px;
+    font-weight: 400;
+    font-size: 14px;
+    flex-shrink: 0;
   }
 
   // 值文本
   &__value {
-    color: var(--vp-c-text-2);
+    color: var(--vp-c-text-1);
     font-weight: 500;
   }
 
@@ -161,90 +150,90 @@ const formatDate = (datetime: string | number) => {
   &__category {
     display: flex;
     align-items: center;
-    gap: 6px;
-    font-size: 13px;
+    gap: 8px;
+    font-size: 14px;
   }
 
   // 标签容器
   &__tags {
     display: flex;
     align-items: center;
-    gap: 6px;
-    font-size: 13px;
-    flex: 1;
-    min-width: 0;
+    gap: 8px;
+    flex-wrap: wrap;
   }
 
   // 标签列表
   &__tags-list {
     display: flex;
-    align-items: center;
     flex-wrap: wrap;
-    gap: 6px;
+    gap: 8px;
   }
 
   // 徽章通用样式
   &__badge {
-    display: inline-flex;
-    align-items: center;
-    padding: 2px 8px;
-    border-radius: 4px;
-    font-size: 12px;
-    font-weight: 500;
-    line-height: 1.4;
+    display: inline-block;
+    padding: 0.075rem 0.625rem;
+    border-radius: 0.5rem;
+    font-size: 0.8rem;
+    color: var(--vp-c-text-2);
     text-decoration: none;
-    transition: all 0.2s ease;
-    cursor: pointer;
+    transition: all 0.3s ease;
+    font-weight: 500;
 
     // 分类徽章
     &--category {
-      background-color: var(--vp-c-brand-soft);
-      color: var(--vp-c-brand-1);
+      background-color: var(--vp-c-gray-2);
 
       &:hover {
-        background-color: var(--vp-c-brand-2);
-        color: var(--vp-c-white);
+        background-color: var(--vp-c-brand-soft);
+        text-decoration: none;
       }
     }
 
     // 标签徽章
     &--tag {
-      background-color: var(--vp-c-default-soft);
-      color: var(--vp-c-text-2);
+      border-radius: 9999px;
+      background-color: var(--vp-c-bg);
+      border: 1px solid var(--vp-c-divider);
 
       &:hover {
         background-color: var(--vp-c-brand-soft);
-        color: var(--vp-c-brand-1);
+        border-color: var(--vp-c-brand);
+        text-decoration: none;
       }
     }
   }
 }
 
 // 响应式设计
-@media (max-width: 640px) {
+@media (max-width: 768px) {
   .post-info {
-    padding: 12px 14px;
-    margin: 16px 0;
-
     &__row {
-      gap: 10px;
+      &--primary {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 12px;
+      }
 
       &--secondary {
-        padding-top: 10px;
-        margin-top: 10px;
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 12px;
       }
     }
 
     &__group {
-      gap: 12px;
+      &--left {
+        gap: 12px;
+      }
     }
 
     &__item {
-      font-size: 12px;
+      font-size: 13px;
     }
 
-    &__icon {
-      font-size: 14px;
+    &__badge {
+      font-size: 0.75rem;
     }
   }
 }
