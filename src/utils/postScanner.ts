@@ -83,6 +83,8 @@ export const formatFrontMatter = async (frontMatter: IPost, postPath: string): P
   if (!id) {
     frontMatter.id = generateString(6);
     changed = true;
+  } else if (typeof frontMatter.id !== 'string') {
+    frontMatter.id = String(frontMatter.id);
   }
 
   if (!title) {
@@ -157,7 +159,9 @@ export const scanAndParsePosts = async (
         }
 
         // 2. 字段解构（必须放在 formatFrontMatter 之后，确保拿到新生成的 id）
-        const { description, draft, deleted, id, permalink: customPermalink } = frontMatter;
+        const { description, draft, deleted, permalink: customPermalink } = frontMatter;
+        const id = String(frontMatter.id);
+        frontMatter.id = id;
         const isDraft = !!(draft || deleted);
 
         // 3. 生成摘要
@@ -173,11 +177,11 @@ export const scanAndParsePosts = async (
         let permalink: string = postPath.replace(/\.md$/, '');
         if (!isDraft) {
           if (customPermalink) {
-            permalink = customPermalink;
+            permalink = String(customPermalink);
           } else if (folder.permalink !== false) {
             const rawPrefix = typeof folder.permalink === 'string' ? folder.permalink : folder.input;
             const cleanPrefix = rawPrefix.replace(/^\/+|\/+$/g, '');
-            permalink = cleanPrefix ? `${cleanPrefix}/${id}` : id;
+            permalink = cleanPrefix ? `${cleanPrefix}/${id}` : `${id}`;
           }
         }
 
@@ -185,7 +189,7 @@ export const scanAndParsePosts = async (
           rewrites[postPath.replace(/[+()]/g, '\\$&')] = `${permalink}.md`.replace(/^\//, '').replace(/[+()]/g, '\\$&');
         }
 
-        permalink = permalink.replace(/^\/?/, '/');
+        permalink = String(permalink).replace(/^\/?/, '/');
         frontMatter.permalink = permalink;
 
         const publicPost: IPost = {
