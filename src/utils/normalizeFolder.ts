@@ -32,11 +32,12 @@ export const normalizeFolders = (
           ? ''
           : input;
 
+    const defaultPermalink = globalConfig.permalink === false ? false : input;
     const permalink = isString
-      ? isFirst
-        ? globalConfig.permalink ?? 'posts'
-        : input
-      : item.permalink ?? (isFirst ? globalConfig.permalink ?? 'posts' : input);
+      ? defaultPermalink
+      : item.permalink !== undefined
+        ? item.permalink
+        : defaultPermalink;
 
     const index = isString
       ? isFirst

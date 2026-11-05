@@ -174,8 +174,10 @@ export const scanAndParsePosts = async (
         if (!isDraft) {
           if (customPermalink) {
             permalink = customPermalink;
-          } else if (folder.permalink) {
-            permalink = `${folder.permalink}/${id}`;
+          } else if (folder.permalink !== false) {
+            const rawPrefix = typeof folder.permalink === 'string' ? folder.permalink : folder.input;
+            const cleanPrefix = rawPrefix.replace(/^\/+|\/+$/g, '');
+            permalink = cleanPrefix ? `${cleanPrefix}/${id}` : id;
           }
         }
 

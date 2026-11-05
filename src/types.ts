@@ -12,8 +12,8 @@ export interface IFolderConfig {
   name?: string;
   /** 生成的分页列表输出路径，第一项默认 ''（根目录），后续项默认 input */
   output?: string;
-  /** 文章固定链接前缀，默认 input */
-  permalink?: string;
+  /** 文章固定链接前缀：支持自定义前缀字符串（如 'p'，或 '/'、'' 挂载到根目录），设为 false 关闭永久链接，默认继承 input */
+  permalink?: string | boolean;
   /** 是否生成 index.md 作为列表首页，第一项默认 true（或继承全局 index），后续项默认 true */
   index?: boolean;
   /** 该文件夹专属分页条数，未设置时继承全局 pageSize */
@@ -31,8 +31,8 @@ export interface IPostsConfig {
   index?: boolean;
   /** 摘要截取长度，默认 0 */
   excerpt?: number;
-  /** 全局默认固定链接前缀，默认 'posts' */
-  permalink?: string;
+  /** 全局是否启用永久链接，默认 true。设为 false 则全局关闭永久链接，使用物理文件路径 */
+  permalink?: boolean;
 }
 
 export type PageTarget = 'page' | 'category' | 'tags' | 'archives';
