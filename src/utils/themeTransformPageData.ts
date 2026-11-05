@@ -72,8 +72,9 @@ export const themeTransformPageData: ThemeTransformPageData = (
   // 1. 处理动态分类页面标题（如 /category/散文 -> "分类：散文"）
   if (pageData.params?.category) {
     const category = pageData.params.category as string;
+    const rawName = (pageData.params.rawName as string) || category;
     if (category && category !== 'index') {
-      pageData.title = isZh ? `分类：${category}` : `Category: ${category}`;
+      pageData.title = isZh ? `分类：${rawName}` : `Category: ${rawName}`;
       return;
     }
     if (category === 'index' && !isZh) {
@@ -85,8 +86,9 @@ export const themeTransformPageData: ThemeTransformPageData = (
   // 2. 处理动态标签页面标题（如 /tags/生活 -> "标签：生活"）
   if (pageData.params?.tag) {
     const tag = pageData.params.tag as string;
+    const rawName = (pageData.params.rawName as string) || tag;
     if (tag && tag !== 'index') {
-      pageData.title = isZh ? `标签：${tag}` : `Tag: ${tag}`;
+      pageData.title = isZh ? `标签：${rawName}` : `Tag: ${rawName}`;
       return;
     }
     if (tag === 'index' && !isZh) {

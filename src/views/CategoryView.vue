@@ -16,7 +16,7 @@
           :tabs="isCategory ? tabs.category : tabs.tag"
           :posts="isCategory ? posts.category : undefined"
           :linkPrefix="isCategory ? '/category/' : '/tags/'"
-          :selected="currentName || null"
+          :selected="currentSlug || null"
         />
 
         <div v-if="currentName" class="post-list-wrapper">
@@ -60,7 +60,23 @@ const isCategory = computed(() => props.type === 'category');
 
 const { theme, page, lang } = useData();
 const isZh = computed(() => (lang.value || 'zh').startsWith('zh'));
-const { tabs, posts } = useGroup(theme.value?.posts ?? []);
+const { tabs, posts, slugMap } = useGroup(theme.value?.posts ?? []);
+
+// 从动态路由参数获取对应名称（作为路由 slug）
+const currentSlug = computed(() => {
+  const params = page.value.params as Record<string, string>;
+  const val = isCategory.value ? params?.category : params?.tag;
+  return !val || val === 'index' ? '' : val;
+});
+
+// 当前展示名称：优先用 params.rawName，其次从 slugMap 查找原名，最后回退为 currentSlug
+const currentName = computed(() => {
+  if (!currentSlug.value) return '';
+  const params = page.value.params as Record<string, string>;
+  if (params?.rawName) return params.rawName;
+  const map = isCategory.value ? slugMap.category : slugMap.tag;
+  return map.get(currentSlug.value) || currentSlug.value;
+});
 
 const titleText = computed(() => {
   if (isZh.value) {
@@ -85,14 +101,11 @@ const slotDocAfter = computed(() => resolveSlot(theme.value.slots?.docAfter, cur
 const slotAsideLeft = computed(() => resolveSlot(theme.value.slots?.asideLeft, currentTarget.value));
 const slotAsideRight = computed(() => resolveSlot(theme.value.slots?.asideRight, currentTarget.value));
 
-// 从动态路由参数获取对应名称；由于通过 paths.ts 生成 index，当值为 'index' 时，视为空。
-const currentName = computed(() => {
-  const params = page.value.params as Record<string, string>;
-  const val = isCategory.value ? params?.category : params?.tag;
-  return !val || val === 'index' ? '' : val;
+const filteredPosts = computed(() => {
+  if (!currentSlug.value) return [];
+  const group = posts[props.type];
+  return group?.[currentSlug.value] ?? group?.[currentName.value] ?? [];
 });
-
-const filteredPosts = computed(() => posts[props.type]?.[currentName.value] ?? []);
 </script>
 
 <style lang="less" scoped>

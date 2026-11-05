@@ -10,7 +10,7 @@
           </span>
           <a :href="withBase(post.permalink)" @click.stop style="color: inherit; text-decoration: none;">{{ post.title }}</a>
         </h2>
-        <a v-if="post.category" :href="withBase(`/category/${encodeURIComponent(post.category)}`)" class="post-item__category" @click.stop>
+        <a v-if="post.category" :href="withBase(`/category/${encodeURIComponent(slugify(post.category))}`)" class="post-item__category" @click.stop>
           {{ post.category }}
         </a>
       </div>
@@ -29,7 +29,7 @@
           </div>
 
           <div v-if="post.tags && post.tags.length" class="post-item__tags">
-            <a v-for="tag in post.tags" :key="tag" :href="withBase(`/tags/${encodeURIComponent(tag)}`)" class="post-item__tag" @click.stop>
+            <a v-for="tag in post.tags" :key="tag" :href="withBase(`/tags/${encodeURIComponent(slugify(tag))}`)" class="post-item__tag" @click.stop>
               <Icon class="post-item__tag-icon" icon="mingcute:tag-line" />
               {{ tag }}
             </a>
@@ -49,6 +49,7 @@
 import { useData, withBase, useRouter } from 'vitepress';
 import { IPost } from '../types';
 import { Icon } from '@iconify/vue';
+import { slugify } from '../utils/slugify.ts';
 
 
 const { theme } = useData();

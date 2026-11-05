@@ -2,6 +2,7 @@ import fs from 'fs/promises';
 import path from 'path';
 import fg from 'fast-glob';
 import matter from 'gray-matter';
+import { slugify } from './slugify.ts';
 
 let inMemoryFolders: string[] = ['posts'];
 
@@ -50,7 +51,7 @@ export const getCategoryPaths = async (): Promise<Array<{ params: { category: st
   const ignores = folders.flatMap((f) => [`${f}/index.md`, `${f}/page-[0-9]*.md`]);
 
   const paths = await fg(patterns, { ignore: ignores });
-  const categories = new Set<string>();
+  const slugMap = new Map<string, string>();
   const isProd = process.env.NODE_ENV === 'production';
 
   for (const postPath of paths) {
@@ -58,15 +59,21 @@ export const getCategoryPaths = async (): Promise<Array<{ params: { category: st
     const skip = isProd && (data.draft || data.deleted || data.hidden);
 
     if (data.category && !skip) {
-      categories.add(String(data.category));
+      const raw = String(data.category).trim();
+      if (raw) {
+        const slug = slugify(raw);
+        if (slug && !slugMap.has(slug)) {
+          slugMap.set(slug, raw);
+        }
+      }
     }
   }
 
-  const routePaths = [...categories].map((category) => ({
-    params: { category }
+  const routePaths = [...slugMap.entries()].map(([category, rawName]) => ({
+    params: { category, rawName }
   }));
 
-  routePaths.push({ params: { category: 'index' } });
+  routePaths.push({ params: { category: 'index', rawName: '' } });
 
   return routePaths;
 };
@@ -74,13 +81,13 @@ export const getCategoryPaths = async (): Promise<Array<{ params: { category: st
 /**
  * 扫描所有文章目录，生成标签动态路由参数列表（供 tags/[tag].paths.ts 使用）
  */
-export const getTagPaths = async (): Promise<Array<{ params: { tag: string } }>> => {
+export const getTagPaths = async (): Promise<Array<{ params: { tag: string; rawName?: string } }>> => {
   const folders = await getConfiguredFolders();
   const patterns = folders.map((f) => `${f}/**/*.md`);
   const ignores = folders.flatMap((f) => [`${f}/index.md`, `${f}/page-[0-9]*.md`]);
 
   const paths = await fg(patterns, { ignore: ignores });
-  const tags = new Set<string>();
+  const slugMap = new Map<string, string>();
   const isProd = process.env.NODE_ENV === 'production';
 
   for (const postPath of paths) {
@@ -89,16 +96,24 @@ export const getTagPaths = async (): Promise<Array<{ params: { tag: string } }>>
 
     if (Array.isArray(data.tags) && !skip) {
       data.tags.forEach((tag: unknown) => {
-        if (tag != null) tags.add(String(tag));
+        if (tag != null) {
+          const raw = String(tag).trim();
+          if (raw) {
+            const slug = slugify(raw);
+            if (slug && !slugMap.has(slug)) {
+              slugMap.set(slug, raw);
+            }
+          }
+        }
       });
     }
   }
 
-  const routePaths = [...tags].map((tag) => ({
-    params: { tag }
+  const routePaths = [...slugMap.entries()].map(([tag, rawName]) => ({
+    params: { tag, rawName }
   }));
 
-  routePaths.push({ params: { tag: 'index' } });
+  routePaths.push({ params: { tag: 'index', rawName: '' } });
 
   return routePaths;
 };

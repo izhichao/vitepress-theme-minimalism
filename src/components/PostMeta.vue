@@ -34,7 +34,7 @@
       <div class="post-info__category" v-if="category">
         <Icon class="post-info__icon" icon="mingcute:folder-line" />
         <span class="post-info__label">{{ isZh ? '分类' : 'Category' }}</span>
-        <a :href="withBase(`/category/${encodeURIComponent(category)}`)" class="post-info__badge post-info__badge--category">
+        <a :href="withBase(`/category/${encodeURIComponent(slugify(category))}`)" class="post-info__badge post-info__badge--category">
           {{ category }}
         </a>
       </div>
@@ -44,7 +44,7 @@
         <Icon class="post-info__icon" icon="mingcute:tag-line" />
         <span class="post-info__label">{{ isZh ? '标签' : 'Tags' }}</span>
         <div class="post-info__tags-list">
-          <a v-for="tag in tags" :key="tag" :href="withBase(`/tags/${encodeURIComponent(tag)}`)" class="post-info__badge post-info__badge--tag">
+          <a v-for="tag in tags" :key="tag" :href="withBase(`/tags/${encodeURIComponent(slugify(tag))}`)" class="post-info__badge post-info__badge--tag">
             {{ tag }}
           </a>
         </div>
@@ -57,6 +57,7 @@
 import { computed } from 'vue';
 import { useData, withBase } from 'vitepress';
 import { Icon } from '@iconify/vue';
+import { slugify } from '../utils/slugify.ts';
 
 const { page, frontmatter, lang } = useData();
 const isZh = computed(() => (lang.value || 'zh').startsWith('zh'));
