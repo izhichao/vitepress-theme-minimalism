@@ -80,21 +80,24 @@ const navigate = (url: string) => {
   color: inherit;
   text-decoration: none;
   border: 1px solid var(--vp-c-divider);
-  border-radius: 0.5rem;
+  border-radius: 0.75rem;
   padding: 1.25rem;
-  transition: all 0.15s ease;
+  box-shadow:
+    0 1px 3px 0 rgba(0, 0, 0, 0.04),
+    0 1px 2px -1px rgba(0, 0, 0, 0.04);
+  transition:
+    border-color 0.2s ease,
+    box-shadow 0.2s ease,
+    transform 0.2s ease;
   -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
   cursor: pointer;
 
   &:hover {
-    border-color: var(--vp-c-brand-soft);
+    border-color: var(--vp-c-text-3);
+    transform: translateY(-2px);
     box-shadow:
-      0 1px 3px 0 rgba(0, 0, 0, 0.1),
-      0 1px 2px -1px rgba(0, 0, 0, 0.1);
-
-    & .post-item__title {
-      color: var(--vp-c-brand);
-    }
+      0 4px 12px 0 rgba(0, 0, 0, 0.08),
+      0 2px 4px -2px rgba(0, 0, 0, 0.04);
 
     & .post-item__excerpt {
       color: var(--vp-c-text-1);
@@ -116,7 +119,7 @@ const navigate = (url: string) => {
     line-height: 1.4;
     color: var(--vp-c-text-1);
     margin: 0;
-    transition: all 0.3s ease;
+    transition: color 0.2s ease;
   }
 
   &__pinned {
@@ -152,11 +155,11 @@ const navigate = (url: string) => {
     border-radius: 0.5rem;
     white-space: nowrap;
     text-decoration: none;
-    transition: all 0.3s ease;
+    transition: all 0.2s ease;
 
     &:hover {
-      color: var(--vp-c-brand);
-      background-color: var(--vp-c-brand-soft);
+      color: var(--vp-c-text-1);
+      background-color: var(--vp-c-default-soft);
     }
   }
 
@@ -165,19 +168,19 @@ const navigate = (url: string) => {
     line-height: 1.6;
     margin-bottom: 0.75rem;
     display: -webkit-box;
-    -webkit-line-clamp: 1;
-    line-clamp: 1;
+    -webkit-line-clamp: 2;
+    line-clamp: 2;
     -webkit-box-orient: vertical;
     overflow: hidden;
     text-overflow: ellipsis;
-    transition: all 0.3s ease;
+    transition: color 0.2s ease;
   }
 
   &__footer {
     display: flex;
     align-items: center;
     justify-content: space-between;
-    border-top: 1px solid var(--vp-c-gray-3);
+    border-top: 1px solid var(--vp-c-divider);
     padding-top: 0.75rem;
     gap: 1rem;
     flex-wrap: wrap;
@@ -223,12 +226,12 @@ const navigate = (url: string) => {
     border: 1px solid var(--vp-c-divider);
     border-radius: 9999px;
     text-decoration: none;
-    transition: all 0.3s ease;
+    transition: all 0.2s ease;
 
     &:hover {
-      background-color: var(--vp-c-brand-soft);
-      color: var(--vp-c-brand);
-      border-color: var(--vp-c-brand);
+      background-color: var(--vp-c-default-soft);
+      border-color: var(--vp-c-text-2);
+      color: var(--vp-c-text-1);
       text-decoration: none;
     }
   }

@@ -60,24 +60,24 @@ const getPostCount = (tab: string) => {
     transition: all 0.3s ease;
     cursor: pointer;
 
-    &:hover {
-      background-color: var(--vp-c-brand-soft);
-      color: var(--vp-c-brand-1);
+    &:hover:not(&--active) {
+      background-color: var(--vp-c-default-soft);
+      color: var(--vp-c-text-1);
     }
 
     &--active {
-      background-color: var(--vp-c-brand-1);
-      color: var(--vp-c-white);
+      background-color: var(--vp-c-text-1);
+      color: var(--vp-c-bg);
+      cursor: default;
 
       &:hover {
-        background-color: var(--vp-c-brand-2);
-        color: var(--vp-c-white);
+        background-color: var(--vp-c-text-1);
+        color: var(--vp-c-bg);
+        opacity: 0.9;
       }
     }
 
     &--tag {
-      font-size: 0.75rem;
-      padding: 0.25rem 0.75rem;
       border-radius: 9999px;
     }
   }
