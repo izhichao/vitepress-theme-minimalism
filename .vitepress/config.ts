@@ -23,7 +23,7 @@ export default defineConfig<ThemeConfig>({
   ignoreDeadLinks: true,
   lastUpdated: true,
   sitemap: {
-    hostname: 'https://tsx.dpdns.org',
+    hostname: 'https://vue.qd.je',
     transformItems: (items) => {
       return items.filter((item) => !hiddenPosts.has(item.url.replace(/\.html$/, '')));
     }

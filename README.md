@@ -4,7 +4,7 @@
 
 **一个极简、现代、优雅的 VitePress 博客主题**
 
-[✨ 演示站](https://tsx.dpdns.org) | [📖 使用文档](https://zhichao.org/vitepress/overview)
+[✨ 演示站](https://vue.qd.je) | [📖 使用文档](https://zhichao.org/vitepress/overview)
 
 </div>
 
